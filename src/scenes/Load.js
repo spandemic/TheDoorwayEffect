@@ -5,7 +5,10 @@ class Load extends Phaser.Scene {
     }
 
     preload(){
+        this.load.path = './assets/';
 
+        this.load.image('cube', 'standardCube.png');
+        this.load.image('betaRoom', 'betaRoom.png');
     }
 
     create() {
