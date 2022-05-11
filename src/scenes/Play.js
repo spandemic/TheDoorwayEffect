@@ -13,8 +13,18 @@ class Play extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // set world bounds for camera and physics
-        this.cameras.main.setBounds(0, 0, screenWidth, screenHeight);
-        this.physics.world.setBounds(0, 0, screenWidth, screenHeight);
+        this.cameras.main.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
+        this.physics.world.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
+
+        this.add.image(0, 0, 'betaRoom').setOrigin(0);
+        this.add.image(0, screenHeight, 'betaRoom').setOrigin(0);
+        this.add.image(0, screenHeight * 2, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth, 0, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth, screenHeight, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth, screenHeight * 2, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth * 2, 0, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth * 2, screenHeight, 'betaRoom').setOrigin(0);
+        this.add.image(screenWidth * 2, screenHeight * 2, 'betaRoom').setOrigin(0);
 
         this.player = this.physics.add.sprite(centerX, centerY, 'cube');
         this.player.setOrigin(0.5);
