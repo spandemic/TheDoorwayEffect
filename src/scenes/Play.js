@@ -20,15 +20,15 @@ class Play extends Phaser.Scene {
 
         // column 1
         this.add.image(0, 0, 'room1').setOrigin(0);
-        this.add.image(0, screenHeight, 'room2').setOrigin(0);
-        this.add.image(0, screenHeight * 2, 'room3').setOrigin(0);
+        this.add.image(0, screenHeight, 'room4').setOrigin(0);
+        this.add.image(0, screenHeight * 2, 'room7').setOrigin(0);
         // column 2
-        this.add.image(screenWidth, 0, 'room4').setOrigin(0);
+        this.add.image(screenWidth, 0, 'room2').setOrigin(0);
         this.add.image(screenWidth, screenHeight, 'room5').setOrigin(0);
-        this.add.image(screenWidth, screenHeight * 2, 'room6').setOrigin(0);
+        this.add.image(screenWidth, screenHeight * 2, 'room8').setOrigin(0);
         // column 3
-        this.add.image(screenWidth * 2, 0, 'room7').setOrigin(0);
-        this.add.image(screenWidth * 2, screenHeight, 'room8').setOrigin(0);
+        this.add.image(screenWidth * 2, 0, 'room3').setOrigin(0);
+        this.add.image(screenWidth * 2, screenHeight, 'room6').setOrigin(0);
         this.add.image(screenWidth * 2, screenHeight * 2, 'room9').setOrigin(0);
 
         this.player = this.physics.add.sprite(centerX, centerY, 'cube');
@@ -42,7 +42,7 @@ class Play extends Phaser.Scene {
 
     update() {
         // console.log(this.player.x, this.player.y);
-        console.log(this.cameras.main.x, this.cameras.main.y);
+        // console.log(this.cameras.main.x, this.cameras.main.y);
         this.player.setVelocity(0);
 
         if (keyA.isDown) {
@@ -59,47 +59,47 @@ class Play extends Phaser.Scene {
         }
 
         // camera panning logic
-        // row 1
+        // col 1
         if (this.player.x <= screenWidth) {
-            // col 1 (room1)
+            // row 1 (room1)
             if (this.player.y <= screenHeight) {
                 this.cameras.main.centerOn(screenWidth / 2, screenHeight / 2);
             }
-            // col 2 (room2)
+            // row 2 (room4)
             if (this.player.y > screenHeight && this.player.y <= screenHeight * 2) {
-                this.cameras.main.centerOn(screenWidth * 6 / 4, screenHeight / 2);
-            }
-            // col 3 (room3)
-            if (this.player.y > screenHeight * 2 && this.player.y <= screenHeight * 3){
-                this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight / 2);
-            }
-        }
-        // row 2
-        if (this.player.x > screenWidth && this.player.x <= screenWidth * 2) {
-            // col 1 (room4)
-            if (this.player.y <= screenHeight) {
                 this.cameras.main.centerOn(screenWidth / 2, screenHeight * 6 / 4);
             }
-            // col 2 (room5)
+            // row 3 (room7)
+            if (this.player.y > screenHeight * 2 && this.player.y <= screenHeight * 3){
+                this.cameras.main.centerOn(screenWidth / 2, screenHeight * 15 / 6);
+            }
+        }
+        // col 2
+        if (this.player.x > screenWidth && this.player.x <= screenWidth * 2) {
+            // row 1 (room2)
+            if (this.player.y <= screenHeight) {
+                this.cameras.main.centerOn(screenWidth * 6 / 4, screenHeight / 2);
+            }
+            // row 2 (room5)
             if (this.player.y > screenHeight && this.player.y <= screenHeight * 2) {
                 this.cameras.main.centerOn(screenWidth * 6 / 4, screenHeight * 6 / 4);
             }
-            // col 3 (room6)
+            // row 3 (room8)
             if (this.player.y > screenHeight * 2 && this.player.y <= screenHeight * 3){
-                this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight * 6 / 4);
-            }
-        }
-        // row 3
-        if (this.player.x > screenWidth * 2 && this.player.x <= screenWidth * 3) {
-            // col 1 (room7)
-            if (this.player.y <= screenHeight) {
-                this.cameras.main.centerOn(screenWidth / 2, screenHeight * 15 / 6);
-            }
-            // col 2 (room8)
-            if (this.player.y > screenHeight && this.player.y <= screenHeight * 2) {
                 this.cameras.main.centerOn(screenWidth * 6 / 4, screenHeight * 15 / 6);
             }
-            // col 3 (room9)
+        }
+        // col 3
+        if (this.player.x > screenWidth * 2 && this.player.x <= screenWidth * 3) {
+            // row 1 (room3)
+            if (this.player.y <= screenHeight) {
+                this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight / 2);
+            }
+            // row 2 (room6)
+            if (this.player.y > screenHeight && this.player.y <= screenHeight * 2) {
+                this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight * 6 / 4);
+            }
+            // row 3 (room9)
             if (this.player.y > screenHeight * 2 && this.player.y <= screenHeight * 3){
                 this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight * 15 / 6);
             }
