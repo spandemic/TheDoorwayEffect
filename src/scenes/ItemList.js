@@ -14,7 +14,7 @@ class ItemList extends Phaser.Scene {
 
     }
     init(data){
-        let {playScene}=data;
+        //let {playScene}=data;
         //this.playScene=playScene;
         //this.inventory =playScene.player.inventory;
 
@@ -24,12 +24,10 @@ class ItemList extends Phaser.Scene {
     }
     refresh(){
         for (let index =0; index <this.maxColumn*this.rows;index++){
-            let x =this.game.config.width/4+((index%this.maxColumn)*(this.tilesize+this.space));
-            let y =this.game.config.heigh/4+Math.floor(index/this.maxColumn)*(this.tilesize+this.space);
-            let slots =this.add.sprite(0,0,"Inventorybox");
+            let x =this.margin+this._tilesize*2+(index*(this._tilesize+ this.space*5));
+            let y =this.margin+this._tilesize;
+            let slots =this.add.sprite(x,y,"Inventorybox");
             slots.setScale(this.uiScale);
-           
-
         }
     }
     create(){
