@@ -40,10 +40,10 @@ class ItemList extends Phaser.Scene {
     update(){
 
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
-            this.scene.stop();
-            this.scene.wake('playScene')
-          
+            this.scene.pause()
+	        this.scene.resume('playScene')
         }
+       
     }
         
        

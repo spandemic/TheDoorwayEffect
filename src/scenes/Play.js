@@ -60,10 +60,11 @@ playScene
             this.player.setVelocityY(500);
         }
         if(Phaser.Input.Keyboard.JustDown(keyTAB)){
-            this.scene.sleep();
-            this.scene.launch('ItemList')
+            this.scene.pause();
+            this.scene.launch('ItemList');
             
         }
+        
 
         // camera panning logic
         // col 1
