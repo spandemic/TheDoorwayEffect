@@ -34,13 +34,11 @@ class ItemList extends Phaser.Scene {
         keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         this.refresh();
 
-      
-
     }
-    update(){
+    update() {
 
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
-            this.scene.stop();
+            this.scene.sleep();
             this.scene.wake('playScene')
           
         }
