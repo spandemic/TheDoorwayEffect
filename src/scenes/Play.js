@@ -1,5 +1,5 @@
 class Play extends Phaser.Scene {
-
+playScene
     constructor() {
         super("playScene");
     }
@@ -10,6 +10,8 @@ class Play extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // set world bounds for camera and physics
@@ -56,6 +58,11 @@ class Play extends Phaser.Scene {
         }
         if (keyS.isDown) {
             this.player.setVelocityY(500);
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyTAB)){
+            this.scene.sleep();
+            this.scene.launch('ItemList')
+            
         }
 
         // camera panning logic

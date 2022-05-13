@@ -10,7 +10,7 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Play ]
+    scene: [ Load , Menu , Play ,ItemList]
 }
 
 let game = new Phaser.Game(gameConfig);
@@ -23,4 +23,4 @@ let screenHeight = game.config.height;
 let borderSize = game.config.width / 8;     // 128px for 1024
 
 // keys for player
-let keyW, keyA, keyS, keyD, keyENTER, keySPACE;
+let keyW, keyA, keyS, keyD, keyENTER, keySPACE,keyTAB;
