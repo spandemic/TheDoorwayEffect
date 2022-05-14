@@ -16,6 +16,7 @@ playScene
 
         
         this.isWalking = false;
+        this.itemNum = 0;
 
         // set world bounds for camera and physics
         this.cameras.main.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
@@ -40,6 +41,22 @@ playScene
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
         this.player.setTint(0xF73D6E);
+
+        this.itemGroup = this.add.group({ runChildUpdate: true });
+        this.hitItemLogic = this.physics.add.overlap(
+            this.player,
+            this.itemGroup,
+            this.collectItem,
+            null,
+            this
+        );
+
+        this.time.addEvent({
+            delay: 100,
+            callback: this.createItem,
+            callbackScope: this,
+            loop: true        
+        });
 
         this.player.setCollideWorldBounds(true);
         // this.cameras.main.startFollow(this.player, true, 1, 1, screenWidth, screenHeight);
@@ -161,5 +178,39 @@ playScene
             }
         }
         
+    }
+
+    createItem() {
+        this.itemNum += 1
+        if (this.itemNum <= 10){ 
+            let newItem = new Items(
+                this,
+                Phaser.Math.Between(0, screenWidth * 3),
+                Phaser.Math.Between(0, screenHeight * 3),      // temp
+                'cube',
+                this.itemNum                        // test
+            );
+
+            this.itemGroup.add(newItem);
+
+            this.physics.add.overlap(
+                this.player,
+                this.itemGroup,
+                this.collectItem,
+                null,
+                this
+            );
+        }
+    }
+
+    collectItem(player, item) {
+        this.hitItemLogic.active = false;
+        this.pickUpItemSound.play();
+        item.disableBody(true, true);
+
+        this.time.delayedCall(
+            1000,
+            () => {this.hitItemLogic.active = true}
+        );
     }
 }
