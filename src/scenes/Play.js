@@ -17,6 +17,7 @@ playScene
 
         
         this.isWalking = false;
+        this.itemNum = 0;
 
         // set world bounds for camera and physics
         this.cameras.main.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
@@ -41,6 +42,22 @@ playScene
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
         this.player.setTint(0xF73D6E);
+
+        this.itemGroup = this.add.group({ runChildUpdate: true });
+        this.hitItemLogic = this.physics.add.overlap(
+            this.player,
+            this.itemGroup,
+            this.collectItem,
+            null,
+            this
+        );
+
+        this.time.addEvent({
+            delay: 100,
+            callback: this.createItem,
+            callbackScope: this,
+            loop: true        
+        });
 
         this.player.setCollideWorldBounds(true);
         // this.cameras.main.startFollow(this.player, true, 1, 1, screenWidth, screenHeight);
