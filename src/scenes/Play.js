@@ -1,7 +1,8 @@
 class Play extends Phaser.Scene {
 playScene
     constructor() {
-        super("playScene");
+        super("sceneA");
+        Phaser.Scene.call(this, 'sceneA');
     }
 
     create() {
@@ -13,6 +14,9 @@ playScene
         keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        
+        this.isWalking = false;
 
         // set world bounds for camera and physics
         this.cameras.main.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
@@ -40,28 +44,86 @@ playScene
 
         this.player.setCollideWorldBounds(true);
         // this.cameras.main.startFollow(this.player, true, 1, 1, screenWidth, screenHeight);
+
+        this.walkSound = this.sound.add('walk', {
+            mute: false,
+            volume: 0.4,
+            rate: 1.5,
+            loop: true
+        });
+
+        this.openDoorSound = this.sound.add('openDoor', {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            loop: false
+        });
+
+        this.pickUpItemSound = this.sound.add('pickItem', {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            loop: false
+        });
+
+        this.pickUpItemSound = this.sound.add('dropItem', {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            loop: false
+        });
+     
+
+        this.input.once(Phaser.Input.Events.POINTER_DOWN, function () {
+
+            this.scene.switch('sceneB');
+
+        }, this);
+
+        this.events.on(Phaser.Scenes.Events.WAKE, function() {
+            this.wake(this.input, this.scene);
+        }, this);
+    
+
     }
 
     update() {
-        // console.log(this.player.x, this.player.y);
-        // console.log(this.cameras.main.x, this.cameras.main.y);
-        this.player.setVelocity(0);
 
+        console.log(this.player.velocityX);
+
+        // movement keys
+        this.player.setVelocity(0);
+        this.player.setState(0);        // 0 for still, 1 for moving
         if (keyA.isDown) {
-            this.player.setVelocityX(-500);
+            this.player.setVelocityX(-400);
+            this.player.setState(1);
         }
         if (keyD.isDown) {
-            this.player.setVelocityX(500);
+            this.player.setVelocityX(400);
+            this.player.setState(1);
         }
         if (keyW.isDown) {
-            this.player.setVelocityY(-500);
+            this.player.setVelocityY(-400);
+            this.player.setState(1);
         }
         if (keyS.isDown) {
-            this.player.setVelocityY(500);
+            this.player.setVelocityY(400);
+            this.player.setState(1);
         }
+
+        // walking sound
+        if (this.player.state === 1 && this.isWalking === false){
+            this.walkSound.play();
+            this.isWalking = true;
+        }
+        if (this.player.state === 0) {
+            this.walkSound.stop();
+            this.isWalking = false;
+        }
+        
+
         if(Phaser.Input.Keyboard.JustDown(keyTAB)){
-            this.scene.pause();
-            this.scene.launch('ItemList');
+            this.scene.switch('sceneB');
             
         }
         
@@ -114,4 +176,12 @@ playScene
         }
         
     }
+    wake(input, scene) {
+        input.once(Phaser.Input.Events.POINTER_DOWN, function () {
+            scene.switch('sceneB');
+
+        }, this);
+    }
+
+
 }

@@ -1,7 +1,7 @@
 class ItemList extends Phaser.Scene {
 
     constructor() {
-        super("ItemList");
+        super("sceneB");
         this.maxColumn =5;
         this.maxRole =3;
         this.rows =1;
@@ -10,7 +10,7 @@ class ItemList extends Phaser.Scene {
         this.margin =6;
         this._tilesize =32;
         this.slots =[];
-
+        Phaser.Scene.call(this, 'sceneB');
 
     }
     init(data){
@@ -33,22 +33,37 @@ class ItemList extends Phaser.Scene {
     create(){
         keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         this.refresh();
+        this.timerEvent = this.time.addEvent({ delay: 8000, loop: true });
 
+        this.graphics = this.add.graphics({ x: 0, y: 0 });
+
+        this.input.once(Phaser.Input.Events.POINTER_DOWN, function (event) {
+            this.scene.switch('sceneA');
+        }, this);
+
+        this.events.on(Phaser.Scenes.Events.WAKE, function() {
+            this.wake(this.input, this.scene);
+        }, this);
       
+    
 
     }
-    update(){
+    wake(input, scene)
+    {
+        input.once(Phaser.Input.Events.POINTER_DOWN, function (event) {
+            scene.switch('sceneA');
+        }, this);
+    }
+    update() {
 
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
-            this.scene.pause()
-	        this.scene.resume('playScene')
+           this.scene.switch('sceneA');
         }
-       
     }
         
        
 
-
+  
 
 
 
