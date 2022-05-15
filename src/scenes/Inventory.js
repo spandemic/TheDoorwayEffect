@@ -1,4 +1,4 @@
-class ItemList extends Phaser.Scene {
+class Inventory extends Phaser.Scene {
 
     constructor() {
         super("sceneB");

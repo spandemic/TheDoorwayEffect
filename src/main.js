@@ -10,7 +10,7 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Play ,ItemList]
+    scene: [ Load , Menu , Play , Inventory ]
 }
 
 let game = new Phaser.Game(gameConfig);
