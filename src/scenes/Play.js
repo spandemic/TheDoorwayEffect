@@ -10,12 +10,19 @@ playScene
         const map = this.add.tilemap("map", 64, 64, 30, 20);
         const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
         
-        const floorLayer = map.createLayer("floor", tileset, 0, 0);
-        const wallLayer = map.createLayer("walls", tileset, 0, 0);
-        const decorLayer = map.createLayer("decor", tileset, 0, 0);
-        const decorLayer2 = map.createLayer("decor2", tileset, 0,0);
-        
-        
+        // trying to figure out how to load in the tiles for the entrances/exits (doorways)
+        // maybe just put the doorways on a tile layer instead of object layer in tiled
+        let doorways = map.createFromObjects("doorways", {
+            name: "doorway"
+        });
+
+        const floorLayer = map.createLayer("floor/floor", tileset, 0, 0);
+        const rugLayer = map.createLayer("floor/rug", tileset, 0, 0,);
+        const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
+        const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0);
+        const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
+        const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0);
+
         // player interaction keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
