@@ -6,6 +6,13 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // player interaction keys
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.walkSound = this.sound.add('walk', {
             mute: true,
@@ -36,23 +43,14 @@ class Play extends Phaser.Scene {
         const map = this.add.tilemap("map", 64, 64, 30, 20);
         const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
 
-        const floorLayer = map.createLayer("floor/floor", tileset, 0, 0).setDepth(1);
-        const rugLayer = map.createLayer("floor/rug", tileset, 0, 0).setDepth(2);
-        const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0).setDepth(2);
-        const returnDoorLayer = map.createLayer("floor/return doorways", tileset, 0, 0).setDepth(2);
-        const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0).setDepth(3);
+        const floorLayer = map.createLayer("floor/floor", tileset, 0, 0);
+        const rugLayer = map.createLayer("floor/rug", tileset, 0, 0);
+        const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0);
+        const returnDoorLayer = map.createLayer("floor/return doorways", tileset, 0, 0);
+        const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
+        const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
+        const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0);
         const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(4);
-        const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0).setDepth(5);
-        const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0).setDepth(6);
-
-        // player interaction keys
-        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
-
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         wallFrameLayer.setCollisionByProperty({ collides: true });
         spawnDoorLayer.setCollisionByProperty({ type: "spawn" });
@@ -60,8 +58,7 @@ class Play extends Phaser.Scene {
 
 
         // set world bounds for camera and physics
-        // tileSize is set in main.js
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
@@ -76,6 +73,17 @@ class Play extends Phaser.Scene {
             this.kitchenSpawn
         ];
 
+        this.itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
+        this.itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
+        this.itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
+
+        this.itemKitchenLocations = [
+            this.itemKitchen1,
+            this.itemKitchen2,
+            this.itemKitchen3
+        ]
+
+        this.neededItems = this.add.group({ runChildUpdate: true });
 
         this.player = this.physics.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y, 'cube');
         this.player.setOrigin(0.5);
@@ -94,12 +102,12 @@ class Play extends Phaser.Scene {
         //     this
         // );
 
-        // this.time.addEvent({
-        //     delay: 100,
-        //     callback: this.createItem,
-        //     callbackScope: this,
-        //     loop: true        
-        // });
+        this.time.addEvent({
+            delay: 100,
+            callback: this.generateItems,
+            callbackScope: this,
+            loop: false       
+        });
 
         this.player.setCollideWorldBounds(true);
         this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
@@ -178,6 +186,14 @@ class Play extends Phaser.Scene {
     returnToSpawn() {
         this.player.setX(this.hallwaySpawn.x);
         this.player.setY(this.hallwaySpawn.y);
+    }
+
+    generateItems() {
+        this.itemNum += 1;
+        let randomKitchenSpawn = this.itemKitchenLocations[Math.ceil(Math.random() * (this.itemKitchenLocations.length - 1))];
+        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, this.itemNum);
+
+        this.neededItems.add(kitchenItem);
     }
 
 }

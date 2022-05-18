@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="19" nextobjectid="49">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="21" nextobjectid="54">
  <editorsettings>
   <export target="tilemap_64px.json" format="json"/>
  </editorsettings>
@@ -59,6 +59,40 @@
  <tileset firstgid="257" name="doorway_effect_64_tileset" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="tileset-64.png" width="1024" height="1024"/>
  </tileset>
+ <objectgroup id="9" name="spawnpoints" visible="0" locked="1" opacity="0">
+  <object id="11" name="Hallway spawn" x="448" y="1024">
+   <point/>
+  </object>
+  <object id="12" name="Kitchen spawn" x="1216" y="448">
+   <point/>
+  </object>
+  <object id="17" name="Bathroom spawn" x="704" y="1728">
+   <point/>
+  </object>
+  <object id="29" name="Living room spawn" x="1092" y="2552">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="19" name="item spawnpoints" visible="0">
+  <object id="51" name="kitchen spawn 3" x="1092" y="660">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="52" name="kitchen item 2" x="1220" y="300">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="53" name="kitchen item 1" x="496" y="496">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
  <group id="12" name="floor" locked="1" opacity="0.97">
   <layer id="1" name="floor" width="50" height="50">
    <data encoding="csv">
@@ -277,20 +311,6 @@
 </data>
   </layer>
  </group>
- <objectgroup id="9" name="spawnpoints" visible="0" locked="1" opacity="0">
-  <object id="11" name="Hallway spawn" x="448" y="1024">
-   <point/>
-  </object>
-  <object id="12" name="Kitchen spawn" x="1216" y="448">
-   <point/>
-  </object>
-  <object id="17" name="Bathroom spawn" x="704" y="1728">
-   <point/>
-  </object>
-  <object id="29" name="Living room spawn" x="1092" y="2552">
-   <point/>
-  </object>
- </objectgroup>
  <group id="6" name="collisions">
   <layer id="16" name="wallFrames" width="50" height="50">
    <properties>
@@ -298,7 +318,7 @@
    </properties>
    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,21,5,5,5,5,5,5,5,0,0,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,5,5,5,5,5,5,5,0,0,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,21,0,0,0,0,0,0,0,18,19,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
