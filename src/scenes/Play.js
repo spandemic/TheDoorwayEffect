@@ -189,8 +189,18 @@ class Play extends Phaser.Scene {
     sendFromSpawn() {
         let randomSpawn = this.spawnList[Math.ceil(Math.random() * (this.spawnList.length - 1))];
  
+        /*
         this.player.setX(this.kitchenSpawn.x);
         this.player.setY(this.kitchenSpawn.y);
+        */
+       
+        this.player.setX(this.bathroomSpawn.x);
+        this.player.setY(this.bathroomSpawn.y);
+
+        /*
+        this.player.setX(this.livingSpawn.x);
+        this.player.setY(this.livingSpawn.y);
+        */
     }
 
     returnToSpawn() {
