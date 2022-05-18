@@ -1,0 +1,57 @@
+html {
+    background-color: #32a9a5;
+}
+
+body {
+
+    background-size: auto;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    padding-top: 5%;
+    padding-bottom: 8.5%;
+}
+
+h1 {
+    text-align: center;
+    font-family: Consolas;
+    color: #f9f2e2;
+    font-size: 45px;
+}
+
+h5 {
+    text-align: center;
+    font-family: Consolas;
+    color: #f9f2e2;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+p {
+    font-family: Consolas;
+    color: #f9f2e2;
+    font-size: 20px;
+    text-align: center;
+    padding: 20%;
+    padding-top: 0%;
+    padding-bottom: 0%;
+    font-weight: bold;
+}
+
+a {
+    color: #f9f2e2;
+    text-decoration: none;
+}
+a:hover {
+    color: #f9f2e2;
+}
+
+#phaser-game {
+    text-align: center;
+    align-content: center;
+    border-radius: 10%;
+    border-style: "solid";
+    border-color: #f9f2e2;
+    border-width: 15px;
+}

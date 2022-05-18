@@ -24,6 +24,9 @@ class Load extends Phaser.Scene {
         this.load.audio('openDoor', 'opendoor.wav');
         this.load.audio('pickItem', 'pickitem.wav');
         this.load.audio('walk', 'walking.wav');
+
+        this.load.tilemapTiledJSON("map", "tilemap_64px.json");
+        this.load.image("64_tiles", "tileset-64.png");
     }
 
     create() {

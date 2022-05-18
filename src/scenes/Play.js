@@ -6,6 +6,16 @@ playScene
     }
 
     create() {
+        // tilemap
+        const map = this.add.tilemap("map", 64, 64, 30, 20);
+        const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
+        
+        const floorLayer = map.createLayer("floor", tileset, 0, 0);
+        const wallLayer = map.createLayer("walls", tileset, 0, 0);
+        const decorLayer = map.createLayer("decor", tileset, 0, 0);
+        const decorLayer2 = map.createLayer("decor2", tileset, 0,0);
+        
+        
         // player interaction keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -20,11 +30,13 @@ playScene
         this.itemNum = 0;
 
         // set world bounds for camera and physics
-        this.cameras.main.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
+        // tileSize is set in main.js
+        this.cameras.main.setBounds(4*tileSize, 11*tileSize, map.widthInPixels, map.heightInPixels);
         // this.cameras.main.centerOn(0, 0);
         // this.cameras.main.setSize(screenWidth, screenHeight);
         this.physics.world.setBounds(0, 0, screenWidth * 3, screenHeight * 3);
 
+        /*
         // column 1
         this.add.image(0, 0, 'room1').setOrigin(0);
         this.add.image(0, screenHeight, 'room4').setOrigin(0);
@@ -37,8 +49,9 @@ playScene
         this.add.image(screenWidth * 2, 0, 'room3').setOrigin(0);
         this.add.image(screenWidth * 2, screenHeight, 'room6').setOrigin(0);
         this.add.image(screenWidth * 2, screenHeight * 2, 'room9').setOrigin(0);
+        */
 
-        this.player = this.physics.add.sprite(centerX, centerY, 'cube');
+        this.player = this.physics.add.sprite(7*tileSize, 16*tileSize, 'cube');
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
         this.player.setTint(0xF73D6E);
@@ -106,7 +119,7 @@ playScene
 
     update() {
 
-        console.log(this.player.velocityX);
+        //console.log(this.player.velocityX);
 
         // movement keys
         this.player.setVelocity(0);
@@ -144,8 +157,9 @@ playScene
             
         }
         
-
+        
         // camera panning logic
+        /*
         // col 1
         if (this.player.x <= screenWidth) {
             // row 1 (room1)
@@ -191,6 +205,7 @@ playScene
                 this.cameras.main.centerOn(screenWidth * 15 / 6, screenHeight * 15 / 6);
             }
         }
+        */
         
     }
     wake(input, scene) {
