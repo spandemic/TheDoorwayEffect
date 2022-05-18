@@ -1,4 +1,4 @@
-class Items extends Phaser.Physics.Arcade.Sprite {
+class Fakes extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, itemNum) {
         super(scene, x, y).setOrigin(0.5);
 
@@ -9,10 +9,10 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.setImmovable(true);
         this.body.setAllowGravity(false);
         this.setDepth(9);
-        this.setTint(0x00FF00);
+        this.setTint(0xFF0000);
         
         this.itemNum = itemNum;
-        this.realItem = true;
+        this.realItem = false;
     }
 
     update () {

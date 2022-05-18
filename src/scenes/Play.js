@@ -65,7 +65,6 @@ class Play extends Phaser.Scene {
         this.livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
         this.kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
-
         this.spawnList = [
             this.hallwaySpawn,
             this.livingSpawn,
@@ -76,14 +75,18 @@ class Play extends Phaser.Scene {
         this.itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
         this.itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
         this.itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
-
+        this.itemKitchen4 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 4");
+        this.itemKitchen5 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 5");
         this.itemKitchenLocations = [
             this.itemKitchen1,
             this.itemKitchen2,
-            this.itemKitchen3
-        ]
+            this.itemKitchen3,
+            this.itemKitchen4,
+            this.itemKitchen5
+        ];
 
         this.neededItems = this.add.group({ runChildUpdate: true });
+        this.realItemLocations = [];
 
         this.player = this.physics.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y, 'cube');
         this.player.setOrigin(0.5);
@@ -104,7 +107,14 @@ class Play extends Phaser.Scene {
 
         this.time.addEvent({
             delay: 100,
-            callback: this.generateItems,
+            callback: this.generateRealItems,
+            callbackScope: this,
+            loop: false       
+        });
+
+        this.time.addEvent({
+            delay: 500,
+            callback: this.generateFakeItems,
             callbackScope: this,
             loop: false       
         });
@@ -179,8 +189,8 @@ class Play extends Phaser.Scene {
     sendFromSpawn() {
         let randomSpawn = this.spawnList[Math.ceil(Math.random() * (this.spawnList.length - 1))];
  
-        this.player.setX(randomSpawn.x);
-        this.player.setY(randomSpawn.y);
+        this.player.setX(this.kitchenSpawn.x);
+        this.player.setY(this.kitchenSpawn.y);
     }
 
     returnToSpawn() {
@@ -188,12 +198,21 @@ class Play extends Phaser.Scene {
         this.player.setY(this.hallwaySpawn.y);
     }
 
-    generateItems() {
+    generateRealItems() {
         this.itemNum += 1;
-        let randomKitchenSpawn = this.itemKitchenLocations[Math.ceil(Math.random() * (this.itemKitchenLocations.length - 1))];
+        let randomKitchenSpawn = this.itemKitchenLocations[Math.floor(Math.random() * (this.itemKitchenLocations.length))];
         let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, this.itemNum);
 
+        this.realKitchenItem = randomKitchenSpawn;
         this.neededItems.add(kitchenItem);
     }
 
+    generateFakeItems() {
+        for (let i = 0; i < this.itemKitchenLocations.length; i++) {
+            if (this.itemKitchenLocations[i] !== this.realKitchenItem) {
+                this.itemNum += 1;
+                let fakeKitchenItem = new Fakes(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, this.itemNum);
+            }
+        }
+    }
 }
