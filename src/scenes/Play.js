@@ -48,8 +48,8 @@ class Play extends Phaser.Scene {
         const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0);
         const returnDoorLayer = map.createLayer("floor/return doorways", tileset, 0, 0);
         const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
-        const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
         const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0);
+        const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
         const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(4);
 
         wallFrameLayer.setCollisionByProperty({ collides: true });
@@ -189,13 +189,13 @@ class Play extends Phaser.Scene {
     sendFromSpawn() {
         let randomSpawn = this.spawnList[Math.ceil(Math.random() * (this.spawnList.length - 1))];
  
-        /*
+        
         this.player.setX(this.kitchenSpawn.x);
         this.player.setY(this.kitchenSpawn.y);
-        */
+        
        
-        this.player.setX(this.bathroomSpawn.x);
-        this.player.setY(this.bathroomSpawn.y);
+        // this.player.setX(this.bathroomSpawn.x);
+        // this.player.setY(this.bathroomSpawn.y);
 
         /*
         this.player.setX(this.livingSpawn.x);
