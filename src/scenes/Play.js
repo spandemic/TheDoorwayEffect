@@ -51,12 +51,14 @@ class Play extends Phaser.Scene {
         const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
         const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0);
         const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
+        const itemListLayer = map.createLayer("collisions/decor/itemList", tileset, 0, 0);
         const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(4);
 
         wallFrameLayer.setCollisionByProperty({ collides: true });
         spawnDoorLayer.setCollisionByProperty({ type: "spawn" });
         returnDoorLayer.setCollisionByProperty({ type: "exit" });
         spawnExitLayer.setCollisionByProperty({ type: "spawn" });
+        itemListLayer.setCollisionByProperty({ collides: true });
 
         // set world bounds for camera and physics
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -141,6 +143,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
+        this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
      
         // bugged
         this.input.once(Phaser.Input.Events.POINTER_DOWN, function () {
@@ -223,6 +226,10 @@ class Play extends Phaser.Scene {
         this.player.setY(this.hallwaySpawn.y);
     }
 
+    openList() {
+        console.log(this.neededItemNames);
+    }
+
     generateRealItems() {
         this.itemNum += 1;
         let randomKitchenSpawn = this.itemKitchenLocations[Math.floor(Math.random() * (this.itemKitchenLocations.length))];
@@ -234,7 +241,6 @@ class Play extends Phaser.Scene {
         this.itemNumList.push(kitchenItem.itemNum);
         this.realItemNum.push(kitchenItem.itemNum);
         this.neededItemNames.push(randomKitchenItem);
-        console.log(randomKitchenItem);
 
         this.itemList.splice(this.itemList.indexOf(randomKitchenItem), 1);
 
@@ -247,7 +253,6 @@ class Play extends Phaser.Scene {
                 this.itemNum += 1;
                 let randomFakeKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
                 let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', randomFakeKitchenItem, this.itemNum);
-                console.log(randomFakeKitchenItem);
 
                 this.allItems.add(fakeKitchenItem);
                 this.itemNumList.push(fakeKitchenItem.itemNum);
