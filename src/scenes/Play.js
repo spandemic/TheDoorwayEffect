@@ -69,11 +69,11 @@ class Play extends Phaser.Scene {
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
         this.kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
         this.spawnList = [
-            this.hallwaySpawn,
             this.livingSpawn,
             this.bathroomSpawn,
             this.kitchenSpawn
         ];
+        this.lastRoom;
 
         this.itemList = [
             'Binder',
@@ -224,20 +224,16 @@ class Play extends Phaser.Scene {
     }
 
     sendFromSpawn() {
-        let randomSpawn = this.spawnList[Math.ceil(Math.random() * (this.spawnList.length - 1))];
- 
-        
-        this.player.setX(this.kitchenSpawn.x);
-        this.player.setY(this.kitchenSpawn.y);
-        
-       
-        // this.player.setX(this.bathroomSpawn.x);
-        // this.player.setY(this.bathroomSpawn.y);
+        let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
+        if (this.lastRoom != randomSpawn) {
 
-        /*
-        this.player.setX(this.livingSpawn.x);
-        this.player.setY(this.livingSpawn.y);
-        */
+            this.player.setX(randomSpawn.x);
+            this.player.setY(randomSpawn.y);
+            this.lastRoom = randomSpawn;
+            
+        } else {
+            this.sendFromSpawn;
+        }
     }
 
     returnToSpawn() {
