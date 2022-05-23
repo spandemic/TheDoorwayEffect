@@ -102,18 +102,23 @@ class Play extends Phaser.Scene {
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
         this.player.setTint(0xF73D6E);
+        this.playerInventory = [];
 
         this.isWalking = false;
         this.itemNum = 0;
+        this.itemNumList = [];
+        this.realItemNum = [];
 
         this.allItems = this.add.group({ runChildUpdate: true });
         this.hitItemLogic = this.physics.add.overlap(
             this.player,
             this.allItems,
-            (obj1, obj2) => {obj2.destroy();},
+            (obj1, obj2) => {obj2.destroy(); this.playerInventory.push(obj2.itemNum); console.log(obj2.itemNum)},
             null,
             this
         );
+
+        this.neededItemGroup = this.add.group({ runChildUpdate: true });
 
         this.time.addEvent({
             delay: 100,
@@ -135,7 +140,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, wallFrameLayer);
         this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
-        // this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
+        this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
      
         // bugged
         this.input.once(Phaser.Input.Events.POINTER_DOWN, function () {
@@ -224,8 +229,11 @@ class Play extends Phaser.Scene {
         let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, 'real', this.itemNum);
 
         this.allItems.add(kitchenItem);
+        this.neededItemGroup.add(kitchenItem);
+        this.itemNumList.push(kitchenItem.itemNum);
+        this.realItemNum.push(kitchenItem.itemNum);
+
         this.realKitchenItem = randomKitchenSpawn;
-        this.neededItemNames.push(randomKitchenSpawn.name);
     }
 
     generateFakeItems() {
@@ -234,16 +242,28 @@ class Play extends Phaser.Scene {
                 this.itemNum += 1;
                 let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', this.itemNum);
                 this.allItems.add(fakeKitchenItem);
-                this.allItemNames.push(fakeKitchenItem.name);
+                this.itemNumList.push(fakeKitchenItem.itemNum);
             }
         }
     }
 
-    // gameEnd() {
-    //     for (let i = 0; i < this.allItemNames.length; i++) {
-    //         for (let k = 0; k < this.neededItemNames.length; k++) {
-    //             if 
-    //         }
-    //     }
-    // }
+    collectedItem(obj1, obj2) {
+        console.log(obj2.itemNum);
+    }
+
+    gameEnd() {
+        let itemsGot = 0;
+        for (let i = 0; i < this.playerInventory.length; i++) {
+            for (let k = 0; k < this.realItemNum.length; k++) {
+                if (this.realItemNum[k] == this.playerInventory[i]) {
+                    itemsGot += 1;
+                }
+            }   
+        }
+        if (itemsGot > 0) {
+            console.log('winner');
+        } else {
+            console.log('loser');
+        }
+    }   
 }
