@@ -8,9 +8,9 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.setImmovable(true);
         this.body.setAllowGravity(false);
         this.setDepth(9);
-        
-        
-        this.itemNum = itemNum;
+        this.itemNum = itemNum;     // the item's ID
+
+        // BETA
         if (status === 'real') {
             if (texture === 'Binder'){
                 this.setTint(0x0000FF);

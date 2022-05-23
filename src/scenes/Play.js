@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
         keyTAB= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        // sound
         this.walkSound = this.sound.add('walk', {
             mute: true,
             volume: 0.4,
@@ -60,10 +61,7 @@ class Play extends Phaser.Scene {
         spawnExitLayer.setCollisionByProperty({ type: "spawn" });
         itemListLayer.setCollisionByProperty({ collides: true });
 
-        // set world bounds for camera and physics
-        // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
+        // locations where the player will spawn when entering the respective room
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
         this.livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
@@ -73,8 +71,8 @@ class Play extends Phaser.Scene {
             this.bathroomSpawn,
             this.kitchenSpawn
         ];
-        this.lastRoom;
 
+        // the actual visual items
         this.itemList = [
             'Binder',
             'Notebook',
@@ -91,17 +89,16 @@ class Play extends Phaser.Scene {
         let itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
         let itemKitchen4 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 4");
         let itemKitchen5 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 5");
- 
         let itemBathroom1 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 1");
         let itemBathroom2 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 2");
         let itemBathroom3 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 3");
-
         let itemLiving1 = map.findObject("item spawnpoints", obj => obj.name === "living item 1");
         let itemLiving2 = map.findObject("item spawnpoints", obj => obj.name === "living item 2");
         let itemLiving3 = map.findObject("item spawnpoints", obj => obj.name === "living item 3");
         let itemLiving4 = map.findObject("item spawnpoints", obj => obj.name === "living item 4");
         let itemLiving5 = map.findObject("item spawnpoints", obj => obj.name === "living item 5");
 
+        // list of item spawn locations to iterate through
         this.itemLocations = [
             itemKitchen1,
             itemKitchen2,
@@ -118,38 +115,44 @@ class Play extends Phaser.Scene {
             itemLiving5
         ];
 
-        this.neededItemNames = [];
-        this.allItemNames = [];
-
+        // player declaration variables
         this.player = this.physics.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y, 'cube');
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
         this.player.setTint(0xF73D6E);
-        this.playerInventory = [];
+        this.playerInventory = [];      // collected itemNum goes here
 
+        // misc variables
         this.isWalking = false;
         this.itemNum = 0;
-        this.itemNumList = [];
-        this.realItemNum = [];
+        this.realItemNum = [];          // list of the itemNum of all real items
+        this.lastRoom;                  // declared variable to store the last room the player was in
+        this.neededItemNames = [];      // the list of names of items that the player needs to pick up
 
-        this.allItems = this.add.group({ runChildUpdate: true });
+        // camera and world methods
+        // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.player.setCollideWorldBounds(true);
+        this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
+
+        // collision logic for collecting items
+        this.allItems = this.add.group({ runChildUpdate: true });       // this.allItems stores the individually created Phaser.Physics.Sprites
         this.hitItemLogic = this.physics.add.overlap(
             this.player,
             this.allItems,
-            (obj1, obj2) => {obj2.destroy(); this.playerInventory.push(obj2.itemNum); console.log(obj2.itemNum)},
+            (obj1, obj2) => {obj2.destroy(); this.playerInventory.push(obj2.itemNum);},     // destroys the collected item and adds its itemNum to the playerInventory
             null,
             this
         );
-
-        this.neededItemGroup = this.add.group({ runChildUpdate: true });
-
+        
+        // event that generates all the real items
         this.time.addEvent({
             delay: 100,
             callback: this.generateRealItems,
             callbackScope: this,
             loop: false   
         });
-
+        // event that generates all the fake items
         this.time.addEvent({
             delay: 500,
             callback: this.generateFakeItems,
@@ -157,16 +160,14 @@ class Play extends Phaser.Scene {
             loop: false       
         });
 
-        this.player.setCollideWorldBounds(true);
-        this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
-
-        // this.physics.add.collider(this.player, wallFrameLayer);
+        // collision logic for all layers with collide tiles
+        this.physics.add.collider(this.player, wallFrameLayer);
         this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
         this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
      
-        // bugged
+        // bugged inventory screen
         this.input.once(Phaser.Input.Events.POINTER_DOWN, function () {
 
             this.scene.switch('sceneB');
@@ -224,70 +225,84 @@ class Play extends Phaser.Scene {
     }
 
     sendFromSpawn() {
+        // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
-        if (this.lastRoom != randomSpawn) {
 
+        // makes sure the player cannot enter the same room twice in a row
+        if (this.lastRoom != randomSpawn) {
             this.player.setX(randomSpawn.x);
             this.player.setY(randomSpawn.y);
             this.lastRoom = randomSpawn;
-            
         } else {
-            this.sendFromSpawn;
+            this.sendFromSpawn;     // actually using recursion omg
         }
     }
 
     returnToSpawn() {
+        // returns player to hallway
         this.player.setX(this.hallwaySpawn.x);
         this.player.setY(this.hallwaySpawn.y);
     }
 
     openList() {
+        // list of needed items at start of game
         console.log(this.neededItemNames);
     }
 
     generateRealItems() {
+        // generates 7 needed items that the player will collect
         for (let i = 0; i < 7; i++) {
-            this.itemNum += 1;
+            this.itemNum += 1;          // itemNum is the ID of the items generated
             
+            // randomly selects a item and spawn location
             let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
             let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+            
+            // generates the item, status = real
             let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum);
 
-            this.allItems.add(realItem);
+            this.allItems.add(realItem);                // add to physics collider
+ 
+            this.realItemNum.push(realItem.itemNum);    // adds itemNum of a real item to the list
+            this.neededItemNames.push(randomItem);      // adds the item's name to the list the player can see
 
-            this.itemNumList.push(realItem.itemNum);
-            this.realItemNum.push(realItem.itemNum);
-            this.neededItemNames.push(randomItem);
-
-            this.itemList.splice(this.itemList.indexOf(randomItem), 1);
+            this.itemList.splice(this.itemList.indexOf(randomItem), 1);                 // removes both the item and the spawn location from their respective lists
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
         }
     }
 
     generateFakeItems() {
+        // generates fake items for all spawns that do not have a real item
         for (let i = 0; i < this.itemLocations.length; i++) {
+            this.itemNum += 1;      // ID of item generated
 
-            this.itemNum += 1;
-            let randomFakeKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-            let fakeKitchenItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeKitchenItem, this.itemNum);
+            // selects and generates a random item
+            let randomFakeItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum);
 
-            this.allItems.add(fakeKitchenItem);
-            this.itemNumList.push(fakeKitchenItem.itemNum);
-            this.itemList.splice(this.itemList.indexOf(randomFakeKitchenItem), 1);
+            this.allItems.add(fakeItem);        // adds to physics collider
+
+            this.itemList.splice(this.itemList.indexOf(randomFakeItem), 1);     // removes the item from spawn pool
             }
         
     }
 
     gameEnd() {
-        let itemsGot = 0;
+        let itemsGot = 0;       // how many items the player got
+
+        // checks through player inventory
         for (let i = 0; i < this.playerInventory.length; i++) {
+            // checks through the real item list
             for (let k = 0; k < this.realItemNum.length; k++) {
+                // compares the itemNum of the two arrays
                 if (this.realItemNum[k] == this.playerInventory[i]) {
-                    itemsGot += 1;
+                    itemsGot += 1;      // for each item the player picked up that was in the real item list, they get a point
                 }
             }   
         }
+        // checks how many items the player collected
         if (itemsGot > 6) {
+            // BETA 
             console.log('winner');
         } else {
             console.log('loser');
