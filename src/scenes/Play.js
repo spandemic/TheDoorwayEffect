@@ -81,20 +81,41 @@ class Play extends Phaser.Scene {
             'Globe',
             'Shoes',
             'Printing Paper',
-            'Flashcards'
+            'Flashcards',
+            'Laptop'
         ]
 
+        // item spawn locations
         let itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
         let itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
         let itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
         let itemKitchen4 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 4");
         let itemKitchen5 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 5");
-        this.itemKitchenLocations = [
+ 
+        let itemBathroom1 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 1");
+        let itemBathroom2 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 2");
+        let itemBathroom3 = map.findObject("item spawnpoints", obj => obj.name === "bathroom item 3");
+
+        let itemLiving1 = map.findObject("item spawnpoints", obj => obj.name === "living item 1");
+        let itemLiving2 = map.findObject("item spawnpoints", obj => obj.name === "living item 2");
+        let itemLiving3 = map.findObject("item spawnpoints", obj => obj.name === "living item 3");
+        let itemLiving4 = map.findObject("item spawnpoints", obj => obj.name === "living item 4");
+        let itemLiving5 = map.findObject("item spawnpoints", obj => obj.name === "living item 5");
+
+        this.itemLocations = [
             itemKitchen1,
             itemKitchen2,
             itemKitchen3,
             itemKitchen4,
-            itemKitchen5
+            itemKitchen5,
+            itemBathroom1,
+            itemBathroom2,
+            itemBathroom3,
+            itemLiving1,
+            itemLiving2,
+            itemLiving3,
+            itemLiving4,
+            itemLiving5
         ];
 
         this.neededItemNames = [];
@@ -126,7 +147,7 @@ class Play extends Phaser.Scene {
             delay: 100,
             callback: this.generateRealItems,
             callbackScope: this,
-            loop: false       
+            loop: false   
         });
 
         this.time.addEvent({
@@ -139,7 +160,7 @@ class Play extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
 
-        this.physics.add.collider(this.player, wallFrameLayer);
+        // this.physics.add.collider(this.player, wallFrameLayer);
         this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
@@ -160,8 +181,6 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-
-        //console.log(this.player.velocityX);
 
         // movement keys
         this.player.setVelocity(0);
@@ -231,34 +250,36 @@ class Play extends Phaser.Scene {
     }
 
     generateRealItems() {
-        this.itemNum += 1;
-        let randomKitchenSpawn = this.itemKitchenLocations[Math.floor(Math.random() * (this.itemKitchenLocations.length))];
-        let randomKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, 'real', randomKitchenItem, this.itemNum);
+        for (let i = 0; i < 7; i++) {
+            this.itemNum += 1;
+            
+            let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
+            let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum);
 
-        this.allItems.add(kitchenItem);
+            this.allItems.add(realItem);
 
-        this.itemNumList.push(kitchenItem.itemNum);
-        this.realItemNum.push(kitchenItem.itemNum);
-        this.neededItemNames.push(randomKitchenItem);
+            this.itemNumList.push(realItem.itemNum);
+            this.realItemNum.push(realItem.itemNum);
+            this.neededItemNames.push(randomItem);
 
-        this.itemList.splice(this.itemList.indexOf(randomKitchenItem), 1);
-
-        this.realKitchenItem = randomKitchenSpawn;
+            this.itemList.splice(this.itemList.indexOf(randomItem), 1);
+            this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
+        }
     }
 
     generateFakeItems() {
-        for (let i = 0; i < this.itemKitchenLocations.length; i++) {
-            if (this.itemKitchenLocations[i] !== this.realKitchenItem) {
-                this.itemNum += 1;
-                let randomFakeKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-                let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', randomFakeKitchenItem, this.itemNum);
+        for (let i = 0; i < this.itemLocations.length; i++) {
 
-                this.allItems.add(fakeKitchenItem);
-                this.itemNumList.push(fakeKitchenItem.itemNum);
-                this.itemList.splice(this.itemList.indexOf(randomFakeKitchenItem), 1);
+            this.itemNum += 1;
+            let randomFakeKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+            let fakeKitchenItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeKitchenItem, this.itemNum);
+
+            this.allItems.add(fakeKitchenItem);
+            this.itemNumList.push(fakeKitchenItem.itemNum);
+            this.itemList.splice(this.itemList.indexOf(randomFakeKitchenItem), 1);
             }
-        }
+        
     }
 
     gameEnd() {
@@ -270,7 +291,7 @@ class Play extends Phaser.Scene {
                 }
             }   
         }
-        if (itemsGot > 0) {
+        if (itemsGot > 6) {
             console.log('winner');
         } else {
             console.log('loser');
