@@ -73,14 +73,14 @@ class Play extends Phaser.Scene {
             this.kitchenSpawn
         ];
 
-        // this.itemList = [
-        //     'Binder',
-        //     'Notebook',
-        //     'Globe',
-        //     'Shoes',
-        //     'Printing Paper',
-        //     'Flashcards'
-        // ]
+        this.itemList = [
+            'Binder',
+            'Notebook',
+            'Globe',
+            'Shoes',
+            'Printing Paper',
+            'Flashcards'
+        ]
 
         let itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
         let itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
@@ -226,12 +226,17 @@ class Play extends Phaser.Scene {
     generateRealItems() {
         this.itemNum += 1;
         let randomKitchenSpawn = this.itemKitchenLocations[Math.floor(Math.random() * (this.itemKitchenLocations.length))];
-        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, 'real', this.itemNum);
+        let randomKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, 'real', randomKitchenItem, this.itemNum);
 
         this.allItems.add(kitchenItem);
-        this.neededItemGroup.add(kitchenItem);
+
         this.itemNumList.push(kitchenItem.itemNum);
         this.realItemNum.push(kitchenItem.itemNum);
+        this.neededItemNames.push(randomKitchenItem);
+        console.log(randomKitchenItem);
+
+        this.itemList.splice(this.itemList.indexOf(randomKitchenItem), 1);
 
         this.realKitchenItem = randomKitchenSpawn;
     }
@@ -240,15 +245,15 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < this.itemKitchenLocations.length; i++) {
             if (this.itemKitchenLocations[i] !== this.realKitchenItem) {
                 this.itemNum += 1;
-                let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', this.itemNum);
+                let randomFakeKitchenItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
+                let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', randomFakeKitchenItem, this.itemNum);
+                console.log(randomFakeKitchenItem);
+
                 this.allItems.add(fakeKitchenItem);
                 this.itemNumList.push(fakeKitchenItem.itemNum);
+                this.itemList.splice(this.itemList.indexOf(randomFakeKitchenItem), 1);
             }
         }
-    }
-
-    collectedItem(obj1, obj2) {
-        console.log(obj2.itemNum);
     }
 
     gameEnd() {
