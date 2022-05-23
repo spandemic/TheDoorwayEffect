@@ -46,6 +46,7 @@ class Play extends Phaser.Scene {
         const floorLayer = map.createLayer("floor/floor", tileset, 0, 0);
         const rugLayer = map.createLayer("floor/rug", tileset, 0, 0);
         const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0);
+        const spawnExitLayer = map.createLayer("floor/spawn exit", tileset, 0, 0);
         const returnDoorLayer = map.createLayer("floor/return doorways", tileset, 0, 0);
         const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
         const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0,0);
@@ -55,7 +56,7 @@ class Play extends Phaser.Scene {
         wallFrameLayer.setCollisionByProperty({ collides: true });
         spawnDoorLayer.setCollisionByProperty({ type: "spawn" });
         returnDoorLayer.setCollisionByProperty({ type: "exit" });
-
+        spawnExitLayer.setCollisionByProperty({ type: "spawn" });
 
         // set world bounds for camera and physics
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -72,21 +73,30 @@ class Play extends Phaser.Scene {
             this.kitchenSpawn
         ];
 
-        this.itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
-        this.itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
-        this.itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
-        this.itemKitchen4 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 4");
-        this.itemKitchen5 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 5");
+        // this.itemList = [
+        //     'Binder',
+        //     'Notebook',
+        //     'Globe',
+        //     'Shoes',
+        //     'Printing Paper',
+        //     'Flashcards'
+        // ]
+
+        let itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
+        let itemKitchen2 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 2");
+        let itemKitchen3 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 3");
+        let itemKitchen4 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 4");
+        let itemKitchen5 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 5");
         this.itemKitchenLocations = [
-            this.itemKitchen1,
-            this.itemKitchen2,
-            this.itemKitchen3,
-            this.itemKitchen4,
-            this.itemKitchen5
+            itemKitchen1,
+            itemKitchen2,
+            itemKitchen3,
+            itemKitchen4,
+            itemKitchen5
         ];
 
-        this.neededItems = this.add.group({ runChildUpdate: true });
-        this.realItemLocations = [];
+        this.neededItemNames = [];
+        this.allItemNames = [];
 
         this.player = this.physics.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y, 'cube');
         this.player.setOrigin(0.5);
@@ -96,14 +106,14 @@ class Play extends Phaser.Scene {
         this.isWalking = false;
         this.itemNum = 0;
 
-        // this.itemGroup = this.add.group({ runChildUpdate: true });
-        // this.hitItemLogic = this.physics.add.overlap(
-        //     this.player,
-        //     this.itemGroup,
-        //     this.collectItem,
-        //     null,
-        //     this
-        // );
+        this.allItems = this.add.group({ runChildUpdate: true });
+        this.hitItemLogic = this.physics.add.overlap(
+            this.player,
+            this.allItems,
+            (obj1, obj2) => {obj2.destroy();},
+            null,
+            this
+        );
 
         this.time.addEvent({
             delay: 100,
@@ -125,7 +135,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, wallFrameLayer);
         this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
-        
+        // this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
      
         // bugged
         this.input.once(Phaser.Input.Events.POINTER_DOWN, function () {
@@ -211,18 +221,29 @@ class Play extends Phaser.Scene {
     generateRealItems() {
         this.itemNum += 1;
         let randomKitchenSpawn = this.itemKitchenLocations[Math.floor(Math.random() * (this.itemKitchenLocations.length))];
-        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, this.itemNum);
+        let kitchenItem = new Items(this, randomKitchenSpawn.x, randomKitchenSpawn.y, 'real', this.itemNum);
 
+        this.allItems.add(kitchenItem);
         this.realKitchenItem = randomKitchenSpawn;
-        this.neededItems.add(kitchenItem);
+        this.neededItemNames.push(randomKitchenSpawn.name);
     }
 
     generateFakeItems() {
         for (let i = 0; i < this.itemKitchenLocations.length; i++) {
             if (this.itemKitchenLocations[i] !== this.realKitchenItem) {
                 this.itemNum += 1;
-                let fakeKitchenItem = new Fakes(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, this.itemNum);
+                let fakeKitchenItem = new Items(this, this.itemKitchenLocations[i].x, this.itemKitchenLocations[i].y, 'fake', this.itemNum);
+                this.allItems.add(fakeKitchenItem);
+                this.allItemNames.push(fakeKitchenItem.name);
             }
         }
     }
+
+    // gameEnd() {
+    //     for (let i = 0; i < this.allItemNames.length; i++) {
+    //         for (let k = 0; k < this.neededItemNames.length; k++) {
+    //             if 
+    //         }
+    //     }
+    // }
 }
