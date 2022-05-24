@@ -23,6 +23,8 @@ class Load extends Phaser.Scene {
 
         this.load.tilemapTiledJSON("map", "tilemap_64px.json");
         this.load.image("64_tiles", "tileset-64.png");
+
+        this.load.atlas("lethe", "atlas/lethe-atlas.png", "atlas/lethe-atlas.json")
     }
 
     create() {

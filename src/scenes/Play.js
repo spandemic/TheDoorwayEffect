@@ -15,12 +15,6 @@ class Play extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // sound
-        this.walkSound = this.sound.add('walk', {
-            mute: true,
-            volume: 0.4,
-            rate: 1.5,
-            loop: true
-        });
         this.openDoorSound = this.sound.add('openDoor', {
             mute: false,
             volume: 0.5,
@@ -116,11 +110,13 @@ class Play extends Phaser.Scene {
         ];
 
         // player declaration variables
-        this.player = this.physics.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y, 'cube');
+        this.player = new Player(this, this.hallwaySpawn.x, this.hallwaySpawn.y, "lethe", "front_1");
         this.player.setOrigin(0.5);
         this.player.setDepth(20);
-        this.player.setTint(0xF73D6E);
+        // this.player.setTint(0xF73D6E);
         this.playerInventory = [];      // collected itemNum goes here
+        this.playerState = null;
+
 
         // misc variables
         this.isWalking = false;
@@ -182,38 +178,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-
-        // movement keys
-        this.player.setVelocity(0);
-        this.player.setState(0);        // 0 for still, 1 for moving
-        if (keyA.isDown) {
-            this.player.setVelocityX(-400);
-            this.player.setState(1);
-        }
-        if (keyD.isDown) {
-            this.player.setVelocityX(400);
-            this.player.setState(1);
-        }
-        if (keyW.isDown) {
-            this.player.setVelocityY(-400);
-            this.player.setState(1);
-        }
-        if (keyS.isDown) {
-            this.player.setVelocityY(400);
-            this.player.setState(1);
-        }
-
-        // walking sound
-        if (this.player.state === 1 && this.isWalking === false){
-            this.walkSound.play();
-            this.isWalking = true;
-        }
-        if (this.player.state === 0) {
-            this.walkSound.stop();
-            this.isWalking = false;
-        } 
-    
-        
+        this.player.update();
     }
 
 
