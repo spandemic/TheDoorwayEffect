@@ -47,11 +47,16 @@ a:hover {
     color: #f9f2e2;
 }
 
+/* code reference: https://github.com/michaellamore/Modded-Rocket-Patrol/blob/main/styles/main.css#L7 
+
+Michael Remorin's Modded Rocket Patrol
+*/
+canvas {
+    border-radius: 25px;
+    border: solid #f9f2e2 20px;
+}
+
 #phaser-game {
     text-align: center;
     align-content: center;
-    border-radius: 10%;
-    border-style: "solid";
-    border-color: #f9f2e2;
-    border-width: 15px;
 }
