@@ -1,5 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nunito:wght@700&display=swap');
+
 html {
     background-color: #32a9a5;
+    scroll-behavior: smooth;
+    text-align: center;
+    align-content: center;
 }
 
 body {
@@ -13,38 +19,31 @@ body {
     padding-bottom: 8.5%;
 }
 
-h1 {
-    text-align: center;
-    font-family: Consolas;
-    color: #f9f2e2;
-    font-size: 45px;
-}
-
 h5 {
-    text-align: center;
-    font-family: Consolas;
+    font-family: "Nunito";
     color: #f9f2e2;
     font-size: 20px;
     font-weight: normal;
 }
 
+img {
+    padding: 0px;
+    margin: 0px;
+}
+
 p {
-    font-family: Consolas;
+    font-family: "Nunito";
     color: #f9f2e2;
-    font-size: 20px;
-    text-align: center;
-    padding: 20%;
+    font-size: 25px;
+    padding: 10%;
     padding-top: 0%;
     padding-bottom: 0%;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 a {
-    color: #f9f2e2;
+    color: #fcc17b;
     text-decoration: none;
-}
-a:hover {
-    color: #f9f2e2;
 }
 
 /* code reference: https://github.com/michaellamore/Modded-Rocket-Patrol/blob/main/styles/main.css#L7 
@@ -57,6 +56,38 @@ canvas {
 }
 
 #phaser-game {
-    text-align: center;
-    align-content: center;
+    padding: 5%;
+    padding-bottom: 15%;
 }
+
+/* Ashley: code reference from a previous project I did */
+ul#navigation-bar {
+    list-style-type: none;
+    margin: 0px;
+    padding: 20px;
+    padding-top: 10px;
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    width: 80%;
+    font-family: "Nunito";
+  }
+  
+  ul#navigation-bar li {
+    display: inline;
+  }
+  
+  ul#navigation-bar a {
+    background-color: #fcc17b;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 20px;
+  }
+  
+  ul#navigation-bar a:hover {
+    color: #32a9a5;
+    font-weight: bold;
+  }

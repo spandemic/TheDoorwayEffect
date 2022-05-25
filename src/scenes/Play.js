@@ -60,10 +60,12 @@ class Play extends Phaser.Scene {
         this.livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
         this.kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
+        this.masterSpawn = map.findObject("spawnpoints", obj => obj.name === "master spawn");
         this.spawnList = [
             this.livingSpawn,
             this.bathroomSpawn,
-            this.kitchenSpawn
+            this.kitchenSpawn,
+            this.masterSpawn
         ];
 
         // the actual visual items
