@@ -9,9 +9,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.direction = "front"
 
         // player hitbox
-        this.body.offset.y = 48;
-        this.body.offset.x = 16;
-        this.body.height = 16;
+        this.body.offset.y = 64;
+        this.body.offset.x = 32;
+        this.body.height = 32;
         this.body.width = 32;
 
         // player animations
