@@ -14,9 +14,9 @@ class Inventory extends Phaser.Scene {
 
     }
     init(data) {
-        //let {playScene}=data;
-        //this.playScene=playScene;
-        //this.inventory =playScene.player.inventory;
+        let {sceneA}=data;
+        this.sceneA=sceneA;
+       
 
     }
     get tilesize() {

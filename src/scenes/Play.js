@@ -37,7 +37,6 @@ class Play extends Phaser.Scene {
         // tilemap
         const map = this.add.tilemap("map", 64, 64, 30, 20);
         const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
-
         const floorLayer = map.createLayer("floor/floor", tileset, 0, 0);
         const rugLayer = map.createLayer("floor/rug", tileset, 0, 0);
         const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0);
@@ -54,6 +53,7 @@ class Play extends Phaser.Scene {
         returnDoorLayer.setCollisionByProperty({ type: "exit" });
         spawnExitLayer.setCollisionByProperty({ type: "spawn" });
         itemListLayer.setCollisionByProperty({ collides: true });
+        wallLayer.setCollisionByProperty({ collides: true });
 
         // locations where the player will spawn when entering the respective room
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
@@ -167,7 +167,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
         this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
-
+        this.physics.add.collider(this.player, tileset[64]);
+       
         // bugged inventory screen
         let test = this.scene;
         keyTAB.on('down', function(event) {
