@@ -132,6 +132,7 @@ class Play extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.player.setCollideWorldBounds(true);
         this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
+        this.cameras.main.setLerp(1, 1);
 
         // collision logic for collecting items
         this.allItems = this.add.group({ runChildUpdate: true }); // this.allItems stores the individually created Phaser.Physics.Sprites
@@ -193,24 +194,45 @@ class Play extends Phaser.Scene {
         }, this);
     }
 
+    fadeTransition() {
+        // camera fade transition
+        this.input.enabled = false;
+        this.cameras.main.fadeOut(300);
+        this.cameras.main.once("camerafadeoutcomplete", () => {
+            this.time.delayedCall(400, () => {
+                this.cameras.main.fadeIn(300);
+                this.input.enabled = true;
+            })
+        })
+    }
+
+    // need a way to find out how to stop the player from moving during a transition
+
     sendFromSpawn() {
         // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
+        this.fadeTransition();
 
         // makes sure the player cannot enter the same room twice in a row
-        if (this.lastRoom != randomSpawn) {
+        this.time.delayedCall(400, () => {
+            if (this.lastRoom != randomSpawn) {
             this.player.setX(randomSpawn.x);
             this.player.setY(randomSpawn.y);
             this.lastRoom = randomSpawn;
-        } else {
-            this.sendFromSpawn; // actually using recursion omg
-        }
+            } else {
+                this.sendFromSpawn; // actually using recursion omg
+            }
+        })
+        
     }
 
     returnToSpawn() {
         // returns player to hallway
-        this.player.setX(this.hallwaySpawn.x);
-        this.player.setY(this.hallwaySpawn.y);
+        this.fadeTransition();
+        this.time.delayedCall(400, () => {
+            this.player.setX(this.hallwaySpawn.x);
+            this.player.setY(this.hallwaySpawn.y);
+        });
     }
 
     openList() {
