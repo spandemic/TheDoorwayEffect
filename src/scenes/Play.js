@@ -56,6 +56,7 @@ class Play extends Phaser.Scene {
         wallLayer.setCollisionByProperty({ collides: true });
 
         // locations where the player will spawn when entering the respective room
+        this.returnHallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Return hallway spawn");
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
         this.livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
@@ -93,6 +94,11 @@ class Play extends Phaser.Scene {
         let itemLiving3 = map.findObject("item spawnpoints", obj => obj.name === "living item 3");
         let itemLiving4 = map.findObject("item spawnpoints", obj => obj.name === "living item 4");
         let itemLiving5 = map.findObject("item spawnpoints", obj => obj.name === "living item 5");
+        let itemMaster1 = map.findObject("item spawnpoints", obj => obj.name === "master item 1");
+        let itemMaster2 = map.findObject("item spawnpoints", obj => obj.name === "master item 2");
+        let itemMaster3 = map.findObject("item spawnpoints", obj => obj.name === "master item 3");
+        let itemMaster4 = map.findObject("item spawnpoints", obj => obj.name === "master item 4");
+        let itemMaster5 = map.findObject("item spawnpoints", obj => obj.name === "master item 5");
 
         // list of item spawn locations to iterate through
         this.itemLocations = [
@@ -108,7 +114,12 @@ class Play extends Phaser.Scene {
             itemLiving2,
             itemLiving3,
             itemLiving4,
-            itemLiving5
+            itemLiving5,
+            itemMaster1,
+            itemMaster2,
+            itemMaster3,
+            itemMaster4,
+            itemMaster5
         ];
 
         // player declaration variables
@@ -239,8 +250,8 @@ class Play extends Phaser.Scene {
         // returns player to hallway
         this.fadeTransition();
         this.time.delayedCall(400, () => {
-            this.player.setX(this.hallwaySpawn.x);
-            this.player.setY(this.hallwaySpawn.y);
+            this.player.setX(this.returnHallwaySpawn.x);
+            this.player.setY(this.returnHallwaySpawn.y);
         });
 
         this.time.delayedCall(

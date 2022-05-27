@@ -3,274 +3,6 @@
  "infinite":false,
  "layers":[
         {
-         "draworder":"topdown",
-         "id":9,
-         "name":"spawnpoints",
-         "objects":[
-                {
-                 "height":0,
-                 "id":11,
-                 "name":"Hallway spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":448,
-                 "y":1024
-                }, 
-                {
-                 "height":0,
-                 "id":12,
-                 "name":"Kitchen spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1216,
-                 "y":448
-                }, 
-                {
-                 "height":0,
-                 "id":17,
-                 "name":"Bathroom spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":704,
-                 "y":1728
-                }, 
-                {
-                 "height":0,
-                 "id":29,
-                 "name":"Living room spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1092,
-                 "y":2552
-                }, 
-                {
-                 "height":0,
-                 "id":70,
-                 "name":"master spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2624,
-                 "y":2624
-                }],
-         "opacity":0,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":19,
-         "name":"item spawnpoints",
-         "objects":[
-                {
-                 "height":0,
-                 "id":51,
-                 "name":"kitchen item 5",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"kitchen"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1180,
-                 "y":536
-                }, 
-                {
-                 "height":0,
-                 "id":55,
-                 "name":"kitchen item 4",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"kitchen"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":724,
-                 "y":240
-                }, 
-                {
-                 "height":0,
-                 "id":54,
-                 "name":"kitchen item 3",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"kitchen"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":404,
-                 "y":324
-                }, 
-                {
-                 "height":0,
-                 "id":52,
-                 "name":"kitchen item 2",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"kitchen"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1212,
-                 "y":304
-                }, 
-                {
-                 "height":0,
-                 "id":53,
-                 "name":"kitchen item 1",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"kitchen"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":492,
-                 "y":452
-                }, 
-                {
-                 "height":0,
-                 "id":56,
-                 "name":"bathroom item 1",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":324,
-                 "y":1832
-                }, 
-                {
-                 "height":0,
-                 "id":57,
-                 "name":"bathroom item 2",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":320,
-                 "y":1624
-                }, 
-                {
-                 "height":0,
-                 "id":59,
-                 "name":"bathroom item 3",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":652,
-                 "y":1552
-                }, 
-                {
-                 "height":0,
-                 "id":60,
-                 "name":"living item 1",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":304,
-                 "y":2884
-                }, 
-                {
-                 "height":0,
-                 "id":61,
-                 "name":"living item 2",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":388,
-                 "y":2460
-                }, 
-                {
-                 "height":0,
-                 "id":62,
-                 "name":"living item 3",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":612,
-                 "y":2312
-                }, 
-                {
-                 "height":0,
-                 "id":63,
-                 "name":"living item 4",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1100,
-                 "y":2336
-                }, 
-                {
-                 "height":0,
-                 "id":64,
-                 "name":"living item 5",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1054.66666666667,
-                 "y":2928
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":false,
-         "x":0,
-         "y":0
-        }, 
-        {
          "id":12,
          "layers":[
                 {
@@ -329,7 +61,7 @@
                  "name":"spawn doorways",
                  "opacity":1,
                  "type":"tilelayer",
-                 "visible":false,
+                 "visible":true,
                  "width":50,
                  "x":0,
                  "y":0
@@ -390,7 +122,7 @@
                  "name":"spawn exit",
                  "opacity":1,
                  "type":"tilelayer",
-                 "visible":false,
+                 "visible":true,
                  "width":50,
                  "x":0,
                  "y":0
@@ -578,6 +310,7 @@
                  "x":0,
                  "y":0
                 }],
+         "locked":true,
          "name":"floor",
          "opacity":1,
          "type":"group",
@@ -775,7 +508,7 @@
                          "name":"itemList",
                          "opacity":1,
                          "type":"tilelayer",
-                         "visible":false,
+                         "visible":true,
                          "width":50,
                          "x":0,
                          "y":0
@@ -921,15 +654,357 @@
                  "x":0,
                  "y":0
                 }],
+         "locked":true,
          "name":"collisions",
          "opacity":1,
          "type":"group",
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":19,
+         "name":"item spawnpoints",
+         "objects":[
+                {
+                 "height":0,
+                 "id":51,
+                 "name":"kitchen item 5",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"kitchen"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1246.66666666667,
+                 "y":562.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":55,
+                 "name":"kitchen item 4",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"kitchen"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":754.666666666667,
+                 "y":220
+                }, 
+                {
+                 "height":0,
+                 "id":54,
+                 "name":"kitchen item 3",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"kitchen"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":338.666666666667,
+                 "y":212
+                }, 
+                {
+                 "height":0,
+                 "id":52,
+                 "name":"kitchen item 2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"kitchen"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1094.66666666667,
+                 "y":193.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"kitchen item 1",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"kitchen"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":474.666666666667,
+                 "y":421.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":56,
+                 "name":"bathroom item 1",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":352,
+                 "y":1861.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":57,
+                 "name":"bathroom item 2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":414.666666666667,
+                 "y":1556
+                }, 
+                {
+                 "height":0,
+                 "id":59,
+                 "name":"bathroom item 3",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":670.666666666667,
+                 "y":1537.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":60,
+                 "name":"living item 1",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":273.333,
+                 "y":2830.67
+                }, 
+                {
+                 "height":0,
+                 "id":61,
+                 "name":"living item 2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":408.000333333333,
+                 "y":2523.99666666667
+                }, 
+                {
+                 "height":0,
+                 "id":62,
+                 "name":"living item 3",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":799.999666666667,
+                 "y":2246.67
+                }, 
+                {
+                 "height":0,
+                 "id":63,
+                 "name":"living item 4",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1025.33333333333,
+                 "y":2325.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":64,
+                 "name":"living item 5",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1120.00333333333,
+                 "y":2889.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":73,
+                 "name":"master item 1",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1888.00333333333,
+                 "y":2446.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":74,
+                 "name":"master item 2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1952.00333333333,
+                 "y":2930.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":75,
+                 "name":"master item 3",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2466.67,
+                 "y":2834.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":76,
+                 "name":"master item 4",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2142.67,
+                 "y":2557.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":77,
+                 "name":"master item 5",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2594.67,
+                 "y":2380
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "locked":true,
+         "name":"spawnpoints",
+         "objects":[
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"Return hallway spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":301.666666666667,
+                 "y":1042
+                }, 
+                {
+                 "height":0,
+                 "id":71,
+                 "name":"Hallway spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":900,
+                 "y":1075
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"Kitchen spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1233.33333333333,
+                 "y":450.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"Bathroom spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":724,
+                 "y":1733.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":29,
+                 "name":"Living room spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1100,
+                 "y":2565.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":70,
+                 "name":"master spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2632,
+                 "y":2633.33333333333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":71,
+ "nextobjectid":78,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.4",

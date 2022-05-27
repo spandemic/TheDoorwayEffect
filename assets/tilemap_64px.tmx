@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="25" nextobjectid="71">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="25" nextobjectid="78">
+ <editorsettings>
+  <export target="tilemap_64px.tmj" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="doorway_effect_64_tileset" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="tileset-64.png" width="1024" height="1024"/>
   <tile id="0">
@@ -108,80 +111,7 @@
    </properties>
   </tile>
  </tileset>
- <objectgroup id="9" name="spawnpoints" opacity="0">
-  <object id="11" name="Hallway spawn" x="448" y="1024">
-   <point/>
-  </object>
-  <object id="12" name="Kitchen spawn" x="1216" y="448">
-   <point/>
-  </object>
-  <object id="17" name="Bathroom spawn" x="704" y="1728">
-   <point/>
-  </object>
-  <object id="29" name="Living room spawn" x="1092" y="2552">
-   <point/>
-  </object>
-  <object id="70" name="master spawn" x="2624" y="2624">
-   <point/>
-  </object>
- </objectgroup>
- <objectgroup id="19" name="item spawnpoints">
-  <object id="51" name="kitchen item 5" x="1180" y="536">
-   <properties>
-    <property name="type" value="kitchen"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="55" name="kitchen item 4" x="724" y="240">
-   <properties>
-    <property name="type" value="kitchen"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="54" name="kitchen item 3" x="404" y="324">
-   <properties>
-    <property name="type" value="kitchen"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="52" name="kitchen item 2" x="1212" y="304">
-   <properties>
-    <property name="type" value="kitchen"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="53" name="kitchen item 1" x="492" y="452">
-   <properties>
-    <property name="type" value="kitchen"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="56" name="bathroom item 1" x="324" y="1832">
-   <point/>
-  </object>
-  <object id="57" name="bathroom item 2" x="320" y="1624">
-   <point/>
-  </object>
-  <object id="59" name="bathroom item 3" x="652" y="1552">
-   <point/>
-  </object>
-  <object id="60" name="living item 1" x="285.333" y="2822.67">
-   <point/>
-  </object>
-  <object id="61" name="living item 2" x="410.667" y="2521.33">
-   <point/>
-  </object>
-  <object id="62" name="living item 3" x="673.333" y="2350.67">
-   <point/>
-  </object>
-  <object id="63" name="living item 4" x="1088" y="2432">
-   <point/>
-  </object>
-  <object id="64" name="living item 5" x="1054.67" y="2928">
-   <point/>
-  </object>
- </objectgroup>
- <group id="12" name="floor">
+ <group id="12" name="floor" locked="1">
   <layer id="17" name="spawn doorways" width="50" height="50">
    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -453,7 +383,7 @@
 </data>
   </layer>
  </group>
- <group id="6" name="collisions">
+ <group id="6" name="collisions" locked="1">
   <layer id="5" name="walls" width="50" height="50">
    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -736,4 +666,95 @@
 </data>
   </layer>
  </group>
+ <objectgroup id="19" name="item spawnpoints">
+  <object id="51" name="kitchen item 5" x="1246.67" y="562.667">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="55" name="kitchen item 4" x="754.667" y="220">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="54" name="kitchen item 3" x="338.667" y="212">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="52" name="kitchen item 2" x="1094.67" y="193.333">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="53" name="kitchen item 1" x="474.667" y="421.333">
+   <properties>
+    <property name="type" value="kitchen"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="56" name="bathroom item 1" x="352" y="1861.33">
+   <point/>
+  </object>
+  <object id="57" name="bathroom item 2" x="414.667" y="1556">
+   <point/>
+  </object>
+  <object id="59" name="bathroom item 3" x="670.667" y="1537.33">
+   <point/>
+  </object>
+  <object id="60" name="living item 1" x="273.333" y="2830.67">
+   <point/>
+  </object>
+  <object id="61" name="living item 2" x="408" y="2524">
+   <point/>
+  </object>
+  <object id="62" name="living item 3" x="800" y="2246.67">
+   <point/>
+  </object>
+  <object id="63" name="living item 4" x="1025.33" y="2325.33">
+   <point/>
+  </object>
+  <object id="64" name="living item 5" x="1120" y="2889.33">
+   <point/>
+  </object>
+  <object id="73" name="master item 1" x="1888" y="2446.67">
+   <point/>
+  </object>
+  <object id="74" name="master item 2" x="1952" y="2930.67">
+   <point/>
+  </object>
+  <object id="75" name="master item 3" x="2466.67" y="2834.67">
+   <point/>
+  </object>
+  <object id="76" name="master item 4" x="2142.67" y="2557.33">
+   <point/>
+  </object>
+  <object id="77" name="master item 5" x="2594.67" y="2380">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="spawnpoints" locked="1">
+  <object id="11" name="Return hallway spawn" x="301.667" y="1042">
+   <point/>
+  </object>
+  <object id="71" name="Hallway spawn" x="900" y="1075">
+   <point/>
+  </object>
+  <object id="12" name="Kitchen spawn" x="1233.33" y="450.667">
+   <point/>
+  </object>
+  <object id="17" name="Bathroom spawn" x="724" y="1733.33">
+   <point/>
+  </object>
+  <object id="29" name="Living room spawn" x="1100" y="2565.33">
+   <point/>
+  </object>
+  <object id="70" name="master spawn" x="2632" y="2633.33">
+   <point/>
+  </object>
+ </objectgroup>
 </map>
