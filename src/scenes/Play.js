@@ -224,7 +224,7 @@ class Play extends Phaser.Scene {
             this.lastRoom = randomSpawn; 
             });
         } else {
-            this.sendFromSpawn; // actually using recursion omg
+            this.sendFromSpawn(); // actually using recursion omg
         }
 
         this.time.delayedCall(
