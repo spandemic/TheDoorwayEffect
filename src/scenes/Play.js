@@ -185,24 +185,12 @@ class Play extends Phaser.Scene {
             test.switch('sceneB');
         })
 
-        this.events.on(Phaser.Scenes.Events.WAKE, function() {
-            this.wake(this.input, this.scene);
-        }, this);
-
-
     }
 
     update() {
         this.player.update();
     }
 
-
-    wake(input, scene) {
-        input.once(Phaser.Input.Events.POINTER_DOWN, function() {
-            scene.switch('sceneB');
-
-        }, this);
-    }
 
     fadeTransition() {
         // camera fade transition
@@ -261,11 +249,12 @@ class Play extends Phaser.Scene {
 
     openList() {
         this.listPhysics.active = false;
+        this.player.walkSound.mute = true;
         // list of needed items at start of game
         this.scene.switch('ItemList');
         this.time.delayedCall(
             500,
-            () => {this.listPhysics.active = true;}
+            () => {this.listPhysics.active = true; this.player.walkSound.mute = false;}
         );
     }
 
