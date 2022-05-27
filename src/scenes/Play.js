@@ -135,7 +135,6 @@ class Play extends Phaser.Scene {
         this.itemNum = 0;
         this.realItemNum = []; // list of the itemNum of all real items
         this.lastRoom; // declared variable to store the last room the player was in
-        this.neededItemNames = []; // the list of names of items that the player needs to pick up
 
         // camera and world methods
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -177,7 +176,7 @@ class Play extends Phaser.Scene {
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
-        this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
+        this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         this.physics.add.collider(this.player, tileset[64]);
        
         // bugged inventory screen
@@ -261,8 +260,13 @@ class Play extends Phaser.Scene {
     }
 
     openList() {
+        this.listPhysics.active = false;
         // list of needed items at start of game
-        console.log(this.neededItemNames);
+        this.scene.switch('ItemList');
+        this.time.delayedCall(
+            500,
+            () => {this.listPhysics.active = true;}
+        );
     }
 
     generateRealItems() {
@@ -280,7 +284,7 @@ class Play extends Phaser.Scene {
             this.allItems.add(realItem); // add to physics collider
 
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
-            this.neededItemNames.push(randomItem); // adds the item's name to the list the player can see
+            neededItems.push(randomItem); // adds the item's name to the list the player can see
 
             this.itemList.splice(this.itemList.indexOf(randomItem), 1); // removes both the item and the spawn location from their respective lists
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
