@@ -14,6 +14,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.height = 32;
         this.body.width = 32;
 
+        this.isWalking = false;
+
         // player animations
         this.anims.create({
             key: "front_idle",

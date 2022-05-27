@@ -121,7 +121,6 @@ class Play extends Phaser.Scene {
 
 
         // misc variables
-        this.isWalking = false;
         this.itemNum = 0;
         this.realItemNum = []; // list of the itemNum of all real items
         this.lastRoom; // declared variable to store the last room the player was in
@@ -164,8 +163,8 @@ class Play extends Phaser.Scene {
 
         // collision logic for all layers with collide tiles
         this.physics.add.collider(this.player, wallFrameLayer);
-        this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
-        this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
+        this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
+        this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
         this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         this.physics.add.collider(this.player, tileset[64]);
@@ -210,30 +209,44 @@ class Play extends Phaser.Scene {
     // need a way to find out how to stop the player from moving during a transition
 
     sendFromSpawn() {
+        // disables constant colision updates from Phaser
+        this.sendPhysics.active = false;
+
         // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
         this.fadeTransition();
 
         // makes sure the player cannot enter the same room twice in a row
-        this.time.delayedCall(400, () => {
-            if (this.lastRoom != randomSpawn) {
+        if (this.lastRoom != randomSpawn) {
+            this.time.delayedCall(400, () => {
             this.player.setX(randomSpawn.x);
             this.player.setY(randomSpawn.y);
-            this.lastRoom = randomSpawn;
-            } else {
-                this.sendFromSpawn; // actually using recursion omg
-            }
-        })
+            this.lastRoom = randomSpawn; 
+            });
+        } else {
+            this.sendFromSpawn; // actually using recursion omg
+        }
+
+        this.time.delayedCall(
+            1000,
+            () => {this.sendPhysics.active = true}
+        );
         
     }
 
     returnToSpawn() {
+        this.returnPhysics.active = false;
         // returns player to hallway
         this.fadeTransition();
         this.time.delayedCall(400, () => {
             this.player.setX(this.hallwaySpawn.x);
             this.player.setY(this.hallwaySpawn.y);
         });
+
+        this.time.delayedCall(
+            1000,
+            () => {this.returnPhysics.active = true}
+        );
     }
 
     openList() {
