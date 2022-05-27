@@ -99,18 +99,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if (keyA.isDown) {
             this.direction = "L";
+            this.setVelocityX(-400);
             this.walk()
         }
         if (keyD.isDown) {
             this.direction = "R";
+            this.setVelocityX(400);
             this.walk();
         }
         if (keyW.isDown) {
             this.direction = "back";
+            this.setVelocityY(-400);
             this.walk()
         }
         if (keyS.isDown) {
             this.direction = "front";
+            this.setVelocityY(400);
             this.walk()
         }
 
@@ -128,6 +132,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.walkSound.stop();
             this.isWalking = false;
         } 
+
+        if (this.state === 2) {
+
+        }
         
     }
 
@@ -141,18 +149,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // }
         if (this.state === 1 && this.anims.currentAnim.key != this.direction+"_walk") {
             this.anims.play(this.direction+"_walk");
-        }
-        if (this.direction == "L") {
-            this.setVelocityX(-400);
-        }
-        if (this.direction == "R") {
-            this.setVelocityX(400);
-        }
-        if (this.direction == "front") {
-            this.setVelocityY(400);
-        }
-        if (this.direction == "back") {
-            this.setVelocityY(-400);
         }
         
 

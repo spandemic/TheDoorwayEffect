@@ -11,7 +11,7 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Play , Inventory , ItemList ]
+    scene: [ Load , Menu , Play , Inventory , ItemList , GameOver]
 }
 
 let game = new Phaser.Game(gameConfig);
@@ -27,3 +27,5 @@ let tileSize = 64;
 // keys for player
 let keyW, keyA, keyS, keyD, keyENTER, keySPACE, keyTAB;
 let neededItems = [];       // items player needs to pick up
+let itemsGot = 0;
+let totalItemsGot = 0;

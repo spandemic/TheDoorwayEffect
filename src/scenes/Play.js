@@ -175,7 +175,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, wallFrameLayer);
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
-        this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
+        this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         this.physics.add.collider(this.player, tileset[64]);
        
@@ -297,10 +297,13 @@ class Play extends Phaser.Scene {
     }
 
     gameEnd() {
-        let itemsGot = 0; // how many items the player got
+        itemsGot = 0; // how many items the player got
+        totalItemsGot = this.playerInventory.length;
+        this.exitPhysics.active = false;
+        this.player.walkSound.mute = true;
 
         // checks through player inventory
-        for (let i = 0; i < this.playerInventory.length; i++) {
+        for (let i = 0; i < totalItemsGot; i++) {
             // checks through the real item list
             for (let k = 0; k < this.realItemNum.length; k++) {
                 // compares the itemNum of the two arrays
@@ -309,12 +312,8 @@ class Play extends Phaser.Scene {
                 }
             }
         }
-        // checks how many items the player collected
-        if (itemsGot > 6) {
-            // BETA 
-            console.log('winner');
-        } else {
-            console.log('loser');
-        }
+        this.player.setState(0);
+        this.scene.switch("GameOver");
+        this.time.delayedCall(500, () => {this.exitPhysics.active = true; this.player.walkSound.mute = false;});
     }
 }
