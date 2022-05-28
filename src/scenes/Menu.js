@@ -7,7 +7,7 @@ class Menu extends Phaser.Scene {
     create() {
         
         // define keys
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
         // bg images
         this.add.image(0,0,"bg").setOrigin(0);
@@ -41,8 +41,6 @@ class Menu extends Phaser.Scene {
             yoyo: true
         })
 
-        
-
         this.tweens.add({
             targets: this.title,
             angle: {from: -1, to: 1},
@@ -56,17 +54,12 @@ class Menu extends Phaser.Scene {
             fontFamily: 'Nunito',
             fontSize: '45px',
             color: 'white',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
+            align: 'right'
         }
 
         // menu text
         menuConfig.fontSize = 32;
-        let playButton = this.add.text(centerX, tileSize * 5.3, "Press (SPACE) to play", menuConfig).setOrigin(0.5);
+        let playButton = this.add.text(centerX, tileSize * 5.3, "Press (TAB) to play", menuConfig).setOrigin(0.5);
 
         // flashing text events
         this.time.addEvent({
@@ -83,8 +76,8 @@ class Menu extends Phaser.Scene {
 
     update() {
         
-        if(Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start("sceneA");
+        if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+            this.scene.start('tutorial');
         }
     }
 }

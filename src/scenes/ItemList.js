@@ -4,13 +4,14 @@ class ItemList extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(0,0,"scene-bg").setOrigin(0);
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
-        let textSpace = 36;
+        let textSpace = 52;
         let listConfig = {
-            fontFamily: 'Nunito',
+            fontFamily: 'Nanum Pen Script',
             fontSize: '45px',
-            color: 'white',
+            color: '#cc725a',
             align: 'right',
             padding: {
                 top: 5,
@@ -19,9 +20,9 @@ class ItemList extends Phaser.Scene {
             fixedWidth: 0
         }
         for (let i = 0; i < neededItems.length; i++) {
-            this.add.text(centerX, tileSize + (textSpace * i), neededItems[i], listConfig).setOrigin(0.5);
+            this.add.text(centerX, tileSize*2 + (textSpace * i), neededItems[i], listConfig).setOrigin(0.5);
         }
-        this.add.text(centerX + tileSize * 5, centerY + tileSize * 3, "[TAB] to return", listConfig).setOrigin(0.5);
+        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "[TAB] to return", listConfig).setOrigin(0.5);
     }
 
     update() {

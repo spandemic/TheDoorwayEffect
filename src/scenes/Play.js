@@ -6,6 +6,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // game end condition - will this fix glitched movement after restarting?
+        // this.gameOver = false;
+
         // player interaction keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -188,6 +191,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // if (!this.gameOver) {
+        //     this.player.update();
+        // }
         this.player.update();
     }
 
@@ -297,6 +303,7 @@ class Play extends Phaser.Scene {
     }
 
     gameEnd() {
+        //this.gameOver = true;
         itemsGot = 0; // how many items the player got
         totalItemsGot = this.playerInventory.length;
         this.exitPhysics.active = false;
@@ -313,6 +320,7 @@ class Play extends Phaser.Scene {
             }
         }
         this.player.setState(0);
+        //this.player.destroy();
         this.scene.switch("GameOver");
         this.time.delayedCall(500, () => {this.exitPhysics.active = true; this.player.walkSound.mute = false;});
     }

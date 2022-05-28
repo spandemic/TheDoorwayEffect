@@ -15,6 +15,8 @@ class Load extends Phaser.Scene {
         this.load.image("frontDoors", "title-frontDoors.png");
         this.load.image("title-lethe", "title-lethe.png");
         this.load.image("title", "title.png");
+        this.load.image("scene-bg", "scene-bg.png");
+        this.load.image("list", "list.png");
 
         this.load.audio('dropItem', 'dropitem.wav');
         this.load.audio('openDoor', 'opendoor.wav');

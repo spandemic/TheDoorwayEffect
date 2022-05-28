@@ -4,11 +4,12 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(0,0, "scene-bg").setOrigin(0);
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         let rankConfig = {
-            fontFamily: 'Nunito',
-            fontSize: '45px',
-            color: 'white',
+            fontFamily: 'Nanum Pen Script',
+            fontSize: '70px',
+            color: '#cc725a',
             align: 'right',
             padding: {
                 top: 5,
@@ -67,8 +68,11 @@ class GameOver extends Phaser.Scene {
         if (rank > 13) {
             rank = 13;
         }
-        this.add.text(centerX, centerY, "Grade Recieved: " + rankList[rank], rankConfig).setOrigin(0.5);
-        this.add.text(centerX + tileSize * 4, centerY + tileSize * 3, "[TAB] to return to menu", rankConfig).setOrigin(0.5);
+        this.add.text(centerX, tileSize*2 - 52, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
+        rankConfig.fontSize = "150px";
+        this.add.text(centerX, centerY, rankList[rank], rankConfig).setOrigin(0.5);
+        rankConfig.fontSize = "45px";
+        this.add.text(centerX + tileSize * 5, tileSize*2 + (52*8), "[TAB] to menu", rankConfig).setOrigin(0.5);
     }
     
 
