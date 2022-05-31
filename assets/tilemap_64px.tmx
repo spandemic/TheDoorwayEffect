@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="80">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="85">
+ <editorsettings>
+  <export target="tilemap_64px.tmj" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="doorway_effect_64_tileset" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="tileset-64.png" width="1024" height="1024"/>
   <tile id="0">
@@ -1240,52 +1243,52 @@
    </properties>
    <point/>
   </object>
-  <object id="55" name="kitchen item 4" x="754.667" y="220">
+  <object id="55" name="kitchen item 4" x="729.334" y="226.667">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="54" name="kitchen item 3" x="338.667" y="212">
+  <object id="54" name="kitchen item 3" x="349.334" y="237.333">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="52" name="kitchen item 2" x="1024" y="320">
+  <object id="52" name="kitchen item 2" x="1249.33" y="284">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="53" name="kitchen item 1" x="478.667" y="369.333">
+  <object id="53" name="kitchen item 1" x="418.667" y="554.666">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="56" name="bathroom item 1" x="352" y="1861.33">
+  <object id="56" name="bathroom item 1" x="749.333" y="1902.66">
    <point/>
   </object>
-  <object id="57" name="bathroom item 2" x="320" y="1600">
+  <object id="57" name="bathroom item 2" x="274.667" y="1566.67">
    <point/>
   </object>
-  <object id="59" name="bathroom item 3" x="576" y="1600">
+  <object id="59" name="bathroom item 3" x="618.667" y="1558.67">
    <point/>
   </object>
-  <object id="60" name="living item 1" x="273.333" y="2830.67">
+  <object id="60" name="living item 1" x="288" y="2834.67">
    <point/>
   </object>
   <object id="61" name="living item 2" x="384" y="2496">
    <point/>
   </object>
-  <object id="62" name="living item 3" x="832" y="2432">
+  <object id="62" name="living item 3" x="674.667" y="2330.67">
    <point/>
   </object>
-  <object id="63" name="living item 4" x="1088" y="2432">
+  <object id="63" name="living item 4" x="1029.33" y="2397.33">
    <point/>
   </object>
-  <object id="64" name="living item 5" x="832" y="2880">
+  <object id="64" name="living item 5" x="858.667" y="2933.33">
    <point/>
   </object>
   <object id="73" name="master item 1" x="1920" y="2560">
@@ -1301,6 +1304,21 @@
    <point/>
   </object>
   <object id="77" name="master item 5" x="2496" y="2496">
+   <point/>
+  </object>
+  <object id="80" name="bedroom item 1" x="2332" y="237.333">
+   <point/>
+  </object>
+  <object id="81" name="bedroom item 2" x="2205.33" y="462.667">
+   <point/>
+  </object>
+  <object id="82" name="bedroom item 3" x="2604" y="558.667">
+   <point/>
+  </object>
+  <object id="83" name="bedroom item 4" x="2572" y="278.667">
+   <point/>
+  </object>
+  <object id="84" name="bedroom item 5" x="2324" y="565">
    <point/>
   </object>
  </objectgroup>
@@ -1323,7 +1341,7 @@
   <object id="70" name="master spawn" x="2625" y="2592">
    <point/>
   </object>
-  <object id="78" name="bedroom spawn" x="2816" y="288">
+  <object id="78" name="bedroom spawn" x="2839" y="336">
    <point/>
   </object>
  </objectgroup>

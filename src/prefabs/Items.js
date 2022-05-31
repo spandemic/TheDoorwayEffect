@@ -1,6 +1,6 @@
 class Items extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, status, texture, itemNum) {
-        super(scene, x, y, 'cube').setOrigin(0.5); // replace 'cube' with texture
+        super(scene, x, y, texture).setOrigin(0.5); // replace 'cube' with texture
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -10,31 +10,44 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(9);
         this.itemNum = itemNum;     // the item's ID
 
+        let colorList = [
+            "Red",
+            "Green",
+            "Blue",
+            "Orange",
+            "Purple",
+            "Pink",
+            "Yellow"
+        ];
+
         // BETA
         if (status === 'real') {
-            if (texture === 'Binder'){
+            let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
+            this.name = randomColor + " " + texture;
+            this.color = randomColor;
+            if (randomColor === "Red"){
+                this.setTint(0xFF0000);
+            }
+            if (randomColor === "Green"){
+                this.setTint(0x00FF00);
+            }
+            if (randomColor === "Blue"){
                 this.setTint(0x0000FF);
             }
-            if (texture === 'Notebook'){
-                this.setTint(0x908234);
+            if (randomColor === "Orange"){
+                this.setTint(0xfc5e03);
             }
-            if (texture === 'Globe'){
-                this.setTint(0x435434);
+            if (randomColor === "Purple"){
+                this.setTint(0xad03fc);
             }
-            if (texture === 'Shoes'){
-                this.setTint(0x7cb3a1);
+            if (randomColor === "Pink"){
+                this.setTint(0xfc03c6);
             }
-            if (texture === 'Printing Paper'){
-                this.setTint(0x98df11);
-            }
-            if (texture === 'Flashcards'){
-                this.setTint(0x480497);
-            }
-            if (texture === 'Laptop'){
-                this.setTint(0x4ac797);
+            if (randomColor === "Yellow"){
+                this.setTint(0xfcfc03);
             }
         } else {
-            this.setTint(0xFF0000);
+            this.setTint(0x000000);
         }
         
         

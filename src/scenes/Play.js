@@ -65,17 +65,17 @@ class Play extends Phaser.Scene {
         // locations where the player will spawn when entering the respective room
         this.returnHallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Return hallway spawn");
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
-        this.livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
-        this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
-        this.kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
-        this.masterSpawn = map.findObject("spawnpoints", obj => obj.name === "master spawn");
-        this.bedroomSpawn = map.findObject("spawnpoints", obj => obj.name === "bedroom spawn");
+        let livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
+        let bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
+        let kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
+        let masterSpawn = map.findObject("spawnpoints", obj => obj.name === "master spawn");
+        let bedroomSpawn = map.findObject("spawnpoints", obj => obj.name === "bedroom spawn");
         this.spawnList = [
-            this.livingSpawn,
-            this.bathroomSpawn,
-            this.kitchenSpawn,
-            this.masterSpawn,
-            this.bedroomSpawn
+            livingSpawn,
+            bathroomSpawn,
+            kitchenSpawn,
+            masterSpawn,
+            bedroomSpawn
         ];
 
         // the actual visual items
@@ -84,13 +84,26 @@ class Play extends Phaser.Scene {
             'Notebook',
             'Globe',
             'Shoes',
-            'Printing Paper',
+            'PrintingPaper',
             'Flashcards',
             'Laptop',
-            'Bottle',
+            'Waterbottle',
             'Pencil',
             'Tape'
-        ]
+        ];
+
+        this.fakeItemList = [
+            'Binder',
+            'Notebook',
+            'Globe',
+            'Shoes',
+            'PrintingPaper',
+            'Flashcards',
+            'Laptop',
+            'Waterbottle',
+            'Pencil',
+            'Tape'
+        ];
 
         // item spawn locations
         let itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
@@ -111,6 +124,11 @@ class Play extends Phaser.Scene {
         let itemMaster3 = map.findObject("item spawnpoints", obj => obj.name === "master item 3");
         let itemMaster4 = map.findObject("item spawnpoints", obj => obj.name === "master item 4");
         let itemMaster5 = map.findObject("item spawnpoints", obj => obj.name === "master item 5");
+        let itemBedroom1 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 1");
+        let itemBedroom2 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 2");
+        let itemBedroom3 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 3");
+        let itemBedroom4 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 4");
+        let itemBedroom5 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 5");
 
         // list of item spawn locations to iterate through
         this.itemLocations = [
@@ -131,7 +149,12 @@ class Play extends Phaser.Scene {
             itemMaster2,
             itemMaster3,
             itemMaster4,
-            itemMaster5
+            itemMaster5,
+            itemBedroom1,
+            itemBedroom2,
+            itemBedroom3,
+            itemBedroom4,
+            itemBedroom5
         ];
 
         // player declaration variables
@@ -285,12 +308,12 @@ class Play extends Phaser.Scene {
             let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
 
             // generates the item, status = real
-            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(3);
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(10);
 
             this.allItems.add(realItem); // add to physics collider
 
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
-            neededItems.push(randomItem); // adds the item's name to the list the player can see
+            neededItems.push(realItem.name); // adds the item's name to the list the player can see
 
             this.itemList.splice(this.itemList.indexOf(randomItem), 1); // removes both the item and the spawn location from their respective lists
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
@@ -303,8 +326,8 @@ class Play extends Phaser.Scene {
             this.itemNum += 1; // ID of item generated
 
             // selects and generates a random item
-            let randomFakeItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(3);
+            let randomFakeItem = this.fakeItemList[Math.floor(Math.random() * this.fakeItemList.length)];
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(10);
 
             this.allItems.add(fakeItem); // adds to physics collider
 
