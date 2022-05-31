@@ -49,14 +49,18 @@ class Play extends Phaser.Scene {
         const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0, 0);
         const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
         const itemListLayer = map.createLayer("collisions/decor/itemList", tileset, 0, 0);
-        const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(4);
+        const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(3);
+        const abovePlayerLayer = map.createLayer("collisions/decor/abovePlayer", tileset, 0, 0).setDepth(5);
 
         wallFrameLayer.setCollisionByProperty({ collides: true });
+        wallLayer.setCollisionByProperty({ collides: true });
+        bottomDecorLayer.setCollisionByProperty({ collides: true});
+        topDecorLayer.setCollisionByProperty({ collides: true});
         spawnDoorLayer.setCollisionByProperty({ type: "spawn" });
         returnDoorLayer.setCollisionByProperty({ type: "exit" });
         spawnExitLayer.setCollisionByProperty({ type: "spawn" });
         itemListLayer.setCollisionByProperty({ collides: true });
-        wallLayer.setCollisionByProperty({ collides: true });
+        
 
         // locations where the player will spawn when entering the respective room
         this.returnHallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Return hallway spawn");
@@ -65,11 +69,13 @@ class Play extends Phaser.Scene {
         this.bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
         this.kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
         this.masterSpawn = map.findObject("spawnpoints", obj => obj.name === "master spawn");
+        this.bedroomSpawn = map.findObject("spawnpoints", obj => obj.name === "bedroom spawn");
         this.spawnList = [
             this.livingSpawn,
             this.bathroomSpawn,
             this.kitchenSpawn,
-            this.masterSpawn
+            this.masterSpawn,
+            this.bedroomSpawn
         ];
 
         // the actual visual items
@@ -130,8 +136,7 @@ class Play extends Phaser.Scene {
 
         // player declaration variables
         this.player = new Player(this, this.hallwaySpawn.x, this.hallwaySpawn.y, "lethe", "front_1");
-        this.player.setOrigin(0.5);
-        this.player.setDepth(20);
+        this.player.setDepth(4);
         // this.player.setTint(0xF73D6E);
         this.playerInventory = [];      // collected itemNum goes here
         this.playerState = null;
@@ -179,6 +184,9 @@ class Play extends Phaser.Scene {
 
         // collision logic for all layers with collide tiles
         this.physics.add.collider(this.player, wallFrameLayer);
+        this.physics.add.collider(this.player, wallLayer);
+        this.physics.add.collider(this.player, bottomDecorLayer);
+        this.physics.add.collider(this.player, topDecorLayer);
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
@@ -277,7 +285,7 @@ class Play extends Phaser.Scene {
             let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
 
             // generates the item, status = real
-            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum);
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(3);
 
             this.allItems.add(realItem); // add to physics collider
 
@@ -296,7 +304,7 @@ class Play extends Phaser.Scene {
 
             // selects and generates a random item
             let randomFakeItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum);
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(3);
 
             this.allItems.add(fakeItem); // adds to physics collider
 
