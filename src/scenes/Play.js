@@ -80,7 +80,10 @@ class Play extends Phaser.Scene {
             'Shoes',
             'Printing Paper',
             'Flashcards',
-            'Laptop'
+            'Laptop',
+            'Bottle',
+            'Pencil',
+            'Tape'
         ]
 
         // item spawn locations
