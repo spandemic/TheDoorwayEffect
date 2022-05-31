@@ -77,6 +77,7 @@ class Play extends Phaser.Scene {
             masterSpawn,
             bedroomSpawn
         ];
+        this.spawnListTracker = [];
 
         // the actual visual items
         this.itemList = [
@@ -252,17 +253,24 @@ class Play extends Phaser.Scene {
 
         // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
+        console.log(this.spawnList);
+        console.log(this.spawnListTracker);
         this.fadeTransition();
 
         // makes sure the player cannot enter the same room twice in a row
-        if (this.lastRoom != randomSpawn) {
+        if (this.spawnList.length != 0) {
             this.time.delayedCall(400, () => {
             this.player.setX(randomSpawn.x);
             this.player.setY(randomSpawn.y);
-            this.lastRoom = randomSpawn; 
+            this.spawnList.splice(this.spawnList.indexOf(randomSpawn), 1); 
+            this.spawnListTracker.push(randomSpawn);
             });
         } else {
-            this.sendFromSpawn(); // actually using recursion omg
+            for (let i = 0; i < this.spawnListTracker.length; i++) {
+                this.spawnList.push(this.spawnListTracker[i]);
+            }
+            this.spawnListTracker = [];
+            this.sendFromSpawn();
         }
 
         this.time.delayedCall(
