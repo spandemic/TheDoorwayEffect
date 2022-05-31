@@ -78,6 +78,7 @@ class Play extends Phaser.Scene {
             bedroomSpawn
         ];
         this.spawnListTracker = [];
+        neededItems = [];
 
         // the actual visual items
         this.itemList = [
@@ -92,6 +93,19 @@ class Play extends Phaser.Scene {
             'Pencil',
             'Tape'
         ];
+
+        this.allItemList = {
+            Binder: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Notebook: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Globe: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Shoes: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            PrintingPaper: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Flashcards: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Laptop: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Waterbottle: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Pencil: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
+            Tape: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"]
+        };
 
         this.fakeItemList = [
             'Binder',
@@ -216,11 +230,14 @@ class Play extends Phaser.Scene {
         this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         this.physics.add.collider(this.player, tileset[64]);
-       
+
         // bugged inventory screen
         let test = this.scene;
+        let lol = this.player;
         keyTAB.on('down', function(event) {
-            test.switch('sceneB');
+            test.pause();
+            lol.walkSound.stop();
+            test.launch('sceneB');
         })
 
     }
@@ -228,6 +245,11 @@ class Play extends Phaser.Scene {
     update() {
         // if (!this.gameOver) {
         //     this.player.update();
+        // }
+        // if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+        //     this.scene.pause();
+        //     this.player.walkSound.mute = true;
+        //     this.scene.launch('sceneB');
         // }
         this.player.update();
     }
@@ -297,12 +319,13 @@ class Play extends Phaser.Scene {
 
     openList() {
         this.listPhysics.active = false;
-        this.player.walkSound.mute = true;
         // list of needed items at start of game
-        this.scene.switch('ItemList');
+        this.scene.pause();
+        this.player.walkSound.stop();
+        this.scene.launch('ItemList');
         this.time.delayedCall(
             500,
-            () => {this.listPhysics.active = true; this.player.walkSound.mute = false;}
+            () => {this.listPhysics.active = true;}
         );
     }
 

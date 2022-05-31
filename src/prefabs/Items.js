@@ -20,7 +20,6 @@ class Items extends Phaser.Physics.Arcade.Sprite {
             "Yellow"
         ];
 
-        // BETA
         if (status === 'real') {
             let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
             this.name = randomColor + " " + texture;

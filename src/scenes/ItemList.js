@@ -27,7 +27,8 @@ class ItemList extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
-            this.scene.switch('sceneA');
+            this.scene.stop();
+            this.scene.resume("sceneA");
         }
     }
 }
