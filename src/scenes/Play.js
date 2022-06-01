@@ -245,6 +245,14 @@ class Play extends Phaser.Scene {
             loop: false
         });
 
+        this.timeScore = 0;
+        this.time.addEvent({
+            delay: 40000,
+            callback: () => {this.timeScore += 1;},
+            callbackScope: this,
+            loop: true
+        });
+
         // collision logic for all layers with collide tiles
         this.physics.add.collider(this.player, wallFrameLayer);
         this.physics.add.collider(this.player, wallLayer);
@@ -443,6 +451,7 @@ class Play extends Phaser.Scene {
         
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
                 itemsGot = 0; // how many items the player got
+                timeScore = this.timeScore;
                 totalItemsGot = this.playerInventory.length;
                 // checks through player inventory
                 for (let i = 0; i < totalItemsGot; i++) {

@@ -66,6 +66,9 @@ class GameOver extends Phaser.Scene {
         } else {
             rank -= 2;
         }
+
+        rank += timeScore;
+        
         if (rank > 13) {
             rank = 13;
         }
