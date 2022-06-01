@@ -11,7 +11,7 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Tutorial , Play , Pause , ItemList , GameOver]
+    scene: [ Load , Menu , Tutorial , Credits , Play , Pause , ItemList , GameOver]
 }
 
 let game = new Phaser.Game(gameConfig);

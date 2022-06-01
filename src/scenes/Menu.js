@@ -10,6 +10,7 @@ class Menu extends Phaser.Scene {
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
         // bg images
         this.add.image(0,0,"bg").setOrigin(0);
@@ -84,16 +85,16 @@ class Menu extends Phaser.Scene {
         menuConfig.fontSize = 32;
         let playButton = this.add.text(centerX, tileSize * 5.3, "Press (TAB) to play", menuConfig).setOrigin(0.5);
         let tutButton = this.add.text(centerX, tileSize * 6.3, "Press (SPACE) for tutorial", menuConfig).setOrigin(0.5);
-
+        let creditButton = this.add.text(tileSize * 2 / 3, game.config.height - tileSize / 2, "[W]", menuConfig).setOrigin(0.5);
         // flashing text events
         this.time.addEvent({
             delay: 750,
-            callback: () => {playButton.alpha = 0; tutButton.alpha = 0},
+            callback: () => {playButton.alpha = 0; tutButton.alpha = 0; creditButton.alpha = 0;},
             loop: true
         })
         this.time.addEvent({
             delay: 1500,
-            callback: () => {playButton.alpha = 1; tutButton.alpha = 1},
+            callback: () => {playButton.alpha = 1; tutButton.alpha = 1; creditButton.alpha = 1;},
             loop: true
         })
     }
@@ -118,6 +119,10 @@ class Menu extends Phaser.Scene {
                 this.loopbgm.mute = false;
                 playerMuted = false;
             }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyW)) {
+            this.bgm.stop();
+            this.scene.start('credits');
         }
     }
 }
