@@ -33,6 +33,7 @@ class Tutorial extends Phaser.Scene {
         this.add.text(centerX, tileSize*2 + textSpace*4, "Explore the house & collect what you need", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*6, "Exit the main hallway when you are finished", textConfig).setOrigin(0.5);
         this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "(TAB) to continue", textConfig).setOrigin(0.5);
+        this.add.text(centerX - tileSize * 3, tileSize*2 + (textSpace*8), "(ENTER) to mute music", textConfig).setOrigin(0.5);
     }
 
     update() {

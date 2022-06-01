@@ -9,7 +9,6 @@ class Load extends Phaser.Scene {
 
         this.load.json("dialogue", "dialogue.json");
 
-        this.load.image('cube', 'standardCube.png');
         this.load.image("Inventorybox", "Inventorybox.png");
         this.load.image("bg", "title-bg.jpg");
         this.load.image("backDoors", "title-backDoors.png");
@@ -30,10 +29,11 @@ class Load extends Phaser.Scene {
         this.load.image("Waterbottle", "Waterbottle.png");
         this.load.image("textbox", "textbox.png");
 
-        this.load.audio('dropItem', 'dropitem.wav');
         this.load.audio('openDoor', 'opendoor.wav');
         this.load.audio('pickItem', 'pickitem.wav');
         this.load.audio('walk', 'walking.wav');
+        this.load.audio('background1', 'doorwaybg.wav');
+        this.load.audio('backgroundLoop', 'doorwayloop.wav');
 
         this.load.tilemapTiledJSON("map", "tilemap_64px.json");
         this.load.image("64_tiles", "tileset-64.png");

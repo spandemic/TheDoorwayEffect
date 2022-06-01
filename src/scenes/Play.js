@@ -27,6 +27,7 @@ class Play extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
         // sound
         this.openDoorSound = this.sound.add('openDoor', {
@@ -38,16 +39,35 @@ class Play extends Phaser.Scene {
         this.pickUpItemSound = this.sound.add('pickItem', {
             mute: false,
             volume: 0.5,
-            rate: 1,
+            rate: 1.5,
             loop: false
         });
-        this.pickUpItemSound = this.sound.add('dropItem', {
+        bgm = this.sound.add('background1', {
             mute: false,
-            volume: 0.5,
+            volume: 0.3,
             rate: 1,
             loop: false
         });
-
+        loopbgm = this.sound.add('backgroundLoop', {
+            mute: false,
+            volume: 0.3,
+            rate: 1,
+            loop: false
+        });
+        if (playerMuted == false) {
+            bgm.mute = false;
+            loopbgm.mute = false;
+        } else {
+            bgm.mute = true;
+            loopbgm.mute = true;
+        }
+        bgm.play();
+        this.time.addEvent({
+            delay: 79000,
+            callback: this.onEvent,
+            callbackScope: this,
+            loop: false
+        });
         // tilemap
         const map = this.add.tilemap("map", 64, 64, 30, 20);
         const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
@@ -203,8 +223,9 @@ class Play extends Phaser.Scene {
             this.allItems,
             (obj1, obj2) => {
                 obj2.destroy();
-                this.playerInventory.push(obj2.itemNum);
-            }, // destroys the collected item and adds its itemNum to the playerInventory
+                this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
+                this.pickUpItemSound.play();
+            }, 
             null,
             this
         );
@@ -236,6 +257,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, tileset[64]);
 
         // pause screen screen
+        // this is questionable code but IT WORKS and I can't ask for more
         let scene = this.scene;
         let player = this.player;
         keyTAB.on('down', function(event) {
@@ -258,6 +280,17 @@ class Play extends Phaser.Scene {
         // changing tab function when in dialogue
         if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && inDialogue && !gameOver) {
             this.typeText(this.dialogueConvo);
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
+            if(bgm.mute == false) {
+                bgm.mute = true;                       // mute button
+                loopbgm.mute = true;
+                playerMuted = true;
+            } else {
+                bgm.mute = false;
+                loopbgm.mute = false;
+                playerMuted = false;
+            }
         }
     }
 
@@ -291,6 +324,9 @@ class Play extends Phaser.Scene {
             this.time.delayedCall(400, () => {
             this.player.setX(randomSpawn.x);
             this.player.setY(randomSpawn.y);
+
+            this.openDoorSound.play();
+
             this.spawnList.splice(this.spawnList.indexOf(randomSpawn), 1); 
             this.spawnListTracker.push(randomSpawn);
             });
@@ -316,6 +352,7 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(400, () => {
             this.player.setX(this.returnHallwaySpawn.x);
             this.player.setY(this.returnHallwaySpawn.y);
+            this.openDoorSound.play();
         });
 
         this.time.delayedCall(
@@ -381,6 +418,11 @@ class Play extends Phaser.Scene {
 
     }
 
+    onEvent(){
+        bgm.stop();
+        loopbgm.play();
+    }
+
     gameEnd() {
     
         gameOver = true;
@@ -416,6 +458,8 @@ class Play extends Phaser.Scene {
                 this.fadeTransition();
                 this.time.delayedCall(400, () => {
                     this.scene.stop();
+                    bgm.stop();
+                    loopbgm.stop();
                     this.scene.start("GameOver");
                 })
             }

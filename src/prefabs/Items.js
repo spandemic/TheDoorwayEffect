@@ -66,13 +66,6 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         if (texture === "Tape"){
             this.setScale(1.5);
         }
-
-        
-        
-        
-        
-        
-        
     }
 
     update () {

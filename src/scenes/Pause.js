@@ -32,6 +32,8 @@ class Pause extends Phaser.Scene {
 
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start('sceneA');
+            bgm.stop();
+            loopbgm.stop();
         }
     }
 

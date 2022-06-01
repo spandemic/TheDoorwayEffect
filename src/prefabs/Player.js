@@ -5,7 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.moveSpeed = 5;
-        this.walkSound = scene.sound.add("walk", {loop: true, rate: 1.5});
+        this.walkSound = scene.sound.add("walk", {loop: true, rate: 1.5, volume: 0.75});
         this.direction = "front"
 
         // player hitbox

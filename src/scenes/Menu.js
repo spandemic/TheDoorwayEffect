@@ -9,6 +9,7 @@ class Menu extends Phaser.Scene {
         // define keys
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
         // bg images
         this.add.image(0,0,"bg").setOrigin(0);
@@ -58,6 +59,27 @@ class Menu extends Phaser.Scene {
             align: 'right'
         }
 
+        this.bgm = this.sound.add('background1', {
+            mute: false,
+            volume: 0.3,
+            rate: 1,
+            loop: true
+        });
+        this.loopbgm = this.sound.add('backgroundLoop', {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            loop: false
+        });
+        if (playerMuted == false) {
+            this.bgm.mute = false;
+            this.loopbgm.mute = false;
+        } else {
+            this.bgm.mute = true;
+            this.loopbgm.mute = true;
+        }
+        this.bgm.play();
+
         // menu text
         menuConfig.fontSize = 32;
         let playButton = this.add.text(centerX, tileSize * 5.3, "Press (TAB) to play", menuConfig).setOrigin(0.5);
@@ -79,10 +101,23 @@ class Menu extends Phaser.Scene {
     update() {
         
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+            this.bgm.stop();
             this.scene.start('sceneA');
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.bgm.stop();
             this.scene.start('tutorial');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
+            if(this.bgm.mute == false) {
+                this.bgm.mute = true;                       // mute button
+                this.loopbgm.mute = true;
+                playerMuted = true;
+            } else {
+                this.bgm.mute = false;
+                this.loopbgm.mute = false;
+                playerMuted = false;
+            }
         }
     }
 }

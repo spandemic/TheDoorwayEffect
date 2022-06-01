@@ -30,3 +30,6 @@ let keyW, keyA, keyS, keyD, keyENTER, keySPACE, keyTAB;
 let neededItems = [];       // items player needs to pick up
 let itemsGot = 0;
 let totalItemsGot = 0;
+let playerMuted = false;
+let bgm;
+let loopbgm;
