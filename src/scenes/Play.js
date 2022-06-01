@@ -68,6 +68,7 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: false
         });
+
         // tilemap
         const map = this.add.tilemap("map", 64, 64, 30, 20);
         const tileset = map.addTilesetImage("doorway_effect_64_tileset", "64_tiles");
@@ -109,8 +110,6 @@ class Play extends Phaser.Scene {
             masterSpawn,
             bedroomSpawn
         ];
-        this.spawnListTracker = [];
-        neededItems = [];
 
         // the actual visual items, every single item in the game
         this.allItemList = {
@@ -204,9 +203,10 @@ class Play extends Phaser.Scene {
         this.typeText(0);
 
         // misc variables
-        this.itemNum = 0;
-        this.realItemNum = []; // list of the itemNum of all real items
-        this.lastRoom; // declared variable to store the last room the player was in
+        this.itemNum = 0;               // how to ID the items so we can compare them later
+        this.realItemNum = [];          // list of the itemNum of all real items
+        this.spawnListTracker = [];     // tracks which rooms the player has been in
+        neededItems = [];               // list of items the player needs
 
         // camera and world methods
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -245,6 +245,7 @@ class Play extends Phaser.Scene {
             loop: false
         });
 
+        // increases score based on how long the player spends in this scene
         this.timeScore = 0;
         this.time.addEvent({
             delay: 40000,
@@ -289,9 +290,11 @@ class Play extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && inDialogue && !gameOver) {
             this.typeText(this.dialogueConvo);
         }
+
+        // mute button
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             if(bgm.mute == false) {
-                bgm.mute = true;                       // mute button
+                bgm.mute = true;                       
                 loopbgm.mute = true;
                 playerMuted = true;
             } else {
@@ -327,7 +330,7 @@ class Play extends Phaser.Scene {
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
         this.fadeTransition();
 
-        // makes sure the player cannot enter the same room twice in a row
+        // makes sure the player cannot enter the same room in the same loop
         if (this.spawnList.length != 0) {
             this.time.delayedCall(400, () => {
             this.player.setX(randomSpawn.x);
@@ -343,9 +346,10 @@ class Play extends Phaser.Scene {
                 this.spawnList.push(this.spawnListTracker[i]);
             }
             this.spawnListTracker = [];
-            this.sendFromSpawn();
+            this.sendFromSpawn();           // recursive call if spawnList is empty
         }
 
+        // re-activates physics after a delay
         this.time.delayedCall(
             1000,
             () => {this.sendPhysics.active = true}
@@ -354,7 +358,9 @@ class Play extends Phaser.Scene {
     }
 
     returnToSpawn() {
+        // disable physics for a second to stop constant updates
         this.returnPhysics.active = false;
+
         // returns player to hallway
         this.fadeTransition();
         this.time.delayedCall(400, () => {
@@ -363,6 +369,7 @@ class Play extends Phaser.Scene {
             this.openDoorSound.play();
         });
 
+        // re-enable physics
         this.time.delayedCall(
             1000,
             () => {this.returnPhysics.active = true}
@@ -386,10 +393,10 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < 7; i++) {
             this.itemNum += 1; // itemNum is the ID of the items generated
 
-            // color selector
-            let keys = Object.keys(this.allItemList);
-            let randomKey = keys[Math.floor(Math.random() * keys.length)];
-            let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
+            // color selector   
+            let keys = Object.keys(this.allItemList);                           // creates a list of keys from allItemList
+            let randomKey = keys[Math.floor(Math.random() * keys.length)];      // selects a random key from keys
+            let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];  // selects a random color from the list of colors from the key
 
             // selects a random spawn and a random item to spawn in
             let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
@@ -402,8 +409,8 @@ class Play extends Phaser.Scene {
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
             neededItems.push(realItem.name); // adds the item's name to the list the player can see
 
-            this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
-            this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
+            this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);    // removes color from the item values so it can no longer spawn
+            this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
         }
     }
 
@@ -426,6 +433,7 @@ class Play extends Phaser.Scene {
 
     }
 
+    // starts the looping music
     onEvent(){
         bgm.stop();
         loopbgm.play();

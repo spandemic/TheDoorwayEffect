@@ -86,6 +86,7 @@ class Menu extends Phaser.Scene {
         let playButton = this.add.text(centerX, tileSize * 5.3, "Press (TAB) to play", menuConfig).setOrigin(0.5);
         let tutButton = this.add.text(centerX, tileSize * 6.3, "Press (SPACE) for tutorial", menuConfig).setOrigin(0.5);
         let creditButton = this.add.text(tileSize * 2 / 3, game.config.height - tileSize / 2, "[W]", menuConfig).setOrigin(0.5);
+        
         // flashing text events
         this.time.addEvent({
             delay: 750,

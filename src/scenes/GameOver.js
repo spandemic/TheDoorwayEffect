@@ -18,6 +18,8 @@ class GameOver extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+
+        // possible ranks the player can achieve
         let rankList = [
             'S',
             'A+',
@@ -34,7 +36,10 @@ class GameOver extends Phaser.Scene {
             'D-',
             'F'
         ]
+
         let rank = 0;
+
+        // rank calculation based on how many CORRECT items the player collected
         if (itemsGot === 0) {
             rank = 13;
         } else if (itemsGot === 1) {
@@ -53,6 +58,7 @@ class GameOver extends Phaser.Scene {
             rank = 2;
         }
 
+        // rank calculation based on how many TOTAL items the player collected
         if (totalItemsGot >= 20) {
             rank += 4;
         } else if (totalItemsGot >= 16) {
@@ -67,11 +73,14 @@ class GameOver extends Phaser.Scene {
             rank -= 2;
         }
 
+        // rank calculation based on how LONG the player took
         rank += timeScore;
         
+        // rank maxes out at F
         if (rank > 13) {
             rank = 13;
         }
+        
         this.add.text(centerX, tileSize*2 - 52, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
         rankConfig.fontSize = "150px";
         this.add.text(centerX, centerY, rankList[rank], rankConfig).setOrigin(0.5);

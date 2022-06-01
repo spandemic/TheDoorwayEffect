@@ -9,9 +9,10 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.body.setAllowGravity(false);
         this.setDepth(9);
         this.itemNum = itemNum;     // the item's ID
-        this.color = color;
-        this.name = color + " " + texture;
+        this.color = color;         // allows retrieval of color name
+        this.name = color + " " + texture;      // sets the name of the item
 
+        // sets the colors of the items
         if (color === "Red"){
             this.setTint(0xFF0000);
         }
@@ -34,6 +35,7 @@ class Items extends Phaser.Physics.Arcade.Sprite {
             this.setTint(0xfcfc03);
         }
 
+        // some textures need special tweaking, do it here
         if (texture === "PrintingPaper"){
             this.name = color + " " + "Printing Paper";
             this.setScale(1.5);
@@ -66,9 +68,5 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         if (texture === "Tape"){
             this.setScale(1.5);
         }
-    }
-
-    update () {
-        
     }
 }

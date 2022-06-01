@@ -36,6 +36,7 @@ class Pause extends Phaser.Scene {
             loopbgm.stop();
         }
 
+        // player can mute music inside pause menu
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             if(bgm.mute == false) {
                 bgm.mute = true;

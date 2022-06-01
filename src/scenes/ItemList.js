@@ -19,6 +19,8 @@ class ItemList extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+
+        // propagates a list of the items the player NEEDS to collect
         for (let i = 0; i < neededItems.length; i++) {
             this.add.text(centerX, tileSize*2 + (textSpace * i), neededItems[i], listConfig).setOrigin(0.5);
         }
