@@ -35,6 +35,18 @@ class Pause extends Phaser.Scene {
             bgm.stop();
             loopbgm.stop();
         }
+
+        if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
+            if(bgm.mute == false) {
+                bgm.mute = true;
+                loopbgm.mute = true;
+                playerMuted = true;
+            } else {
+                bgm.mute = false;
+                loopbgm.mute = false;
+                playerMuted = false;
+            }
+        }
     }
 
 
