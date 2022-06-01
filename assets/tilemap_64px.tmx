@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="85">
  <editorsettings>
-  <export target="tilemap_64px.tmj" format="json"/>
+  <export target="../../TheDoorwayEffect-1/assets/tilemap_64px.tmj" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="doorway_effect_64_tileset" tilewidth="64" tileheight="64" tilecount="256" columns="16">
-  <image source="tileset-64.png" width="1024" height="1024"/>
+  <image source="../../TheDoorwayEffect-1/assets/tileset-64.png" width="1024" height="1024"/>
   <tile id="0">
    <properties>
     <property name="type" value="spawn"/>
@@ -1282,13 +1282,13 @@
   </layer>
  </group>
  <objectgroup id="19" name="item spawnpoints">
-  <object id="51" name="kitchen item 5" x="1246.67" y="562.667">
+  <object id="51" name="kitchen item 5" x="1228" y="540">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="55" name="kitchen item 4" x="729.334" y="226.667">
+  <object id="55" name="kitchen item 4" x="732.001" y="226.667">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
@@ -1306,64 +1306,64 @@
    </properties>
    <point/>
   </object>
-  <object id="53" name="kitchen item 1" x="418.667" y="554.666">
+  <object id="53" name="kitchen item 1" x="365.334" y="546.666">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="56" name="bathroom item 1" x="749.333" y="1902.66">
+  <object id="56" name="bathroom item 1" x="733.333" y="1881.33">
    <point/>
   </object>
-  <object id="57" name="bathroom item 2" x="274.667" y="1566.67">
+  <object id="57" name="bathroom item 2" x="297.334" y="1561.34">
    <point/>
   </object>
-  <object id="59" name="bathroom item 3" x="618.667" y="1558.67">
+  <object id="59" name="bathroom item 3" x="593.334" y="1558.67">
    <point/>
   </object>
-  <object id="60" name="living item 1" x="288" y="2834.67">
+  <object id="60" name="living item 1" x="285.333" y="2820">
    <point/>
   </object>
-  <object id="61" name="living item 2" x="384" y="2496">
+  <object id="61" name="living item 2" x="384" y="2505.33">
    <point/>
   </object>
-  <object id="62" name="living item 3" x="674.667" y="2330.67">
+  <object id="62" name="living item 3" x="673.334" y="2337.34">
    <point/>
   </object>
   <object id="63" name="living item 4" x="1029.33" y="2397.33">
    <point/>
   </object>
-  <object id="64" name="living item 5" x="858.667" y="2933.33">
+  <object id="64" name="living item 5" x="836" y="2905.33">
    <point/>
   </object>
   <object id="73" name="master item 1" x="1920" y="2560">
    <point/>
   </object>
-  <object id="74" name="master item 2" x="1952" y="2930.67">
+  <object id="74" name="master item 2" x="1952" y="2896">
    <point/>
   </object>
   <object id="75" name="master item 3" x="2368" y="2880">
    <point/>
   </object>
-  <object id="76" name="master item 4" x="2176" y="2560">
+  <object id="76" name="master item 4" x="2189.33" y="2568">
    <point/>
   </object>
-  <object id="77" name="master item 5" x="2496" y="2496">
+  <object id="77" name="master item 5" x="2520" y="2513.33">
    <point/>
   </object>
-  <object id="80" name="bedroom item 1" x="2332" y="237.333">
+  <object id="80" name="bedroom item 1" x="2313.33" y="254.666">
    <point/>
   </object>
   <object id="81" name="bedroom item 2" x="2205.33" y="462.667">
    <point/>
   </object>
-  <object id="82" name="bedroom item 3" x="2604" y="558.667">
+  <object id="82" name="bedroom item 3" x="2588" y="542.667">
    <point/>
   </object>
-  <object id="83" name="bedroom item 4" x="2572" y="278.667">
+  <object id="83" name="bedroom item 4" x="2573.33" y="281.334">
    <point/>
   </object>
-  <object id="84" name="bedroom item 5" x="2324" y="565">
+  <object id="84" name="bedroom item 5" x="2342.67" y="542.333">
    <point/>
   </object>
  </objectgroup>
