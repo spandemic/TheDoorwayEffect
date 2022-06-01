@@ -7,7 +7,18 @@ class Play extends Phaser.Scene {
 
     create() {
         // game end condition - will this fix glitched movement after restarting?
-        // this.gameOver = false;
+        gameOver = false;
+        inDialogue = true;
+
+        // text config
+        this.dialogueConfig = {
+            fontFamily: 'Nunito',
+            fontSize: '25px',
+            color: '#cc725a',
+            align: 'center',
+            wordWrap: { width: 600}
+            
+        }
 
         // player interaction keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -52,6 +63,7 @@ class Play extends Phaser.Scene {
         const wallFrameLayer = map.createLayer("collisions/wallFrames", tileset, 0, 0).setDepth(3);
         const abovePlayerLayer = map.createLayer("collisions/decor/abovePlayer", tileset, 0, 0).setDepth(5);
 
+        // collisions
         wallFrameLayer.setCollisionByProperty({ collides: true });
         wallLayer.setCollisionByProperty({ collides: true });
         bottomDecorLayer.setCollisionByProperty({ collides: true});
@@ -86,7 +98,7 @@ class Play extends Phaser.Scene {
             'Notebook',
             'Globe',
             'Shoes',
-            'PrintingPaper',
+            'Printing Paper',
             'Flashcards',
             'Laptop',
             'Waterbottle',
@@ -175,10 +187,26 @@ class Play extends Phaser.Scene {
         // player declaration variables
         this.player = new Player(this, this.hallwaySpawn.x, this.hallwaySpawn.y, "lethe", "front_1");
         this.player.setDepth(4);
-        // this.player.setTint(0xF73D6E);
         this.playerInventory = [];      // collected itemNum goes here
         this.playerState = null;
+        inDialogue = true;
 
+        // dialogue
+        // https://github.com/nathanaltice/Dialogging code reference
+        this.dialogueConvo = 0; // each array element in dialogue
+        this.dialogueLine = 0; // each object element in dialogueConvo
+        this.dialogueTyping = false; // active typing of dialogue
+
+        this.textbox = this.add.sprite(this.hallwaySpawn.x, this.hallwaySpawn.y + tileSize*3, "textbox").setOrigin(0.5).setDepth(5);
+        this.dialogue = this.cache.json.get("dialogue");
+        this.dialogueText = this.add.text( this.hallwaySpawn.x, this.hallwaySpawn.y + tileSize*3, "", this.dialogueConfig).setOrigin(0.5).setDepth(6);
+        this.dialogueConfig.fontSize = "20px";
+        this.dialogueConfig.color = "#fcc17b";
+        this.nextText = this.add.text(this.hallwaySpawn.x+tileSize*4.4, this.hallwaySpawn.y+tileSize*4, "(TAB) to continue", this.dialogueConfig).setDepth(6).setOrigin(1);
+        this.spaceText = this.add.text(0, 0, "(SPACE) to return", this.dialogueConfig).setDepth(6).setOrigin(1);
+        this.nextText.visible = false;
+        this.spaceText.visible = false;
+        this.typeText(0);
 
         // misc variables
         this.itemNum = 0;
@@ -189,8 +217,9 @@ class Play extends Phaser.Scene {
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.player.setCollideWorldBounds(true);
-        this.cameras.main.startFollow(this.player, true, 0.05, 0.05, 64, 64);
+        this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(1, 1);
+
 
         // collision logic for collecting items
         this.allItems = this.add.group({ runChildUpdate: true }); // this.allItems stores the individually created Phaser.Physics.Sprites
@@ -227,31 +256,34 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, topDecorLayer);
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
-        this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, this.gameEnd, null, this);
+        this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, () => {this.gameEnd();}, null, this);
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         this.physics.add.collider(this.player, tileset[64]);
 
-        // bugged inventory screen
-        let test = this.scene;
-        let lol = this.player;
+        // pause screen screen
+        let scene = this.scene;
+        let player = this.player;
         keyTAB.on('down', function(event) {
-            test.pause();
-            lol.walkSound.stop();
-            test.launch('sceneB');
+            if (!gameOver && !inDialogue) {
+                scene.pause();
+                player.walkSound.stop();
+                scene.launch('sceneB');
+            }
         })
 
     }
 
     update() {
-        // if (!this.gameOver) {
-        //     this.player.update();
-        // }
-        // if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
-        //     this.scene.pause();
-        //     this.player.walkSound.mute = true;
-        //     this.scene.launch('sceneB');
-        // }
-        this.player.update();
+        if (!gameOver) {
+            this.player.update();
+        }
+        else {
+            this.gameEnd();
+        }
+        // changing tab function when in dialogue
+        if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && inDialogue && !gameOver) {
+            this.typeText(this.dialogueConvo);
+        }
     }
 
 
@@ -259,12 +291,14 @@ class Play extends Phaser.Scene {
         // camera fade transition
         this.input.enabled = false;
         this.cameras.main.fadeOut(300);
-        this.cameras.main.once("camerafadeoutcomplete", () => {
-            this.time.delayedCall(400, () => {
-                this.cameras.main.fadeIn(300);
-                this.input.enabled = true;
+        if (!gameOver) {
+            this.cameras.main.once("camerafadeoutcomplete", () => {
+                this.time.delayedCall(400, () => {
+                    this.cameras.main.fadeIn(300);
+                    this.input.enabled = true;
+                })
             })
-        })
+        }   
     }
 
     // need a way to find out how to stop the player from moving during a transition
@@ -275,8 +309,6 @@ class Play extends Phaser.Scene {
 
         // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
-        console.log(this.spawnList);
-        console.log(this.spawnListTracker);
         this.fadeTransition();
 
         // makes sure the player cannot enter the same room twice in a row
@@ -339,7 +371,7 @@ class Play extends Phaser.Scene {
             let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
 
             // generates the item, status = real
-            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(10);
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(3);
 
             this.allItems.add(realItem); // add to physics collider
 
@@ -358,7 +390,7 @@ class Play extends Phaser.Scene {
 
             // selects and generates a random item
             let randomFakeItem = this.fakeItemList[Math.floor(Math.random() * this.fakeItemList.length)];
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(10);
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(3);
 
             this.allItems.add(fakeItem); // adds to physics collider
 
@@ -368,25 +400,132 @@ class Play extends Phaser.Scene {
     }
 
     gameEnd() {
-        //this.gameOver = true;
-        itemsGot = 0; // how many items the player got
-        totalItemsGot = this.playerInventory.length;
+    
+        gameOver = true;
+        this.player.setState(0);
+        this.player.body.immovable = true;
         this.exitPhysics.active = false;
         this.player.walkSound.mute = true;
-
-        // checks through player inventory
-        for (let i = 0; i < totalItemsGot; i++) {
-            // checks through the real item list
-            for (let k = 0; k < this.realItemNum.length; k++) {
-                // compares the itemNum of the two arrays
-                if (this.realItemNum[k] == this.playerInventory[i]) {
-                    itemsGot += 1; // for each item the player picked up that was in the real item list, they get a point
+        this.spaceText.x = this.player.x-tileSize*1.8;
+        this.spaceText.y = this.player.y+tileSize*4;
+        if (!inDialogue) {
+            this.typeText(1, this.player.x, this.player.y+tileSize*3);
+            
+        }
+        
+        if (this.player.anims.currentAnim.key != "R_idle") {
+            this.player.anims.play("R_idle");
+        }
+        
+        if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+                itemsGot = 0; // how many items the player got
+                totalItemsGot = this.playerInventory.length;
+                // checks through player inventory
+                for (let i = 0; i < totalItemsGot; i++) {
+                    // checks through the real item list
+                    for (let k = 0; k < this.realItemNum.length; k++) {
+                        // compares the itemNum of the two arrays
+                        if (this.realItemNum[k] == this.playerInventory[i]) {
+                            itemsGot += 1; // for each item the player picked up that was in the real item list, they get a point
+                        }
+                    }
                 }
+
+                this.fadeTransition();
+                this.time.delayedCall(400, () => {
+                    this.scene.stop();
+                    this.scene.start("GameOver");
+                })
+            }
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            gameOver = false;
+            inDialogue = false;
+            this.player.setVelocityX(-400);
+            this.textbox.visible = false;
+            this.dialogueText.visible = false;
+            this.nextText.visible = false;
+            this.spaceText.visible = false;
+            this.player.body.immovable = true;
+            this.exitPhysics.active = true;
+            this.player.walkSound.mute = false;
+            this.dialogueLine = 0;
+            
+        }
+    }
+
+    typeText(convo, textX=this.hallwaySpawn.x, textY=this.hallwaySpawn.y + tileSize*3) { // https://github.com/nathanaltice/Dialogging code reference
+        // set position of assets and turn them visible. also activate dialogue state
+        inDialogue = true;
+        this.textbox.x = textX;
+        this.textbox.y = textY;
+        this.dialogueText.x = textX;
+        this.dialogueText.y = textY;
+        this.nextText.x = textX + tileSize*4.4;
+        this.nextText.y = textY + tileSize;
+        this.dialogueTyping = true;
+        this.dialogueText.text = "";
+        this.textbox.visible = true;
+        this.dialogueText.visible = true;
+        
+
+        
+        if (this.dialogueTyping) {
+            // if there are no more lines to read in the convo, make everything invisible and disable inDialogue
+            if (this.dialogue[convo].length == this.dialogueLine) {
+                this.dialogueLine = 0;
+                this.textbox.visible = false;
+                this.dialogueText.visible = false;
+                this.nextText.visible = false;
+                inDialogue = false;
+                this.currentChar = 0;
+        
+            // if the dialogue is "items", display needed item list
+            } else if (this.dialogue[convo][this.dialogueLine]["dialogue"] == "items") {
+                this.dialogueLines = "";
+                for (let i = 0; i < neededItems.length; i++) {
+                    if (i < neededItems.length-1) {
+                        this.dialogueLines += neededItems[i]+", ";
+                    } else if (i == neededItems.length-1) {
+                        this.dialogueLines += "and "+neededItems[i]+".";
+                    }
+                }
+                this.nextText.visible = false;
+
+                this.typingAnimation();
+                
+            } else { // otherwise, update dialogue normally
+                this.dialogueLines = this.dialogue[convo][this.dialogueLine]["dialogue"];
+                this.nextText.visible = false;
+
+                this.typingAnimation();
             }
         }
-        this.player.setState(0);
-        //this.player.destroy();
-        this.scene.switch("GameOver");
-        this.time.delayedCall(500, () => {this.exitPhysics.active = true; this.player.walkSound.mute = false;});
+    }
+
+    typingAnimation() {
+        // the actual typing animation
+        this.currentChar = 0;
+        this.textTimer = this.time.addEvent({
+            delay: 30,
+            repeat: this.dialogueLines.length - 1,
+            callback: () => {
+                this.dialogueText.text += this.dialogueLines[this.currentChar];
+                this.currentChar += 1;
+                // when everything is done typing, show input prompts
+                if (this.textTimer.getRepeatCount() == 0 && inDialogue) {
+                    this.time.delayedCall(300, () => {
+                        this.nextText.visible = true;
+                        if (gameOver) {
+                            this.spaceText.visible = true;
+                        }
+                    });
+                    
+                    this.dialogueTyping = false;
+                    this.textTimer.destroy();
+                    this.dialogueLine += 1;
+                }
+            },
+            callbackScope: this
+        });
     }
 }

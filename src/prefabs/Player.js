@@ -96,26 +96,27 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // movement keys
         this.setVelocity(0);
         this.setState(0);        // 0 for still, 1 for moving
-
-        if (keyA.isDown) {
-            this.direction = "L";
-            this.setVelocityX(-400);
-            this.walk()
-        }
-        if (keyD.isDown) {
-            this.direction = "R";
-            this.setVelocityX(400);
-            this.walk();
-        }
-        if (keyW.isDown) {
-            this.direction = "back";
-            this.setVelocityY(-400);
-            this.walk()
-        }
-        if (keyS.isDown) {
-            this.direction = "front";
-            this.setVelocityY(400);
-            this.walk()
+        if (!inDialogue) {
+            if (keyA.isDown) {
+                this.direction = "L";
+                this.setVelocityX(-400);
+                this.walk()
+            }
+            if (keyD.isDown) {
+                this.direction = "R";
+                this.setVelocityX(400);
+                this.walk();
+            }
+            if (keyW.isDown) {
+                this.direction = "back";
+                this.setVelocityY(-400);
+                this.walk()
+            }
+            if (keyS.isDown) {
+                this.direction = "front";
+                this.setVelocityY(400);
+                this.walk()
+            }
         }
 
         // idle animation
@@ -133,8 +134,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.isWalking = false;
         } 
 
-        if (this.state === 2) {
-
+        if (gameOver || inDialogue) {
+            this.setState(0);
+            this.body.immovable = true;
+        } else {
+            this.body.immovable = false;
         }
         
     }
@@ -150,7 +154,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.state === 1 && this.anims.currentAnim.key != this.direction+"_walk") {
             this.anims.play(this.direction+"_walk");
         }
-        
 
     }
 }

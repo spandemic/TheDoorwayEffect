@@ -5,6 +5,7 @@ class GameOver extends Phaser.Scene {
 
     create() {
         this.add.image(0,0, "scene-bg").setOrigin(0);
+        this.cameras.main.fadeIn(300);
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         let rankConfig = {
             fontFamily: 'Nanum Pen Script',

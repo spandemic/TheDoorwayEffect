@@ -7,7 +7,7 @@ let gameConfig = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: true
+            debug: false
         }
        
     },
@@ -15,6 +15,7 @@ let gameConfig = {
 }
 
 let game = new Phaser.Game(gameConfig);
+let inDialogue, gameOver;
 
 // global screen position variables
 let centerX = game.config.width / 2;

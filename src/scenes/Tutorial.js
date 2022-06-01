@@ -8,7 +8,7 @@ class Tutorial extends Phaser.Scene {
         this.add.image(0,0,"scene-bg").setOrigin(0);
         this.player = new Player(this, game.config.width - tileSize*2, tileSize*1.5, "lethe", "front_1");
         this.add.image(game.config.width - tileSize*2, tileSize*3.5, "list");
-        this.add.image(game.config.width - tileSize*2, tileSize*5.2, "cube");
+        this.add.image(game.config.width - tileSize*2, tileSize*5.2, "Tape");
 
         // key inputs
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
@@ -28,11 +28,11 @@ class Tutorial extends Phaser.Scene {
 
         this.add.text(centerX, tileSize*2 - textSpace, "TUTORIAL", textConfig).setOrigin(0.5);
         textConfig.fontSize = "45px";
-        this.add.text(centerX, tileSize*2, "WASD to move", textConfig).setOrigin(0.5);
+        this.add.text(centerX, tileSize*2, "(WASD) to move, (TAB) to pause", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*2, "Check the list for what you need!", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*4, "Explore the house & collect what you need", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*6, "Exit the main hallway when you are finished", textConfig).setOrigin(0.5);
-        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "[TAB] to continue", textConfig).setOrigin(0.5);
+        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "(TAB) to continue", textConfig).setOrigin(0.5);
     }
 
     update() {

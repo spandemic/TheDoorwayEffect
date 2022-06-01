@@ -14,7 +14,7 @@ class Menu extends Phaser.Scene {
         this.add.image(0,0,"bg").setOrigin(0);
         this.backDoors = this.add.tileSprite(0,0, game.config.width, game.config.height, "backDoors").setOrigin(0);
         this.frontDoors = this.add.tileSprite(0,0, game.config.width, game.config.height, "frontDoors").setOrigin(0);
-        this.lethe = this.add.image(0,0,"title-lethe").setOrigin(0);
+        this.lethe = this.add.image(0,30,"title-lethe").setOrigin(0);
         this.title = this.add.image(game.config.width/2, tileSize*4.5,"title").setOrigin(0.5);
         
         // bg tweening
@@ -61,7 +61,7 @@ class Menu extends Phaser.Scene {
         // menu text
         menuConfig.fontSize = 32;
         let playButton = this.add.text(centerX, tileSize * 5.3, "Press (TAB) to play", menuConfig).setOrigin(0.5);
-        let tutButton = this.add.text(centerX, tileSize * 6.5, "Press (SPACE) for tutorial", menuConfig).setOrigin(0.5);
+        let tutButton = this.add.text(centerX, tileSize * 6.3, "Press (SPACE) for tutorial", menuConfig).setOrigin(0.5);
 
         // flashing text events
         this.time.addEvent({

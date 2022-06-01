@@ -6,9 +6,10 @@ class Pause extends Phaser.Scene {
     }
 
     create() {
+        let textSpace = 52;
         let textConfig = {
             fontFamily: 'Nanum Pen Script',
-            fontSize: '70px',
+            fontSize: '60px',
             color: '#cc725a',
             align: "left"
         };
@@ -16,8 +17,9 @@ class Pause extends Phaser.Scene {
         keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.add.text(centerX, centerY, "Press [TAB] to return to game", textConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + tileSize * 2, "Press [SPACE] to restart game", textConfig).setOrigin(0.5);
+        this.add.image(centerX,centerY,"scene-bg").setOrigin(0.5);
+        this.add.text(centerX, tileSize*2 + textSpace*2, "Press (TAB) to return to game", textConfig).setOrigin(0.5);
+        this.add.text(centerX, tileSize*2 + textSpace*4, "Press (SPACE) to restart game", textConfig).setOrigin(0.5);
 
     }
    

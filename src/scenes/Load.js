@@ -7,9 +7,10 @@ class Load extends Phaser.Scene {
     preload(){
         this.load.path = './assets/';
 
+        this.load.json("dialogue", "dialogue.json");
+
         this.load.image('cube', 'standardCube.png');
-        this.load.image('Inventory', 'Inventory.png');
-        this.load.image('Inventorybox', 'Inventorybox.png');
+        this.load.image("Inventorybox", "Inventorybox.png");
         this.load.image("bg", "title-bg.jpg");
         this.load.image("backDoors", "title-backDoors.png");
         this.load.image("frontDoors", "title-frontDoors.png");
@@ -27,6 +28,7 @@ class Load extends Phaser.Scene {
         this.load.image("Tape", "Tape.png");
         this.load.image("PrintingPaper", "PrintingPaper.png");
         this.load.image("Waterbottle", "Waterbottle.png");
+        this.load.image("textbox", "textbox.png");
 
         this.load.audio('dropItem', 'dropitem.wav');
         this.load.audio('openDoor', 'opendoor.wav');
