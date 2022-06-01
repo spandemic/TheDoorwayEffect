@@ -92,20 +92,7 @@ class Play extends Phaser.Scene {
         this.spawnListTracker = [];
         neededItems = [];
 
-        // the actual visual items
-        this.itemList = [
-            'Binder',
-            'Notebook',
-            'Globe',
-            'Shoes',
-            'Printing Paper',
-            'Flashcards',
-            'Laptop',
-            'Waterbottle',
-            'Pencil',
-            'Tape'
-        ];
-
+        // the actual visual items, every single item in the game
         this.allItemList = {
             Binder: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
             Notebook: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"],
@@ -119,18 +106,6 @@ class Play extends Phaser.Scene {
             Tape: ["Red", "Green", "Blue", "Orange", "Yellow", "Pink", "Purple"]
         };
 
-        this.fakeItemList = [
-            'Binder',
-            'Notebook',
-            'Globe',
-            'Shoes',
-            'PrintingPaper',
-            'Flashcards',
-            'Laptop',
-            'Waterbottle',
-            'Pencil',
-            'Tape'
-        ];
 
         // item spawn locations
         let itemKitchen1 = map.findObject("item spawnpoints", obj => obj.name === "kitchen item 1");
@@ -366,19 +341,23 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < 7; i++) {
             this.itemNum += 1; // itemNum is the ID of the items generated
 
-            // randomly selects a item and spawn location
+            // color selector
+            let keys = Object.keys(this.allItemList);
+            let randomKey = keys[Math.floor(Math.random() * keys.length)];
+            let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
+
+            // selects a random spawn and a random item to spawn in
             let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
-            let randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
 
             // generates the item, status = real
-            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, 'real', randomItem, this.itemNum).setDepth(3);
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, randomKey, randomColor, this.itemNum).setDepth(3);
 
             this.allItems.add(realItem); // add to physics collider
 
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
             neededItems.push(realItem.name); // adds the item's name to the list the player can see
 
-            this.itemList.splice(this.itemList.indexOf(randomItem), 1); // removes both the item and the spawn location from their respective lists
+            this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);
         }
     }
@@ -388,13 +367,16 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < this.itemLocations.length; i++) {
             this.itemNum += 1; // ID of item generated
 
-            // selects and generates a random item
-            let randomFakeItem = this.fakeItemList[Math.floor(Math.random() * this.fakeItemList.length)];
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, 'fake', randomFakeItem, this.itemNum).setDepth(3);
+            // selects a random color and texture for the fake items
+            let keys = Object.keys(this.allItemList);
+            let randomKey = keys[Math.floor(Math.random() * keys.length)];
+            let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
+
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, randomKey, randomColor, this.itemNum).setDepth(3);
 
             this.allItems.add(fakeItem); // adds to physics collider
 
-            this.itemList.splice(this.itemList.indexOf(randomFakeItem), 1); // removes the item from spawn pool
+            this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
         }
 
     }
