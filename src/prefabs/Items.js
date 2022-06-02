@@ -11,6 +11,7 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.itemNum = itemNum;     // the item's ID
         this.color = color;         // allows retrieval of color name
         this.name = color + " " + texture;      // sets the name of the item
+        this.texture = texture;
 
         // sets the colors of the items
         if (color === "Red"){

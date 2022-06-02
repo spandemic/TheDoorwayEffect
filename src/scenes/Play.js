@@ -207,6 +207,7 @@ class Play extends Phaser.Scene {
         this.realItemNum = [];          // list of the itemNum of all real items
         this.spawnListTracker = [];     // tracks which rooms the player has been in
         neededItems = [];               // list of items the player needs
+        this.idList = {};
 
         // camera and world methods
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -224,6 +225,7 @@ class Play extends Phaser.Scene {
             (obj1, obj2) => {
                 obj2.destroy();
                 this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
+                this.idList[obj2.itemNum] = [obj2.color, obj2.texture];
                 this.pickUpItemSound.play();
             }, 
             null,
