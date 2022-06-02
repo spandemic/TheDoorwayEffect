@@ -27,6 +27,7 @@ let tileSize = 64;
 
 // keys for player
 let keyW, keyA, keyS, keyD, keyENTER, keySPACE, keyTAB;
+let idList = [];
 let neededItems = [];       // items player needs to pick up
 let itemsGot = 0;
 let totalItemsGot = 0;

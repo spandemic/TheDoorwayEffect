@@ -146,11 +146,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     walk() {
         this.setState(1);
         // stops restarting animation
-        // if (this.state === 1) {
-        //     this.input.enabled = false;
-        // } else {
-        //     this.input.enabled = true;
-        // }
         if (this.state === 1 && this.anims.currentAnim.key != this.direction+"_walk") {
             this.anims.play(this.direction+"_walk");
         }

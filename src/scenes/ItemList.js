@@ -24,7 +24,7 @@ class ItemList extends Phaser.Scene {
         for (let i = 0; i < neededItems.length; i++) {
             this.add.text(centerX, tileSize*2 + (textSpace * i), neededItems[i], listConfig).setOrigin(0.5);
         }
-        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "[TAB] to return", listConfig).setOrigin(0.5);
+        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "(TAB) to return", listConfig).setOrigin(0.5);
     }
 
     update() {

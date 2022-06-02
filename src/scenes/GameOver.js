@@ -5,19 +5,65 @@ class GameOver extends Phaser.Scene {
 
     create() {
         this.add.image(0,0, "scene-bg").setOrigin(0);
-        this.cameras.main.fadeIn(300);
-        keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         let rankConfig = {
             fontFamily: 'Nanum Pen Script',
             fontSize: '70px',
             color: '#cc725a',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
+            align: 'center'
         }
+        let textSpace = 52;
+
+        // player
+        this.player = new Player(this, -tileSize, centerY+tileSize*2, "lethe").setDepth(1);
+        this.player.anims.play("R_walk");
+        this.player.body.immovable = true;
+
+        this.itemList = [];
+        idList.sort();
+
+
+        // tweening
+        this.timeline = this.tweens.createTimeline();
+        this.timeline.add({
+            targets: this.player,
+            x: game.config.width-tileSize*2,
+            duration: 2500,
+            onComplete: () => {
+                // player idles, collected items are spawned
+                this.player.anims.play("R_idle");
+                rankConfig.fontSize = "50px";
+                let startY = tileSize+(textSpace*2);
+                let startX = centerX+tileSize*3;
+                this.add.text(centerX+tileSize*3.5, tileSize+65, "Your Items", rankConfig).setOrigin(0.5)
+                let i = 0;
+                for (let key in idList) {
+                    let id = key;
+                    let color = idList[key][0]
+                    let texture = idList[key][1]
+                    // if items reach the end of the column, start a new column
+                    if (startY+(textSpace*i) > startY+(textSpace*6)) {
+                        i = 0;
+                        startX += 60;
+                    }
+                    let item = new Items(this, startX, startY+(textSpace*i), texture, color, this.id).setOrigin(0.5);
+                    this.tweens.add({
+                        targets: item,
+                        y: "+= 20",
+                        yoyo: true,
+                        repeat: -1
+                    })
+                    i += 1;
+                }
+                
+            }
+        });
+
+        this.timeline.play();
+        
+        
+
+        this.cameras.main.fadeIn(300);
+        keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
         // possible ranks the player can achieve
         let rankList = [
@@ -80,17 +126,22 @@ class GameOver extends Phaser.Scene {
         if (rank > 13) {
             rank = 13;
         }
-        
-        this.add.text(centerX, tileSize*2 - 52, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
+        rankConfig.fontSize = "50px";
+        this.add.text(centerX-tileSize*3.5, tileSize+65, "Needed Items", rankConfig).setOrigin(0.5)
+        rankConfig.fontSize = "40px";
+        this.add.text(centerX-tileSize*3.5, tileSize + (textSpace*4.5), neededItems, rankConfig).setOrigin(0.5);
+        rankConfig.fontSize = "70px";
+        this.add.text(centerX, tileSize*2 - textSpace, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
         rankConfig.fontSize = "150px";
-        this.add.text(centerX, centerY, rankList[rank], rankConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY-textSpace, rankList[rank], rankConfig).setOrigin(0.5);
         rankConfig.fontSize = "45px";
-        this.add.text(centerX + tileSize * 5, tileSize*2 + (52*8), "[TAB] to menu", rankConfig).setOrigin(0.5);
+        this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "(TAB) to menu", rankConfig).setOrigin(0.5);
     }
     
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+            this.scene.stop();
             this.scene.start('menuScene');
         }
     }

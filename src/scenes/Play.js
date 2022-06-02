@@ -207,7 +207,6 @@ class Play extends Phaser.Scene {
         this.realItemNum = [];          // list of the itemNum of all real items
         this.spawnListTracker = [];     // tracks which rooms the player has been in
         neededItems = [];               // list of items the player needs
-        this.idList = {};
 
         // camera and world methods
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -225,7 +224,7 @@ class Play extends Phaser.Scene {
             (obj1, obj2) => {
                 obj2.destroy();
                 this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
-                this.idList[obj2.itemNum] = [obj2.color, obj2.texture];
+                idList[obj2.itemNum] = [obj2.color, obj2.texture];
                 this.pickUpItemSound.play();
             }, 
             null,
@@ -288,6 +287,12 @@ class Play extends Phaser.Scene {
         else {
             this.gameEnd();
         }
+        // if (Phaser.Input.Keyboard.JustDown(keyTAB) && !gameOver && !inDialogue) {
+        //     this.scene.pause();
+        //     this.player.walkSound.stop();
+        //     this.scene.launch("sceneB");
+        // } 
+        
         // changing tab function when in dialogue
         if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && inDialogue && !gameOver) {
             this.typeText(this.dialogueConvo);
@@ -310,7 +315,6 @@ class Play extends Phaser.Scene {
 
     fadeTransition() {
         // camera fade transition
-        this.input.enabled = false;
         this.cameras.main.fadeOut(300);
         if (!gameOver) {
             this.cameras.main.once("camerafadeoutcomplete", () => {
@@ -414,6 +418,7 @@ class Play extends Phaser.Scene {
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);    // removes color from the item values so it can no longer spawn
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
         }
+        neededItems.sort();
     }
 
     generateFakeItems() {
@@ -459,7 +464,7 @@ class Play extends Phaser.Scene {
             this.player.anims.play("R_idle");
         }
         
-        if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+        if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping) {
                 itemsGot = 0; // how many items the player got
                 timeScore = this.timeScore;
                 totalItemsGot = this.playerInventory.length;
@@ -482,7 +487,7 @@ class Play extends Phaser.Scene {
                     this.scene.start("GameOver");
                 })
             }
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+        if (Phaser.Input.Keyboard.JustDown(keySPACE) && !this.dialogueTyping) {
             gameOver = false;
             inDialogue = false;
             this.player.setVelocityX(-400);
