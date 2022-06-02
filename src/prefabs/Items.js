@@ -1,6 +1,6 @@
 class Items extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, color, itemNum) {
-        super(scene, x, y, texture);
+        super(scene, x, y, texture).setOrigin(0.5);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -9,7 +9,7 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         this.body.setAllowGravity(false);
         this.setDepth(9);
 
-        this.setCircle(40, -20, -20);
+        this.setBodySize(120, 120);
         
         // reference variables
         this.itemNum = itemNum;     // the item's ID
