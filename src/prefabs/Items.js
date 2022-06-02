@@ -7,7 +7,7 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         
         this.setImmovable(true);
         this.body.setAllowGravity(false);
-        this.setDepth(9);
+        this.setDepth(6);
 
         this.setBodySize(120, 120);
         

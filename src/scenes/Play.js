@@ -309,7 +309,7 @@ class Play extends Phaser.Scene {
 
         // collision for "pressure plate" tiles
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
-        this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
+        this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.sendFromSpawn, null, this);
         this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, () => {this.gameEnd();}, null, this);
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
         
@@ -379,6 +379,7 @@ class Play extends Phaser.Scene {
     sendFromSpawn() {
         // disables constant colision updates from Phaser
         this.sendPhysics.active = false;
+        this.returnPhysics.active = false;
 
         // selects a random location to send the player
         let randomSpawn = this.spawnList[Math.floor(Math.random() * this.spawnList.length)];
@@ -400,13 +401,13 @@ class Play extends Phaser.Scene {
                 this.spawnList.push(this.spawnListTracker[i]);
             }
             this.spawnListTracker = [];
-            this.sendFromSpawn();           // recursive call if spawnList is empty
+            this.returnToSpawn();           // finish 1 loop
         }
 
         // re-activates physics after a delay
         this.time.delayedCall(
             1000,
-            () => {this.sendPhysics.active = true}
+            () => {this.sendPhysics.active = true; this.returnPhysics.active = true;}
         );
         
     }
@@ -456,7 +457,7 @@ class Play extends Phaser.Scene {
             let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
 
             // generates the item, status = real
-            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, randomKey, randomColor, this.itemNum).setDepth(3);
+            let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, randomKey, randomColor, this.itemNum);
 
             this.allItems.add(realItem); // add to physics collider
 
@@ -479,7 +480,7 @@ class Play extends Phaser.Scene {
             let randomKey = keys[Math.floor(Math.random() * keys.length)];
             let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
 
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, randomKey, randomColor, this.itemNum).setDepth(3);
+            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, randomKey, randomColor, this.itemNum);
 
             this.allItems.add(fakeItem); // adds to physics collider
 
