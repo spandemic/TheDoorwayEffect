@@ -89,26 +89,35 @@ class Play extends Phaser.Scene {
         wallLayer.setCollisionByProperty({ collides: true });
         bottomDecorLayer.setCollisionByProperty({ collides: true});
         topDecorLayer.setCollisionByProperty({ collides: true});
-        spawnDoorLayer.setCollisionByProperty({ type: "spawn" });
-        returnDoorLayer.setCollisionByProperty({ type: "exit" });
-        spawnExitLayer.setCollisionByProperty({ type: "spawn" });
+        spawnDoorLayer.setCollisionByProperty({ collides: true });
+        returnDoorLayer.setCollisionByProperty({ collides: true });
+        spawnExitLayer.setCollisionByProperty({ collides: true });
         itemListLayer.setCollisionByProperty({ collides: true });
         
 
         // locations where the player will spawn when entering the respective room
         this.returnHallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Return hallway spawn");
         this.hallwaySpawn = map.findObject("spawnpoints", obj => obj.name === "Hallway spawn");
+
         let livingSpawn = map.findObject("spawnpoints", obj => obj.name === "Living room spawn");
         let bathroomSpawn = map.findObject("spawnpoints", obj => obj.name === "Bathroom spawn");
         let kitchenSpawn = map.findObject("spawnpoints", obj => obj.name === "Kitchen spawn");
         let masterSpawn = map.findObject("spawnpoints", obj => obj.name === "master spawn");
         let bedroomSpawn = map.findObject("spawnpoints", obj => obj.name === "bedroom spawn");
+        let greenhouseSpawn = map.findObject("spawnpoints", obj => obj.name === "greenhouse spawn");
+        let windySpawn = map.findObject("spawnpoints", obj => obj.name === "windy spawn");
+        let diningSpawn = map.findObject("spawnpoints", obj => obj.name === "dining room spawn");
+        let longhallSpawn = map.findObject("spawnpoints", obj => obj.name === "longhall spawn");
         this.spawnList = [
             livingSpawn,
             bathroomSpawn,
             kitchenSpawn,
             masterSpawn,
-            bedroomSpawn
+            bedroomSpawn,
+            greenhouseSpawn,
+            windySpawn,
+            diningSpawn,
+            longhallSpawn
         ];
 
         // the actual visual items, every single item in the game
@@ -150,7 +159,23 @@ class Play extends Phaser.Scene {
         let itemBedroom3 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 3");
         let itemBedroom4 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 4");
         let itemBedroom5 = map.findObject("item spawnpoints", obj => obj.name === "bedroom item 5");
-
+        let itemWindy1 = map.findObject("item spawnpoints", obj => obj.name === "windy item 1");
+        let itemWindy2 = map.findObject("item spawnpoints", obj => obj.name === "windy item 2");
+        let itemWindy3 = map.findObject("item spawnpoints", obj => obj.name === "windy item 3");
+        let itemWindy4 = map.findObject("item spawnpoints", obj => obj.name === "windy item 4");
+        let itemWindy5 = map.findObject("item spawnpoints", obj => obj.name === "windy item 5");
+        let itemGreenhouse1 = map.findObject("item spawnpoints", obj => obj.name === "greenhouse item 1");
+        let itemGreenhouse2 = map.findObject("item spawnpoints", obj => obj.name === "greenhouse item 2");
+        let itemGreenhouse3 = map.findObject("item spawnpoints", obj => obj.name === "greenhouse item 3");
+        let itemGreenhouse4 = map.findObject("item spawnpoints", obj => obj.name === "greenhouse item 4");
+        let itemGreenhouse5 = map.findObject("item spawnpoints", obj => obj.name === "greenhouse item 5");
+        let itemDining1 = map.findObject("item spawnpoints", obj => obj.name === "dining item 1");
+        let itemDining2 = map.findObject("item spawnpoints", obj => obj.name === "dining item 2");
+        let itemDining3 = map.findObject("item spawnpoints", obj => obj.name === "dining item 3");
+        let itemLonghall1 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 1");
+        let itemLonghall2 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 2");
+        let itemLonghall3 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 3");
+        let itemLonghall4 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 4");
         // list of item spawn locations to iterate through
         this.itemLocations = [
             itemKitchen1,
@@ -175,7 +200,24 @@ class Play extends Phaser.Scene {
             itemBedroom2,
             itemBedroom3,
             itemBedroom4,
-            itemBedroom5
+            itemBedroom5,
+            itemWindy1,
+            itemWindy2,
+            itemWindy3,
+            itemWindy4,
+            itemWindy5,
+            itemGreenhouse1,
+            itemGreenhouse2,
+            itemGreenhouse3,
+            itemGreenhouse4,
+            itemGreenhouse5,
+            itemDining1,
+            itemDining2,
+            itemDining3,
+            itemLonghall1,
+            itemLonghall2,
+            itemLonghall3,
+            itemLonghall4
         ];
 
         // player declaration variables
