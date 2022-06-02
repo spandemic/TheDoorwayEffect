@@ -1980,31 +1980,31 @@
   <object id="71" name="Hallway spawn" x="865" y="5535">
    <point/>
   </object>
-  <object id="12" name="Kitchen spawn" x="816.852" y="550.061">
+  <object id="12" name="Kitchen spawn" x="832.852" y="502.061">
    <point/>
   </object>
-  <object id="17" name="Bathroom spawn" x="304" y="1685.85">
+  <object id="17" name="Bathroom spawn" x="316" y="1685.85">
    <point/>
   </object>
   <object id="29" name="Living room spawn" x="1092.03" y="2562.33">
    <point/>
   </object>
-  <object id="90" name="dining room spawn" x="1646.58" y="1922.94">
+  <object id="70" name="master spawn" x="2625.24" y="2623.27">
    <point/>
   </object>
-  <object id="70" name="master spawn" x="2649.24" y="2619.27">
+  <object id="78" name="bedroom spawn" x="2433.18" y="498.545">
    <point/>
   </object>
-  <object id="78" name="bedroom spawn" x="2433.18" y="558.545">
+  <object id="90" name="dining room spawn" x="1658.58" y="1926.94">
    <point/>
   </object>
-  <object id="85" name="longhall spawn" x="1818" y="1082">
+  <object id="85" name="longhall spawn" x="1790" y="1098">
    <point/>
   </object>
-  <object id="94" name="greenhouse spawn" x="3842" y="932">
+  <object id="94" name="greenhouse spawn" x="3838" y="884">
    <point/>
   </object>
-  <object id="100" name="windy spawn" x="3293.52" y="2122.91">
+  <object id="100" name="windy spawn" x="3325.52" y="2122.91">
    <point/>
   </object>
  </objectgroup>
