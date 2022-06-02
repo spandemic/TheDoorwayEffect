@@ -183,6 +183,7 @@ class Play extends Phaser.Scene {
         this.player.setDepth(4);
         this.playerInventory = [];      // collected itemNum goes here
         this.playerState = null;
+        this.playerInRange = false;
         inDialogue = true;
 
         // dialogue
@@ -222,11 +223,13 @@ class Play extends Phaser.Scene {
             this.player,
             this.allItems,
             (obj1, obj2) => {
-                obj2.destroy();
-                this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
-                idList[obj2.itemNum] = [obj2.color, obj2.texture];
-                this.pickUpItemSound.play();
-            }, 
+                keySPACE.on('down', () => {
+                    obj2.destroy();
+                    this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
+                    idList[obj2.itemNum] = [obj2.color, obj2.texture];
+                    this.pickUpItemSound.play();
+                });
+                }, 
             null,
             this
         );
@@ -260,11 +263,14 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, wallLayer);
         this.physics.add.collider(this.player, bottomDecorLayer);
         this.physics.add.collider(this.player, topDecorLayer);
+        this.physics.add.collider(this.player, tileset[64]);
+
+        // collision for "pressure plate" tiles
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.returnToSpawn, null, this);
         this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, () => {this.gameEnd();}, null, this);
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
-        this.physics.add.collider(this.player, tileset[64]);
+        
 
         // pause screen screen
         // this is questionable code but IT WORKS and I can't ask for more
@@ -438,6 +444,10 @@ class Play extends Phaser.Scene {
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
         }
 
+    }
+
+    inRange(item) {
+        
     }
 
     // starts the looping music
