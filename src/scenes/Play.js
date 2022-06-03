@@ -77,7 +77,7 @@ class Play extends Phaser.Scene {
         const spawnDoorLayer = map.createLayer("floor/spawn doorways", tileset, 0, 0);
         const spawnExitLayer = map.createLayer("floor/spawn exit", tileset, 0, 0);
         const returnDoorLayer = map.createLayer("floor/return doorways", tileset, 0, 0);
-        const wallLayer = map.createLayer("collisions/walls", tileset, 0, 0);
+        const wallLayer = map.createLayer("floor/walls", tileset, 0, 0);
         const bottomDecorLayer = map.createLayer("collisions/decor/bottom", tileset, 0, 0);
         const topDecorLayer = map.createLayer("collisions/decor/top", tileset, 0, 0);
         const itemListLayer = map.createLayer("collisions/decor/itemList", tileset, 0, 0);
@@ -265,16 +265,14 @@ class Play extends Phaser.Scene {
             this.player,
             this.allItems,
             (obj1, obj2) => {
-                keySPACE.on('down', () => {
-                    obj2.destroy();
-                    this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
-                    idList[obj2.itemNum] = [obj2.color, obj2.texture];
-                    this.pickUpItemSound.play();
-                });
+                obj2.destroy();
+                this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
+                idList[obj2.itemNum] = [obj2.color, obj2.texture];
+                this.pickUpItemSound.play();
                 }, 
             null,
             this
-        );
+        );  
 
         // event that generates all the real items
         this.time.addEvent({

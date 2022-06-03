@@ -74,4 +74,13 @@ class Items extends Phaser.Physics.Arcade.Sprite {
             this.setScale(1.5);
         }
     }
+
+    update() {
+        
+        if (this.body.touching.none) {
+            this.ignoreDestroy = true;
+        } else {
+            this.ignoreDestroy = false;
+        }
+    }
 }
