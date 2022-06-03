@@ -195,7 +195,7 @@ class Play extends Phaser.Scene {
             itemLiving5,
             itemMaster1,
             itemMaster2,
-            itemMaster3,
+            itemMaster3, //
             itemMaster4,
             itemMaster5,
             itemBedroom1,
@@ -266,13 +266,13 @@ class Play extends Phaser.Scene {
             this.player,
             this.allItems,
             (obj1, obj2) => {
-                keySPACE.on('down', () => {
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                     obj2.destroy();
                     this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
                     idList[obj2.itemNum] = [obj2.color, obj2.texture];
                     this.pickUpItemSound.play();
-                });
-                }, 
+                }                
+            }, 
             null,
             this
         );
