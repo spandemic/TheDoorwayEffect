@@ -142,6 +142,7 @@ class GameOver extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
             this.scene.stop();
+            bgm.stop();
             this.scene.start('menuScene');
         }
     }

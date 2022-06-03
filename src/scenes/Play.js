@@ -6,9 +6,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        // game end condition - will this fix glitched movement after restarting?
+        // global states
         gameOver = false;
         inDialogue = true;
+        isPaused = false;
+        inList = false;
 
         // text config
         this.dialogueConfig = {
@@ -226,7 +228,6 @@ class Play extends Phaser.Scene {
         this.playerInventory = [];      // collected itemNum goes here
         this.playerState = null;
         this.playerInRange = false;
-        inDialogue = true;
 
         // dialogue
         // https://github.com/nathanaltice/Dialogging code reference
@@ -265,14 +266,16 @@ class Play extends Phaser.Scene {
             this.player,
             this.allItems,
             (obj1, obj2) => {
-                obj2.destroy();
-                this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
-                idList[obj2.itemNum] = [obj2.color, obj2.texture];
-                this.pickUpItemSound.play();
+                keySPACE.on('down', () => {
+                    obj2.destroy();
+                    this.playerInventory.push(obj2.itemNum);    // destroys the collected item and adds its itemNum to the playerInventory
+                    idList[obj2.itemNum] = [obj2.color, obj2.texture];
+                    this.pickUpItemSound.play();
+                });
                 }, 
             null,
             this
-        );  
+        );
 
         // event that generates all the real items
         this.time.addEvent({
@@ -309,20 +312,14 @@ class Play extends Phaser.Scene {
         this.sendPhysics = this.physics.add.collider(this.player, spawnDoorLayer, this.sendFromSpawn, null, this);
         this.returnPhysics = this.physics.add.collider(this.player, returnDoorLayer, this.sendFromSpawn, null, this);
         this.exitPhysics = this.physics.add.collider(this.player, spawnExitLayer, () => {this.gameEnd();}, null, this);
-        this.listPhysics = this.physics.add.collider(this.player, itemListLayer, this.openList, null, this);
+        this.listPhysics = this.physics.add.collider(this.player, itemListLayer, () => {this.openList();}, null, this);
         
-
-        // pause screen screen
-        // this is questionable code but IT WORKS and I can't ask for more
-        let scene = this.scene;
-        let player = this.player;
-        keyTAB.on('down', function(event) {
-            if (!gameOver && !inDialogue) {
-                scene.pause();
-                player.walkSound.stop();
-                scene.launch('sceneB');
-            }
-        })
+        this.textConfig = {
+            fontFamily: 'Nanum Pen Script',
+            fontSize: '45px',
+            color: '#cc725a',
+            align: "left"
+        };
 
     }
 
@@ -333,17 +330,45 @@ class Play extends Phaser.Scene {
         else {
             this.gameEnd();
         }
-        // if (Phaser.Input.Keyboard.JustDown(keyTAB) && !gameOver && !inDialogue) {
-        //     this.scene.pause();
-        //     this.player.walkSound.stop();
-        //     this.scene.launch("sceneB");
-        // } 
-        
-        // changing tab function when in dialogue
-        if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && inDialogue && !gameOver) {
+
+        // changing tab function depending on which game states
+        if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
+            // progress dialogue only
+            if (!isPaused && !this.dialogueTyping && inDialogue && !gameOver && !inList) {
             this.typeText(this.dialogueConvo);
+            // pauses game
+            } else if (!gameOver && !inDialogue && !isPaused && !inList) {
+                isPaused = true;
+                this.pauseImage = this.add.image(this.player.x, this.player.y,"scene-bg").setOrigin(0.5).setDepth(7);
+                this.pauseText1 = this.add.text(this.player.x, this.player.y - tileSize, "Press (TAB) to return to game", this.textConfig).setOrigin(0.5).setDepth(8);
+                this.pauseText2 = this.add.text(this.player.x, this.player.y + tileSize, "Press (SPACE) to restart game", this.textConfig).setOrigin(0.5).setDepth(8);
+                this.player.walkSound.mute = true;
+            // unpauses game
+            } else if (!gameOver && !inDialogue && isPaused && !inList) {
+                isPaused = false;
+                this.pauseImage.destroy();
+                this.pauseText1.destroy();
+                this.pauseText2.destroy();
+                this.player.walkSound.mute = false;
+            // closes list 
+            } else if (!gameOver && !inDialogue && !isPaused && inList) {
+                inList = false;
+                this.itemImage.destroy();
+                this.list.visible = false;
+                for (let x of this.list) {
+                    x.destroy();
+                }
+                this.itemText2.destroy();
+            }
         }
 
+        // restarts scene
+        if (Phaser.Input.Keyboard.JustDown(keySPACE) && isPaused) {
+            isPaused = false;
+            this.scene.restart('sceneA');
+            bgm.stop();
+            loopbgm.stop();
+        }
         // mute button
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             if(bgm.mute == false) {
@@ -355,6 +380,11 @@ class Play extends Phaser.Scene {
                 loopbgm.mute = false;
                 playerMuted = false;
             }
+        }
+
+        if (!inDialogue && !this.dialogueTyping) {
+            this.nextText.visible = false;
+
         }
     }
 
@@ -430,15 +460,16 @@ class Play extends Phaser.Scene {
     }
 
     openList() {
-        this.listPhysics.active = false;
-        // list of needed items at start of game
-        this.scene.pause();
-        this.player.walkSound.stop();
-        this.scene.launch('ItemList');
-        this.time.delayedCall(
-            500,
-            () => {this.listPhysics.active = true;}
-        );
+        inList = true;
+        this.list = [];
+        this.list.visible = true;
+        let textSpace = 52;
+        this.itemImage = this.add.image(this.player.x,this.player.y,"scene-bg").setDepth(7);
+        for (let i = 0; i < neededItems.length; i++) {
+            let item = this.add.text(this.player.x, this.player.y-tileSize*2.5 + (textSpace * i), neededItems[i], this.textConfig).setOrigin(0.5).setDepth(8);
+            this.list.push(item);
+        }
+        this.itemText2 = this.add.text(this.player.x + tileSize * 5, this.player.y + tileSize + (textSpace*3.5), "(TAB) to return", this.textConfig).setOrigin(0.5).setDepth(8);
     }
 
     generateRealItems() {
@@ -501,7 +532,6 @@ class Play extends Phaser.Scene {
     
         gameOver = true;
         this.player.setState(0);
-        this.player.body.immovable = true;
         this.exitPhysics.active = false;
         this.player.walkSound.mute = true;
         this.spaceText.x = this.player.x-tileSize*1.8;
@@ -511,42 +541,39 @@ class Play extends Phaser.Scene {
             
         }
         
-        if (this.player.anims.currentAnim.key != "R_idle") {
-            this.player.anims.play("R_idle");
+        if (this.player.anims.currentAnim.key != "front_idle") {
+            this.player.anims.play("front_idle");
         }
         
-        if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping) {
-                itemsGot = 0; // how many items the player got
-                timeScore = this.timeScore;
-                totalItemsGot = this.playerInventory.length;
-                // checks through player inventory
-                for (let i = 0; i < totalItemsGot; i++) {
-                    // checks through the real item list
-                    for (let k = 0; k < this.realItemNum.length; k++) {
-                        // compares the itemNum of the two arrays
-                        if (this.realItemNum[k] == this.playerInventory[i]) {
-                            itemsGot += 1; // for each item the player picked up that was in the real item list, they get a point
-                        }
+        if (Phaser.Input.Keyboard.JustDown(keyTAB) && !this.dialogueTyping && !isPaused) {
+            itemsGot = 0; // how many items the player got
+            timeScore = this.timeScore;
+            totalItemsGot = this.playerInventory.length;
+            // checks through player inventory
+            for (let i = 0; i < totalItemsGot; i++) {
+                // checks through the real item list
+                for (let k = 0; k < this.realItemNum.length; k++) {
+                    // compares the itemNum of the two arrays
+                    if (this.realItemNum[k] == this.playerInventory[i]) {
+                        itemsGot += 1; // for each item the player picked up that was in the real item list, they get a point
                     }
                 }
-
-                this.fadeTransition();
-                this.time.delayedCall(400, () => {
-                    this.scene.stop();
-                    bgm.stop();
-                    loopbgm.stop();
-                    this.scene.start("GameOver");
-                })
             }
-        if (Phaser.Input.Keyboard.JustDown(keySPACE) && !this.dialogueTyping) {
+        
+            this.fadeTransition();
+            this.time.delayedCall(400, () => {
+                this.scene.stop();
+                this.scene.start("GameOver");
+            })
+        };
+        if (Phaser.Input.Keyboard.JustDown(keySPACE) && !this.dialogueTyping && !isPaused) {
             gameOver = false;
             inDialogue = false;
-            this.player.setVelocityX(-400);
+            this.player.setVelocityY(-600);
             this.textbox.visible = false;
             this.dialogueText.visible = false;
             this.nextText.visible = false;
             this.spaceText.visible = false;
-            this.player.body.immovable = true;
             this.exitPhysics.active = true;
             this.player.walkSound.mute = false;
             this.dialogueLine = 0;
@@ -577,6 +604,7 @@ class Play extends Phaser.Scene {
                 this.textbox.visible = false;
                 this.dialogueText.visible = false;
                 this.nextText.visible = false;
+                this.dialogueTyping = false;
                 inDialogue = false;
                 this.currentChar = 0;
         

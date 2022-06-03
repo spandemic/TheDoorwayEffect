@@ -11,11 +11,11 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Tutorial , Credits , Play , Pause , ItemList , GameOver]
+    scene: [ Load , Menu , Tutorial , Credits , Play , GameOver]
 }
 
 let game = new Phaser.Game(gameConfig);
-let inDialogue, gameOver;
+let inDialogue, isPaused, inList, gameOver;
 
 // global screen position variables
 let centerX = game.config.width / 2;

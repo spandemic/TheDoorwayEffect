@@ -96,7 +96,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // movement keys
         this.setVelocity(0);
         this.setState(0);        // 0 for still, 1 for moving
-        if (!inDialogue) {
+        if (!inDialogue && !isPaused && !inList) {
             if (keyA.isDown) {
                 this.direction = "L";
                 this.setVelocityX(-400);
@@ -133,13 +133,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.walkSound.stop();
             this.isWalking = false;
         } 
-
-        if (gameOver || inDialogue) {
-            this.setState(0);
-            this.body.immovable = true;
-        } else {
-            this.body.immovable = false;
-        }
         
     }
 
