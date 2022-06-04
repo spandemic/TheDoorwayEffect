@@ -19,25 +19,25 @@ class Items extends Phaser.Physics.Arcade.Sprite {
 
         // sets the colors of the items
         if (color === "Red"){
-            this.setTint(0xFF0000);
+            this.setTint(0xff7c72);
         }
         if (color === "Green"){
-            this.setTint(0x00FF00);
+            this.setTint(0x9fe26c);
         }
         if (color === "Blue"){
-            this.setTint(0x0000FF);
+            this.setTint(0x80e1ff);
         }
         if (color === "Orange"){
-            this.setTint(0xfc5e03);
+            this.setTint(0xffa970);
         }
         if (color === "Purple"){
-            this.setTint(0xad03fc);
+            this.setTint(0xe2a8ff);
         }
         if (color === "Pink"){
-            this.setTint(0xfc03c6);
+            this.setTint(0xfe8ec3);
         }
         if (color === "Yellow"){
-            this.setTint(0xfcfc03);
+            this.setTint(0xfef48e);
         }
 
         // some textures need special tweaking, do it here
