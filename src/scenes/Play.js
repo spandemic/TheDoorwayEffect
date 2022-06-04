@@ -250,7 +250,8 @@ class Play extends Phaser.Scene {
         this.itemNum = 0;               // how to ID the items so we can compare them later
         this.realItemNum = [];          // list of the itemNum of all real items
         this.spawnListTracker = [];     // tracks which rooms the player has been in
-        neededItems = [];               // list of items the player needs
+        neededItems = {};               // list of items the player needs
+        this.neededItemNames = [];
 
         // camera and world methods
         // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -465,8 +466,8 @@ class Play extends Phaser.Scene {
         this.list.visible = true;
         let textSpace = 52;
         this.itemImage = this.add.image(this.player.x,this.player.y,"scene-bg").setDepth(7);
-        for (let i = 0; i < neededItems.length; i++) {
-            let item = this.add.text(this.player.x, this.player.y-tileSize*2.5 + (textSpace * i), neededItems[i], this.textConfig).setOrigin(0.5).setDepth(8);
+        for (let key in neededItems) {
+            let item = this.add.text(this.player.x, this.player.y-tileSize*2.5 + (textSpace * i), key, this.textConfig).setOrigin(0.5).setDepth(8);
             this.list.push(item);
         }
         this.itemText2 = this.add.text(this.player.x + tileSize * 5, this.player.y + tileSize + (textSpace*3.5), "(TAB) to return", this.textConfig).setOrigin(0.5).setDepth(8);
@@ -491,12 +492,13 @@ class Play extends Phaser.Scene {
             this.allItems.add(realItem); // add to physics collider
 
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
-            neededItems.push(realItem.name); // adds the item's name to the list the player can see
+            neededItems[this.itemNum] = [randomColor, randomKey]; // adds the item's name to the list the player can see
+            this.neededItemNames.push(realItem.name);
 
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);    // removes color from the item values so it can no longer spawn
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
         }
-        neededItems.sort();
+        // neededItems.sort();
     }
 
     generateFakeItems() {
@@ -507,6 +509,11 @@ class Play extends Phaser.Scene {
             // selects a random color and texture for the fake items
             let keys = Object.keys(this.allItemList);
             let randomKey = keys[Math.floor(Math.random() * keys.length)];
+            if (this.allItemList[randomKey].length == 0){
+                delete this.allItemList[randomKey];
+                keys = Object.keys(this.allItemList);
+                randomKey = keys[Math.floor(Math.random() * keys.length)];
+            }
             let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
 
             let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, randomKey, randomColor, this.itemNum);
@@ -516,10 +523,6 @@ class Play extends Phaser.Scene {
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
         }
 
-    }
-
-    inRange(item) {
-        
     }
 
     // starts the looping music
@@ -611,11 +614,11 @@ class Play extends Phaser.Scene {
             // if the dialogue is "items", display needed item list
             } else if (this.dialogue[convo][this.dialogueLine]["dialogue"] == "items") {
                 this.dialogueLines = "";
-                for (let i = 0; i < neededItems.length; i++) {
-                    if (i < neededItems.length-1) {
-                        this.dialogueLines += neededItems[i]+", ";
-                    } else if (i == neededItems.length-1) {
-                        this.dialogueLines += "and "+neededItems[i]+".";
+                for (let i = 0; i < this.neededItemNames.length; i++) {
+                    if (i < this.neededItemNames.length-1) {
+                        this.dialogueLines += this.neededItemNames[i]+", ";
+                    } else if (i == this.neededItemNames.length-1) {
+                        this.dialogueLines += "and "+this.neededItemNames[i]+".";
                     }
                 }
                 this.nextText.visible = false;

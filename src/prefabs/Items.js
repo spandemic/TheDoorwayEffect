@@ -14,7 +14,6 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         // reference variables
         this.itemNum = itemNum;     // the item's ID
         this.color = color;         // allows retrieval of color name
-        this.name = color + " " + texture;      // sets the name of the item
         this.texture = texture;
 
         // sets the colors of the items
@@ -44,10 +43,11 @@ class Items extends Phaser.Physics.Arcade.Sprite {
         if (texture === "PrintingPaper"){
             this.name = color + " " + "Printing Paper";
             this.setScale(1.5);
-        }
-        if (texture === "Waterbottle"){
+        } else if (texture === "Waterbottle"){
             this.name = color + " " + "Water Bottle";
             this.setScale(1.5);
+        } else {
+            this.name = color + " " + texture;
         }
         if (texture === "Binder"){
             this.setScale(1.5);

@@ -60,6 +60,22 @@ class GameOver extends Phaser.Scene {
 
         this.timeline.play();
         
+        let spaceX = centerX - tileSize * 3.5;
+        let spaceY = tileSize + (textSpace*2.2)
+        for (let key in neededItems) {
+            let neededID = key;
+            let neededColor = neededItems[key][0];
+            let neededTexture = neededItems[key][1];
+            let neededItem = new Items(this, spaceX, spaceY, neededTexture, neededColor, neededID).setOrigin(0.5);
+            spaceY += textSpace;
+
+            this.tweens.add({
+                targets: neededItem,
+                y: "+= 20",
+                yoyo: true,
+                repeat: -1
+            })
+        }
         
 
         this.cameras.main.fadeIn(300);
@@ -129,7 +145,7 @@ class GameOver extends Phaser.Scene {
         rankConfig.fontSize = "50px";
         this.add.text(centerX-tileSize*3.5, tileSize+65, "Needed Items", rankConfig).setOrigin(0.5)
         rankConfig.fontSize = "40px";
-        this.add.text(centerX-tileSize*3.5, tileSize + (textSpace*4.5), neededItems, rankConfig).setOrigin(0.5);
+        // this.add.text(centerX-tileSize*3.5, tileSize + (textSpace*4.5), neededItems, rankConfig).setOrigin(0.5);
         rankConfig.fontSize = "70px";
         this.add.text(centerX, tileSize*2 - textSpace, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
         rankConfig.fontSize = "150px";
