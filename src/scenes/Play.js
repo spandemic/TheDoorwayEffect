@@ -54,7 +54,7 @@ class Play extends Phaser.Scene {
             mute: false,
             volume: 0.3,
             rate: 1,
-            loop: false
+            loop: true
         });
         if (playerMuted == false) {
             bgm.mute = false;

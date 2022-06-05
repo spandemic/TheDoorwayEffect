@@ -70,7 +70,7 @@ class Menu extends Phaser.Scene {
             mute: false,
             volume: 0.5,
             rate: 1,
-            loop: false
+            loop: true
         });
         if (playerMuted == false) {
             this.bgm.mute = false;
