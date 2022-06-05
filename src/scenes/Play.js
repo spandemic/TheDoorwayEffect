@@ -46,13 +46,13 @@ class Play extends Phaser.Scene {
         });
         bgm = this.sound.add('background1', {
             mute: false,
-            volume: 0.3,
+            volume: 0.2,
             rate: 1,
             loop: false
         });
         loopbgm = this.sound.add('backgroundLoop', {
             mute: false,
-            volume: 0.3,
+            volume: 0.2,
             rate: 1,
             loop: true
         });
