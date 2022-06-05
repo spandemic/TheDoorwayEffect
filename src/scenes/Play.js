@@ -110,6 +110,7 @@ class Play extends Phaser.Scene {
         let windySpawn = map.findObject("spawnpoints", obj => obj.name === "windy spawn");
         let diningSpawn = map.findObject("spawnpoints", obj => obj.name === "dining room spawn");
         let longhallSpawn = map.findObject("spawnpoints", obj => obj.name === "longhall spawn");
+        let theatreSpawn = map.findObject("spawnpoints", obj => obj.name === "theatre spawn");
         this.spawnList = [
             livingSpawn,
             bathroomSpawn,
@@ -119,7 +120,8 @@ class Play extends Phaser.Scene {
             greenhouseSpawn,
             windySpawn,
             diningSpawn,
-            longhallSpawn
+            longhallSpawn,
+            theatreSpawn
         ];
 
         // the actual visual items, every single item in the game
@@ -174,10 +176,32 @@ class Play extends Phaser.Scene {
         let itemDining1 = map.findObject("item spawnpoints", obj => obj.name === "dining item 1");
         let itemDining2 = map.findObject("item spawnpoints", obj => obj.name === "dining item 2");
         let itemDining3 = map.findObject("item spawnpoints", obj => obj.name === "dining item 3");
+        let itemDining4 = map.findObject("item spawnpoints", obj => obj.name === "dining item 4");
+        let itemDining5 = map.findObject("item spawnpoints", obj => obj.name === "dining item 5");
         let itemLonghall1 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 1");
         let itemLonghall2 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 2");
         let itemLonghall3 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 3");
         let itemLonghall4 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 4");
+        let itemLonghall5 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 5");
+        let itemLonghall6 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 6");
+        let itemLonghall7 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 7");
+        let itemLonghall8 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 8");
+        let itemLonghall9 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 9");
+        let itemTheatre1 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 1");
+        let itemTheatre2 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 2");
+        let itemTheatre3 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 3");
+        let itemTheatre4 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 4");
+        let itemTheatre5 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 5");
+        let itemTheatre6 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 6");
+        let itemTheatre7 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 7");
+        let itemTheatre8 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 8");
+        let itemTheatre9 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 9");
+        let itemTheatre10 = map.findObject("item spawnpoints", obj => obj.name === "theatre item 10");
+        let itemSpawn1 = map.findObject("item spawnpoints", obj => obj.name === "spawn item 1");
+        let itemSpawn2 = map.findObject("item spawnpoints", obj => obj.name === "spawn item 2");
+        let itemSpawn3 = map.findObject("item spawnpoints", obj => obj.name === "spawn item 3");
+        let itemSpawn4 = map.findObject("item spawnpoints", obj => obj.name === "spawn item 4");
+        let itemSpawn5 = map.findObject("item spawnpoints", obj => obj.name === "spawn item 5");
         // list of item spawn locations to iterate through
         this.itemLocations = {
             // 0 means the item depth is below the player
@@ -188,15 +212,19 @@ class Play extends Phaser.Scene {
                 itemBedroom1, itemBedroom4, itemBedroom5,
                 itemWindy1, itemWindy4, itemWindy5,
                 itemGreenhouse1, itemGreenhouse2, itemGreenhouse3, itemGreenhouse4, itemGreenhouse5,
-                itemDining3],
+                itemDining3, itemDining4,
+                itemLonghall5, itemLonghall6, itemLonghall7, itemLonghall8, itemLonghall9,
+                itemTheatre1, itemTheatre2, itemTheatre3, itemTheatre4, itemTheatre5, itemTheatre6, itemTheatre7, itemTheatre8, itemTheatre9, itemTheatre10,
+                itemSpawn1, itemSpawn5],
             // 1 means the item depth is above the player
             1: [itemKitchen1, itemKitchen5, 
                 itemLiving5,
                 itemMaster3, itemMaster5,
                 itemBedroom2, itemBedroom3,
                 itemWindy2, itemWindy3,
-                itemDining1, itemDining2,
-                itemLonghall1, itemLonghall2, itemLonghall3, itemLonghall4], 
+                itemDining1, itemDining2, itemDining5,
+                itemLonghall1, itemLonghall2, itemLonghall3, itemLonghall4,
+                itemSpawn2, itemSpawn3, itemSpawn4], 
         };
         this.locationKeys = [];
         for (let key in this.itemLocations) {
@@ -204,6 +232,7 @@ class Play extends Phaser.Scene {
                 this.locationKeys.push(this.itemLocations[key][i]);
             }
         }
+        console.log(this.locationKeys.length);
 
         // player declaration variables
         this.player = new Player(this, this.hallwaySpawn.x, this.hallwaySpawn.y, "lethe", "front_1");
@@ -466,6 +495,7 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < 7; i++) {
             this.itemNum += 1; // itemNum is the ID of the items generated
 
+            console.log(this.itemNum);
             // color selector   
             let keys = Object.keys(this.allItemList);                           // creates a list of keys from allItemList
             let randomKey = keys[Math.floor(Math.random() * keys.length)];      // selects a random key from keys
@@ -477,14 +507,12 @@ class Play extends Phaser.Scene {
             // generates the item, status = real
             let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, randomKey, randomColor, this.itemNum);
 
-
             if (this.itemLocations[1].includes(randomItemSpawn)) {
                 realItem.setDepth(6);
             } else {
                 realItem.setDepth(3);
             }
             
-
             this.allItems.add(realItem); // add to physics collider
 
             this.realItemNum.push(realItem.itemNum); // adds itemNum of a real item to the list
@@ -501,34 +529,38 @@ class Play extends Phaser.Scene {
     }
 
     generateFakeItems() {
-        // generates fake items for all spawns that do not have a real item
-        for (let i = 0; i < this.locationKeys.length; i++) {
+        // generates 33 fake items at random spawns that do not have a real item
+        for (let i = 0; i < 33; i++) {
             this.itemNum += 1; // ID of item generated
+            console.log(this.itemNum);
 
             // selects a random color and texture for the fake items
             let keys = Object.keys(this.allItemList);
             let randomKey = keys[Math.floor(Math.random() * keys.length)];
+            let randomLocation = this.locationKeys[Math.floor(Math.random() * this.locationKeys.length)];
+
             if (this.allItemList[randomKey].length == 0){
                 delete this.allItemList[randomKey];
                 keys = Object.keys(this.allItemList);
                 randomKey = keys[Math.floor(Math.random() * keys.length)];
             }
+
             let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
+            let fakeItem = new Items(this, randomLocation.x, randomLocation.y, randomKey, randomColor, this.itemNum);
 
-            let fakeItem = new Items(this, this.locationKeys[i].x, this.locationKeys[i].y, randomKey, randomColor, this.itemNum);
-
-            if (this.itemLocations[1].includes(this.locationKeys[i])) {
+            if (this.itemLocations[1].includes(randomLocation)) {
                 fakeItem.setDepth(6);
             } else {
                 fakeItem.setDepth(3);
             }
-
+        
             this.allItems.add(fakeItem); // adds to physics collider
 
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);
+            this.locationKeys.splice(this.locationKeys.indexOf(randomLocation), 1);
         }
-
     }
+    
 
     // starts the looping music
     onEvent(){

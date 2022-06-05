@@ -33,7 +33,7 @@ class GameOver extends Phaser.Scene {
                 this.player.anims.play("R_idle");
                 rankConfig.fontSize = "35px";
                 let startY = tileSize+(textSpace*2);
-                let startX = centerX+tileSize*3;
+                let startX = centerX+tileSize*2;
                 this.add.text(centerX+tileSize*3.5, tileSize+65, "Your Items", rankConfig).setOrigin(0.5)
                 let i = 0;
                 for (let key in idList) {
