@@ -263,7 +263,7 @@ class Play extends Phaser.Scene {
 
         // collision logic for collecting items
         this.allItems = this.add.group({ runChildUpdate: true }); // this.allItems stores the individually created Phaser.Physics.Sprites
-        this.hitItemLogic = this.physics.add.overlap(
+        this.physics.add.overlap(
             this.player,
             this.allItems,
             (obj1, obj2) => {
@@ -364,12 +364,15 @@ class Play extends Phaser.Scene {
         }
 
         // restarts scene
-        if (Phaser.Input.Keyboard.JustDown(keySPACE) && isPaused) {
-            isPaused = false;
-            this.scene.restart('sceneA');
-            bgm.stop();
-            loopbgm.stop();
+        if (isPaused) {
+            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                isPaused = false;
+                this.scene.restart('sceneA');
+                bgm.stop();
+                loopbgm.stop();
+            }
         }
+        
         // mute button
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             if(bgm.mute == false) {

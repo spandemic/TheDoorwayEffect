@@ -77,10 +77,6 @@ class Items extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         
-        if (this.body.touching.none) {
-            this.ignoreDestroy = true;
-        } else {
-            this.ignoreDestroy = false;
-        }
+        
     }
 }
