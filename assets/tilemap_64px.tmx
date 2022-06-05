@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="122">
+ <editorsettings>
+  <export target="tilemap_64px.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="doorway_effect_64_tileset" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="tileset-64.png" width="1024" height="1024"/>
   <tile id="0">
@@ -1839,13 +1842,13 @@
   </layer>
  </group>
  <objectgroup id="19" name="item spawnpoints">
-  <object id="51" name="kitchen item 5" x="672" y="437.333">
+  <object id="51" name="kitchen item 5" x="672" y="429.333">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
    <point/>
   </object>
-  <object id="55" name="kitchen item 4" x="1101.33" y="192">
+  <object id="55" name="kitchen item 4" x="1093.33" y="190">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
@@ -1857,7 +1860,7 @@
    </properties>
    <point/>
   </object>
-  <object id="52" name="kitchen item 2" x="1248.66" y="203.333">
+  <object id="52" name="kitchen item 2" x="1248.66" y="191.333">
    <properties>
     <property name="type" value="kitchen"/>
    </properties>
@@ -1869,58 +1872,58 @@
    </properties>
    <point/>
   </object>
-  <object id="56" name="bathroom item 1" x="737.333" y="1894.66">
+  <object id="56" name="bathroom item 1" x="323.333" y="1842.66">
    <point/>
   </object>
-  <object id="57" name="bathroom item 2" x="412.001" y="1556.67">
+  <object id="57" name="bathroom item 2" x="414.001" y="1548.67">
    <point/>
   </object>
-  <object id="59" name="bathroom item 3" x="672.001" y="1538.67">
+  <object id="59" name="bathroom item 3" x="672.001" y="1530.67">
    <point/>
   </object>
-  <object id="60" name="living item 1" x="669.333" y="2906.67">
+  <object id="60" name="living item 1" x="675.333" y="2918.67">
    <point/>
   </object>
-  <object id="61" name="living item 2" x="384" y="2512">
+  <object id="61" name="living item 2" x="440" y="2508">
    <point/>
   </object>
-  <object id="62" name="living item 3" x="384.001" y="2321.34">
+  <object id="62" name="living item 3" x="384.001" y="2317.34">
    <point/>
   </object>
-  <object id="63" name="living item 4" x="1024" y="2326.66">
+  <object id="63" name="living item 4" x="1024" y="2316.66">
    <point/>
   </object>
-  <object id="64" name="living item 5" x="1120" y="2897.33">
+  <object id="64" name="living item 5" x="1120" y="2877.33">
    <point/>
   </object>
-  <object id="73" name="master item 1" x="1888" y="2441.33">
+  <object id="73" name="master item 1" x="1890" y="2431.33">
    <point/>
   </object>
-  <object id="74" name="master item 2" x="1952.67" y="2926">
+  <object id="74" name="master item 2" x="1950.67" y="2908">
    <point/>
   </object>
-  <object id="75" name="master item 3" x="2460" y="2824">
+  <object id="75" name="master item 3" x="2464" y="2814">
    <point/>
   </object>
   <object id="76" name="master item 4" x="2137.33" y="2566.67">
    <point/>
   </object>
-  <object id="77" name="master item 5" x="2217.33" y="2908">
+  <object id="77" name="master item 5" x="2621.33" y="2834">
    <point/>
   </object>
-  <object id="80" name="bedroom item 1" x="2330.66" y="175.999">
+  <object id="80" name="bedroom item 1" x="2322.66" y="165.999">
    <point/>
   </object>
-  <object id="81" name="bedroom item 2" x="2201.33" y="486.667">
+  <object id="81" name="bedroom item 2" x="2201.33" y="476.667">
    <point/>
   </object>
-  <object id="82" name="bedroom item 3" x="2750.67" y="472">
+  <object id="82" name="bedroom item 3" x="2746.67" y="466">
    <point/>
   </object>
-  <object id="83" name="bedroom item 4" x="2529.33" y="278.667">
+  <object id="83" name="bedroom item 4" x="2529.33" y="274.667">
    <point/>
   </object>
-  <object id="84" name="bedroom item 5" x="2790.67" y="129">
+  <object id="84" name="bedroom item 5" x="2788.67" y="133">
    <point/>
   </object>
   <object id="86" name="longhall item 1" x="5982.67" y="2185.33">
@@ -1929,34 +1932,34 @@
   <object id="87" name="longhall item 2" x="5664" y="2182.67">
    <point/>
   </object>
-  <object id="88" name="longhall item 3" x="5278.67" y="2184">
+  <object id="88" name="longhall item 3" x="5280.67" y="2182">
    <point/>
   </object>
   <object id="89" name="longhall item 4" x="4960" y="2181.33">
    <point/>
   </object>
-  <object id="91" name="dining item 1" x="5246.24" y="3540.64">
+  <object id="91" name="dining item 1" x="5246.24" y="3548.64">
    <point/>
   </object>
-  <object id="92" name="dining item 2" x="5949.33" y="3668.61">
+  <object id="92" name="dining item 2" x="5953.33" y="3662.61">
    <point/>
   </object>
-  <object id="93" name="dining item 3" x="5955.39" y="3265.58">
+  <object id="93" name="dining item 3" x="5953.39" y="3263.58">
    <point/>
   </object>
-  <object id="112" name="windy item 1" x="4700.91" y="4740.97">
+  <object id="112" name="windy item 1" x="4698.91" y="4736.97">
    <point/>
   </object>
-  <object id="113" name="windy item 2" x="5216.06" y="4668.24">
+  <object id="113" name="windy item 2" x="5214.06" y="4654.24">
    <point/>
   </object>
-  <object id="114" name="windy item 3" x="5728.18" y="4983.39">
+  <object id="114" name="windy item 3" x="5730.18" y="4975.39">
    <point/>
   </object>
   <object id="115" name="windy item 4" x="4958.48" y="5659.15">
    <point/>
   </object>
-  <object id="116" name="windy item 5" x="5528.18" y="5495.52">
+  <object id="116" name="windy item 5" x="5528.18" y="5473.52">
    <point/>
   </object>
   <object id="117" name="greenhouse item 1" x="5338" y="474">
@@ -1968,10 +1971,10 @@
   <object id="119" name="greenhouse item 3" x="6106" y="488">
    <point/>
   </object>
-  <object id="120" name="greenhouse item 4" x="6168" y="950">
+  <object id="120" name="greenhouse item 4" x="6110" y="926">
    <point/>
   </object>
-  <object id="121" name="greenhouse item 5" x="5600" y="460">
+  <object id="121" name="greenhouse item 5" x="5600" y="456">
    <point/>
   </object>
  </objectgroup>

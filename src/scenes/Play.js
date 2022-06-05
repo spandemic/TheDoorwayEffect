@@ -179,48 +179,31 @@ class Play extends Phaser.Scene {
         let itemLonghall3 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 3");
         let itemLonghall4 = map.findObject("item spawnpoints", obj => obj.name === "longhall item 4");
         // list of item spawn locations to iterate through
-        this.itemLocations = [
-            itemKitchen1,
-            itemKitchen2,
-            itemKitchen3,
-            itemKitchen4,
-            itemKitchen5,
-            itemBathroom1,
-            itemBathroom2,
-            itemBathroom3,
-            itemLiving1,
-            itemLiving2,
-            itemLiving3,
-            itemLiving4,
-            itemLiving5,
-            itemMaster1,
-            itemMaster2,
-            itemMaster3, //
-            itemMaster4,
-            itemMaster5,
-            itemBedroom1,
-            itemBedroom2,
-            itemBedroom3,
-            itemBedroom4,
-            itemBedroom5,
-            itemWindy1,
-            itemWindy2,
-            itemWindy3,
-            itemWindy4,
-            itemWindy5,
-            itemGreenhouse1,
-            itemGreenhouse2,
-            itemGreenhouse3,
-            itemGreenhouse4,
-            itemGreenhouse5,
-            itemDining1,
-            itemDining2,
-            itemDining3,
-            itemLonghall1,
-            itemLonghall2,
-            itemLonghall3,
-            itemLonghall4
-        ];
+        this.itemLocations = {
+            // 0 means the item depth is below the player
+            0: [itemKitchen2, itemKitchen3, itemKitchen4, 
+                itemBathroom1, itemBathroom2, itemBathroom3, 
+                itemLiving1, itemLiving2, itemLiving3, itemLiving4,
+                itemMaster1, itemMaster2, itemMaster4, 
+                itemBedroom1, itemBedroom4, itemBedroom5,
+                itemWindy1, itemWindy4, itemWindy5,
+                itemGreenhouse1, itemGreenhouse2, itemGreenhouse3, itemGreenhouse4, itemGreenhouse5,
+                itemDining3],
+            // 1 means the item depth is above the player
+            1: [itemKitchen1, itemKitchen5, 
+                itemLiving5,
+                itemMaster3, itemMaster5,
+                itemBedroom2, itemBedroom3,
+                itemWindy2, itemWindy3,
+                itemDining1, itemDining2,
+                itemLonghall1, itemLonghall2, itemLonghall3, itemLonghall4], 
+        };
+        this.locationKeys = [];
+        for (let key in this.itemLocations) {
+            for (let i = 0; i < this.itemLocations[key].length; i++) {
+                this.locationKeys.push(this.itemLocations[key][i]);
+            }
+        }
 
         // player declaration variables
         this.player = new Player(this, this.hallwaySpawn.x, this.hallwaySpawn.y, "lethe", "front_1");
@@ -372,7 +355,7 @@ class Play extends Phaser.Scene {
                 loopbgm.stop();
             }
         }
-        
+
         // mute button
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             if(bgm.mute == false) {
@@ -489,10 +472,18 @@ class Play extends Phaser.Scene {
             let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];  // selects a random color from the list of colors from the key
 
             // selects a random spawn and a random item to spawn in
-            let randomItemSpawn = this.itemLocations[Math.floor(Math.random() * (this.itemLocations.length))];
+            let randomItemSpawn = this.locationKeys[Math.floor(Math.random() * (this.locationKeys.length))];
 
             // generates the item, status = real
             let realItem = new Items(this, randomItemSpawn.x, randomItemSpawn.y, randomKey, randomColor, this.itemNum);
+
+
+            if (this.itemLocations[1].includes(randomItemSpawn)) {
+                realItem.setDepth(6);
+            } else {
+                realItem.setDepth(3);
+            }
+            
 
             this.allItems.add(realItem); // add to physics collider
 
@@ -501,7 +492,8 @@ class Play extends Phaser.Scene {
             this.neededItemNames.push(realItem.name);
 
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);    // removes color from the item values so it can no longer spawn
-            this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
+            this.locationKeys.splice(this.locationKeys.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
+
         }
         this.neededItemNames.sort();
         neededItems = Object.values(neededItems).sort();
@@ -510,7 +502,7 @@ class Play extends Phaser.Scene {
 
     generateFakeItems() {
         // generates fake items for all spawns that do not have a real item
-        for (let i = 0; i < this.itemLocations.length; i++) {
+        for (let i = 0; i < this.locationKeys.length; i++) {
             this.itemNum += 1; // ID of item generated
 
             // selects a random color and texture for the fake items
@@ -523,7 +515,13 @@ class Play extends Phaser.Scene {
             }
             let randomColor = this.allItemList[randomKey][Math.floor(Math.random() * this.allItemList[randomKey].length)];
 
-            let fakeItem = new Items(this, this.itemLocations[i].x, this.itemLocations[i].y, randomKey, randomColor, this.itemNum);
+            let fakeItem = new Items(this, this.locationKeys[i].x, this.locationKeys[i].y, randomKey, randomColor, this.itemNum);
+
+            if (this.itemLocations[1].includes(this.locationKeys[i])) {
+                fakeItem.setDepth(6);
+            } else {
+                fakeItem.setDepth(3);
+            }
 
             this.allItems.add(fakeItem); // adds to physics collider
 

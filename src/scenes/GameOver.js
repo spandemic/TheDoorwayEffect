@@ -131,10 +131,7 @@ class GameOver extends Phaser.Scene {
             rank += 1;
         } else if (totalItemsGot >= 8) {
             rank -= 1;
-        } else {
-            rank -= 2;
         }
-
         // rank calculation based on how LONG the player took
         rank += timeScore;
         
