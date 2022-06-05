@@ -26,11 +26,11 @@ class GameOver extends Phaser.Scene {
         this.timeline = this.tweens.createTimeline();
         this.timeline.add({
             targets: this.player,
-            x: game.config.width-tileSize*2,
+            x: game.config.width/2,
             duration: 2500,
             onComplete: () => {
                 // player idles, collected items are spawned
-                this.player.anims.play("R_idle");
+                this.player.anims.play("front_idle");
                 rankConfig.fontSize = "35px";
                 let startY = tileSize+(textSpace*2);
                 let startX = centerX+tileSize*2;
