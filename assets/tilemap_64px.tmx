@@ -1975,8 +1975,8 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="9" name="spawnpoints" visible="0">
-  <object id="11" name="Return hallway spawn" x="1431.5" y="5549">
+ <objectgroup id="9" name="spawnpoints">
+  <object id="11" name="Return hallway spawn" x="864.833" y="5534.33">
    <point/>
   </object>
   <object id="71" name="Hallway spawn" x="865" y="5535">
@@ -1985,7 +1985,7 @@
   <object id="12" name="Kitchen spawn" x="832.852" y="502.061">
    <point/>
   </object>
-  <object id="17" name="Bathroom spawn" x="316" y="1685.85">
+  <object id="17" name="Bathroom spawn" x="320" y="1664">
    <point/>
   </object>
   <object id="29" name="Living room spawn" x="1092.03" y="2562.33">

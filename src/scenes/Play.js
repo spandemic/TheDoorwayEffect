@@ -316,8 +316,8 @@ class Play extends Phaser.Scene {
         this.listPhysics = this.physics.add.collider(this.player, itemListLayer, () => {this.openList();}, null, this);
         
         this.textConfig = {
-            fontFamily: 'Nanum Pen Script',
-            fontSize: '45px',
+            fontFamily: 'Nunito',
+            fontSize: '35px',
             color: '#cc725a',
             align: "left"
         };
@@ -342,7 +342,7 @@ class Play extends Phaser.Scene {
                 isPaused = true;
                 this.pauseImage = this.add.image(this.player.x, this.player.y,"scene-bg").setOrigin(0.5).setDepth(7);
                 this.pauseText1 = this.add.text(this.player.x, this.player.y - tileSize, "Press (TAB) to return to game", this.textConfig).setOrigin(0.5).setDepth(8);
-                this.pauseText2 = this.add.text(this.player.x, this.player.y + tileSize, "Press (SPACE) to restart game", this.textConfig).setOrigin(0.5).setDepth(8);
+                this.pauseText2 = this.add.text(this.player.x, this.player.y + 52*2, "Press (SPACE) to restart game", this.textConfig).setOrigin(0.5).setDepth(8);
                 this.player.walkSound.mute = true;
             // unpauses game
             } else if (!gameOver && !inDialogue && isPaused && !inList) {
@@ -466,8 +466,10 @@ class Play extends Phaser.Scene {
         this.list.visible = true;
         let textSpace = 52;
         this.itemImage = this.add.image(this.player.x,this.player.y,"scene-bg").setDepth(7);
-        for (let key in neededItems) {
-            let item = this.add.text(this.player.x, this.player.y-tileSize*2.5 + (textSpace * i), key, this.textConfig).setOrigin(0.5).setDepth(8);
+        let i = 0;
+        for (let key of Object.values(neededItems)) {
+            let item = this.add.text(this.player.x, this.player.y-tileSize*2.5 + (textSpace * i), key[0]+" "+key[1], this.textConfig).setOrigin(0.5).setDepth(8);
+            i++;
             this.list.push(item);
         }
         this.itemText2 = this.add.text(this.player.x + tileSize * 5, this.player.y + tileSize + (textSpace*3.5), "(TAB) to return", this.textConfig).setOrigin(0.5).setDepth(8);

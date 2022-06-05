@@ -9,7 +9,7 @@ class Tutorial extends Phaser.Scene {
         this.add.image(game.config.width, 0, "scene-bg").setOrigin(0);
         this.player = new Player(this, game.config.width - tileSize*2, tileSize*1.5, "lethe", "front_1");
         this.add.image(game.config.width - tileSize*2, tileSize*3.5, "list");
-        this.add.image(game.config.width - tileSize, tileSize*5.2, "Tape").setScale(1.5).setTint(0x00FF00);
+        this.add.image(game.config.width - tileSize*2, tileSize*5.2, "Tape").setScale(1.5).setTint(0x00FF00);
 
         this.page = 0;
         // key inputs
@@ -23,8 +23,8 @@ class Tutorial extends Phaser.Scene {
         // text
         let textSpace = 52;
         let textConfig = {
-            fontFamily: 'Nanum Pen Script',
-            fontSize: 70,
+            fontFamily: 'Nunito',
+            fontSize: 50,
             color: '#cc725a',
             align: "left"
         }
@@ -32,9 +32,10 @@ class Tutorial extends Phaser.Scene {
         this.add.text(centerX, tileSize*2 - textSpace, "TUTORIAL", textConfig).setOrigin(0.5);                  // page 1
         this.add.text(game.config.width * 1.5, tileSize*2 - textSpace, "SCORE", textConfig).setOrigin(0.5);     // page 2
 
-        textConfig.fontSize = 45;
+        textConfig.fontSize = 25;
 
         this.add.text(centerX, tileSize*2, "(WASD) to move, (TAB) to pause", textConfig).setOrigin(0.5);
+        this.add.text(centerX, tileSize*2 + textSpace, "(SPACE) to collect items", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*2, "Check the list for what you need!", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*4, "Explore the house & collect what you need", textConfig).setOrigin(0.5);
         this.add.text(centerX, tileSize*2 + textSpace*6, "Exit the main hallway when you are finished", textConfig).setOrigin(0.5);

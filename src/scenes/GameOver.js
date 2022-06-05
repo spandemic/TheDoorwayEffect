@@ -6,8 +6,8 @@ class GameOver extends Phaser.Scene {
     create() {
         this.add.image(0,0, "scene-bg").setOrigin(0);
         let rankConfig = {
-            fontFamily: 'Nanum Pen Script',
-            fontSize: '70px',
+            fontFamily: 'Nunito',
+            fontSize: 50,
             color: '#cc725a',
             align: 'center'
         }
@@ -31,7 +31,7 @@ class GameOver extends Phaser.Scene {
             onComplete: () => {
                 // player idles, collected items are spawned
                 this.player.anims.play("R_idle");
-                rankConfig.fontSize = "50px";
+                rankConfig.fontSize = "35px";
                 let startY = tileSize+(textSpace*2);
                 let startX = centerX+tileSize*3;
                 this.add.text(centerX+tileSize*3.5, tileSize+65, "Your Items", rankConfig).setOrigin(0.5)
@@ -142,15 +142,13 @@ class GameOver extends Phaser.Scene {
         if (rank > 13) {
             rank = 13;
         }
-        rankConfig.fontSize = "50px";
+        rankConfig.fontSize = "35px";
         this.add.text(centerX-tileSize*3.5, tileSize+65, "Needed Items", rankConfig).setOrigin(0.5)
-        rankConfig.fontSize = "40px";
-        // this.add.text(centerX-tileSize*3.5, tileSize + (textSpace*4.5), neededItems, rankConfig).setOrigin(0.5);
-        rankConfig.fontSize = "70px";
+        rankConfig.fontSize = "50px";
         this.add.text(centerX, tileSize*2 - textSpace, "GRADE RECEIVED", rankConfig).setOrigin(0.5);
-        rankConfig.fontSize = "150px";
+        rankConfig.fontSize = "100px";
         this.add.text(centerX, centerY-textSpace, rankList[rank], rankConfig).setOrigin(0.5);
-        rankConfig.fontSize = "45px";
+        rankConfig.fontSize = "35px";
         this.add.text(centerX + tileSize * 5, tileSize*2 + (textSpace*8), "(TAB) to menu", rankConfig).setOrigin(0.5);
     }
     

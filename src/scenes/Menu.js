@@ -54,7 +54,7 @@ class Menu extends Phaser.Scene {
 
         // menu text config
         let menuConfig = {
-            fontFamily: 'Nunito',
+            fontFamily: "Nunito",
             fontSize: '45px',
             color: 'white',
             align: 'right'

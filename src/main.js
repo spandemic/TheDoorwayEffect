@@ -7,7 +7,7 @@ let gameConfig = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: true
+            debug: false
         }
        
     },
