@@ -500,7 +500,9 @@ class Play extends Phaser.Scene {
             this.allItemList[randomKey].splice(this.allItemList[randomKey].indexOf(randomColor), 1);    // removes color from the item values so it can no longer spawn
             this.itemLocations.splice(this.itemLocations.indexOf(randomItemSpawn), 1);                  // removes real item spawns from the location list
         }
-        // neededItems.sort();
+        this.neededItemNames.sort();
+        neededItems = Object.values(neededItems).sort();
+        
     }
 
     generateFakeItems() {
