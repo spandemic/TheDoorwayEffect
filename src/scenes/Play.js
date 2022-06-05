@@ -569,7 +569,9 @@ class Play extends Phaser.Scene {
     }
 
     gameEnd() {
-    
+        bgm.stop();
+        loopbgm.stop();
+
         gameOver = true;
         this.player.setState(0);
         this.exitPhysics.active = false;

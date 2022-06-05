@@ -20,6 +20,7 @@ class GameOver extends Phaser.Scene {
 
         this.itemList = [];
         idList.sort();
+        this.player.walkSound.play();
 
 
         // tweening
@@ -30,6 +31,7 @@ class GameOver extends Phaser.Scene {
             duration: 2500,
             onComplete: () => {
                 // player idles, collected items are spawned
+                this.player.walkSound.stop();
                 this.player.anims.play("front_idle");
                 rankConfig.fontSize = "35px";
                 let startY = tileSize+(textSpace*2);
