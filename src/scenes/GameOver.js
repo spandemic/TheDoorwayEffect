@@ -141,6 +141,9 @@ class GameOver extends Phaser.Scene {
         if (rank > 13) {
             rank = 13;
         }
+        if (difficulty == 0) {
+            rank -= 4;
+        }
         rankConfig.fontSize = "35px";
         this.add.text(centerX-tileSize*3.5, tileSize+65, "Needed Items", rankConfig).setOrigin(0.5)
         rankConfig.fontSize = "50px";

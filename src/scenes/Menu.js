@@ -12,6 +12,8 @@ class Menu extends Phaser.Scene {
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+        difficulty = 0;
+
         // bg images
         this.add.image(0,0,"bg").setOrigin(0);
         this.backDoors = this.add.tileSprite(0,0, game.config.width, game.config.height, "backDoors").setOrigin(0);
@@ -104,7 +106,7 @@ class Menu extends Phaser.Scene {
         
         if (Phaser.Input.Keyboard.JustDown(keyTAB)) {
             this.bgm.stop();
-            this.scene.start('sceneA');
+            this.scene.start('diffScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.bgm.stop();

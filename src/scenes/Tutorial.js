@@ -63,7 +63,7 @@ class Tutorial extends Phaser.Scene {
 
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
            
-            this.scene.start("sceneA");
+            this.scene.start("diffScene");
           
         }
 

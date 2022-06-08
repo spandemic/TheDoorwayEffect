@@ -11,7 +11,7 @@ let gameConfig = {
         }
        
     },
-    scene: [ Load , Menu , Tutorial , Credits , Play , GameOver]
+    scene: [ Load , Menu , Difficulty, Tutorial , Credits , Play , GameOver]
 }
 
 let game = new Phaser.Game(gameConfig);
@@ -35,3 +35,4 @@ let timeScore = 0;
 let playerMuted = false;
 let bgm;
 let loopbgm;
+let difficulty = 0;

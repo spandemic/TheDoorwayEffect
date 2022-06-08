@@ -491,8 +491,14 @@ class Play extends Phaser.Scene {
     }
 
     generateRealItems() {
-        // generates 7 needed items that the player will collect
-        for (let i = 0; i < 7; i++) {
+        let diff = 0;
+        if (difficulty == 0) {
+            diff = 4;
+        } else {
+            diff = 7
+        }
+        // generates X needed items that the player will collect
+        for (let i = 0; i < diff; i++) {
             this.itemNum += 1; // itemNum is the ID of the items generated
 
             console.log(this.itemNum);
@@ -529,10 +535,15 @@ class Play extends Phaser.Scene {
     }
 
     generateFakeItems() {
+        let fakeDiff = 0;
+        if (difficulty == 0) {
+            fakeDiff = 26;
+        } else {
+            fakeDiff = 33;
+        }
         // generates 33 fake items at random spawns that do not have a real item
-        for (let i = 0; i < 33; i++) {
+        for (let i = 0; i < fakeDiff; i++) {
             this.itemNum += 1; // ID of item generated
-            console.log(this.itemNum);
 
             // selects a random color and texture for the fake items
             let keys = Object.keys(this.allItemList);
